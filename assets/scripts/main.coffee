@@ -1,31 +1,37 @@
-require [], ->
+require ['etc/lang'], (lang) ->
+	editing = false
+	isDataURL = false
 	step = 0
 	steps = [
 		{
 			enter: ->
-				# bind paste
-				($ document).on 'paste', (e) ->
-					# TODO: alert for legacy
+				if model.canPasteImage
+					# bind paste
+					($ document).on 'paste', (e) ->
+						# get image
+						[image] = for datam in e.originalEvent.clipboardData.items
+							datam if /image\/.+/.test datam.type
+						return alert lang.noImagesInClipBoard unless image?
 
-					# get image
-					[image] = for datam in e.clipboardData.items
-						if /image\/.+/.test datam.type then datam else false
-					return alert 'no images found' unless image?
-
-					# read image
-					reader = new FileReader
-					reader.onload = (e) ->
-						console.log evt.target.result
-					reader.readAsDataURL image.getAsFile()
+						# read image
+						reader = new FileReader
+						reader.onload = (e) ->
+							isDataURL = true
+							model.imageSource e.target.result
+							next()
+						reader.readAsDataURL image.getAsFile()
 
 				 # TODO: bind drop
+				 # if model.canDropImage
+				 	# TODO: do
 
 			exit: ->
-				($ document).off 'click'
+				($ document).off 'paste'
+				editing = true
 		}
 		{
 			enter: ->
-				viewModel.state 'editor'
+				model.state 'editor'
 			exit: ->
 		}
 		{
@@ -37,13 +43,23 @@ require [], ->
 		steps[step].enter()
 		step++
 
-	viewModel = new class
+	model = new class
 		constructor: ->
+			# TODO detection
+			@canPasteImage = true
+			@canDropImage = true
+
+			# 
+			@imageSource = ko.observable '/images/spacer.gif'
 			@state = ko.observable 'portal'
 			@upload = (e) ->
 				alert 'upload'
 
-	ko.applyBindings viewModel, document.body
+	ko.applyBindings model, document.body
+
+	# TODO: before leave
+	($ window).on 'beforeunload', ->
+		return lang.areYouSureToLeave if editing
 
 	# boot strap
 	next()
