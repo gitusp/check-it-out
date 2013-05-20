@@ -3,6 +3,7 @@ require [], ->
 	steps = [
 		{
 			enter: ->
+				# TODO: bind paste
 				($ document).on 'click', ->
 					alert 'check it out!'
 			exit: ->
@@ -19,4 +20,11 @@ require [], ->
 		steps[step].enter()
 		step++
 
+	viewModel = new class
+		constructor: ->
+			@state = ko.observable 'portal'
+
+	ko.applyBindings viewModel, document.body
+
+	# boot strap
 	next()

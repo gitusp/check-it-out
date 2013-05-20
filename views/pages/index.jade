@@ -1,13 +1,18 @@
 !!! 5
 html
-    head
-        title CHECK IT OUT!
-        //- link(rel='stylesheet', href='/assets/styles/main.css')
-        //- TODO: favicon
-        //- TODO: ogp
+	head
+		title CHECK IT OUT!
+		//- link(rel='stylesheet', href='/assets/styles/main.css')
+		//- TODO: favicon
+		//- TODO: ogp
 
-    body
+	body
+		#wrapper
+			#content-portal(data-bind='visible: state() == "portal"')
+				| paste, drop or [ upload ] your image
+			//- #content-portal(data-bind='visible: state() == "portal"')
+			//- 	| paste, drop or [ upload ] your image
 
-        script(src='/assets/scripts/libs/jquery.js')
-        //- script(src='/assets/scripts/libs/knockout.js')
-        script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/main.js')
+		script(src='/assets/scripts/libs/jquery.js')
+		script(src='/assets/scripts/libs/knockout.js')
+		script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/main.js')
