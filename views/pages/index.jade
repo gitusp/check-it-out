@@ -2,16 +2,19 @@
 html
 	head
 		title CHECK IT OUT!
-		//- link(rel='stylesheet', href='/assets/styles/main.css')
+		link(rel='stylesheet', href='/assets/styles/main.css')
 		//- TODO: favicon
 		//- TODO: ogp
 
 	body
 		#wrapper
 			#content-portal(data-bind='visible: state() == "portal"')
-				| paste, drop or [ upload ] your image
-			//- #content-portal(data-bind='visible: state() == "portal"')
-			//- 	| paste, drop or [ upload ] your image
+				| paste, drop or 
+				a.button-upload(data-bind='click: upload') UPLOAD
+				|  your image
+
+			#content-editor(data-bind='visible: state() == "editor"', style='display: none')
+				| [ clip ] [draw] [ share ]
 
 		script(src='/assets/scripts/libs/jquery.js')
 		script(src='/assets/scripts/libs/knockout.js')
