@@ -1,3 +1,4 @@
 module.exports = {
-	'viewEngine': 'ejs'
+	'viewEngine': 'jade',
+	'layout': false,
 };
