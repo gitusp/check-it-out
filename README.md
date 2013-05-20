@@ -1,0 +1,2 @@
+# checkout
+### a Sails application
