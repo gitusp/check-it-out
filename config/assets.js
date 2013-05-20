@@ -6,7 +6,7 @@ module.exports.assets = {
 	// ( assets.css(), assets.js() and assets.templateLibrary() )
 	sequence: [
 		'assets/mixins', 
-		'assets/js', 
+		'assets/scripts', 
 		'assets/styles', 
 		'assets/templates'
 	]
