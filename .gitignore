@@ -23,7 +23,7 @@ pids
 logs
 results
 
-node_modules/*
+node_modules
 
 npm-debug.log
 
@@ -43,9 +43,3 @@ nbproject
 # local config
 ########################
 config/local.js
-
-
-########################
-# custom node modules
-########################
-!node_modules/btree.*
