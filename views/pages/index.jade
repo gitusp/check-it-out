@@ -9,10 +9,15 @@ html
 	body
 		#wrapper
 			//- TODO: スライドアニメーション？
-			#content-portal(data-bind='visible: state() == "portal"')
-				span(data-bind='visible: canPasteImage', style='display: none') クリップボードから画像をペースト、
-				span(data-bind='visible: canDropImage', style='display: none') 画像をドラッグアンドドロップ、
-				span(data-bind='visible: canPasteImage || canDropImage', style='display: none') または
+			#content-loading(data-bind='visible: state() == "loading"')
+				//- TODO: bg
+				img(src='/images/loading.gif')
+
+			//- TODO: スライドアニメーション？
+			#content-portal(data-bind='visible: state() == "portal"', style='display: none')
+				span(data-bind='visible: canPasteImage') クリップボードから画像をペースト、
+				span(data-bind='visible: canDropImage') 画像をドラッグアンドドロップ、
+				span(data-bind='visible: canPasteImage || canDropImage') または
 				a.button-upload(data-bind='click: upload') 画像をアップロード
 				span してください
 

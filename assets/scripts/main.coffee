@@ -45,8 +45,8 @@ require ['etc/lang'], (lang) ->
 
 	model = new class
 		constructor: ->
+			@canPasteImage = navigator.userAgent.toLowerCase().indexOf 'chrome' > -1
 			# TODO detection
-			@canPasteImage = true
 			@canDropImage = true
 
 			# 
@@ -57,7 +57,7 @@ require ['etc/lang'], (lang) ->
 
 	ko.applyBindings model, document.body
 
-	# TODO: before leave
+	# before leave
 	($ window).on 'beforeunload', ->
 		return lang.areYouSureToLeave if editing
 
