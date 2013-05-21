@@ -16,6 +16,9 @@ require ['etc/lang'], (lang) ->
 					($ document).on 'dragover', (e) ->
 						e.preventDefault()
 
+					($ document).on 'dragenter', (e) ->
+						e.preventDefault()
+
 					($ document).on 'drop', (e) ->
 						e.preventDefault()
 						alert lang.noImagesInDragData unless loadItems e.originalEvent.dataTransfer.files
@@ -38,7 +41,7 @@ require ['etc/lang'], (lang) ->
 					true
 
 			exit: ->
-				($ document).off 'paste dragover drop'
+				($ document).off 'paste dragover dragenter drop'
 				editing = true
 		}
 		{
@@ -59,7 +62,7 @@ require ['etc/lang'], (lang) ->
 		constructor: ->
 			# feature detection
 			@canPasteImage = /chrome/.test useragent
-			@canDropImage = /chrome|safari|firefox|msie (9|10)/.test useragent
+			@canDropImage = /chrome|safari|firefox|msie 10/.test useragent
 
 			# model
 			@imageSource = ko.observable '/images/spacer.gif'
