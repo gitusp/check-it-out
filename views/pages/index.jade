@@ -1,31 +1,40 @@
-!!! 5
-html
-	head
-		title CHECK IT OUT!
-		link(rel='stylesheet', href='/assets/styles/main.css')
-		//- TODO: favicon
-		//- TODO: ogp
+extends ../prototypes/base
 
-	body
-		#wrapper
-			//- TODO: スライドアニメーション？
-			#content-loading(data-bind='visible: state() == "loading"')
-				//- TODO: bg
-				img(src='/images/loading.gif')
+block title
+	= screenAppName
 
-			//- TODO: スライドアニメーション？
-			#content-portal(data-bind='visible: state() == "portal"', style='display: none')
-				span(data-bind='visible: canPasteImage') クリップボードから画像をペースト、
-				span(data-bind='visible: canDropImage') 画像をドラッグアンドドロップ、
-				span(data-bind='visible: canPasteImage || canDropImage') または
-				a.button-upload(data-bind='click: upload') 画像をアップロード
-				span してください
+append styles
+	link(rel='stylesheet', href='/assets/styles/main.css')
 
-			//- TODO: スライドアニメーション？
-			#content-editor(data-bind='visible: state() == "editor"', style='display: none')
-				img(data-bind='attr: {src: imageSource}')
-				| [ clip ] [draw] [ share ]
+append metas
+	//- TODO: favicon
+	//- TODO: ogp
 
-		script(src='/assets/scripts/libs/jquery.js')
-		script(src='/assets/scripts/libs/knockout.js')
-		script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/main.js')
+block body
+	#wrapper
+		//- TODO: スライドアニメーション？
+		#content-loading(data-bind='visible: state() == "loading"')
+			//- TODO: bg
+			img(src='/images/loading.gif')
+
+		//- TODO: スライドアニメーション？
+		#content-portal(data-bind='visible: state() == "portal"', style='display: none')
+			//- TODO: hide
+			iframe(name='upload-frame')
+			span(data-bind='visible: canPasteImage') クリップボードから画像をペースト、
+			span(data-bind='visible: canDropImage') 画像をドラッグアンドドロップ、
+			span(data-bind='visible: canPasteImage || canDropImage') または
+			form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
+				input(type='file', name='image', data-bind='event: {change: upload}')
+				input(type='submit')
+			span してください
+
+		//- TODO: スライドアニメーション？
+		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
+			img(data-bind='attr: {src: imageSource}, event: {error: imageError}')
+			| [ clip ] [draw] [ share ]
+
+append scripts
+	script(src='/assets/scripts/libs/jquery.js')
+	script(src='/assets/scripts/libs/knockout.js')
+	script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/main.js')

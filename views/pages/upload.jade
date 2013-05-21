@@ -1,0 +1,8 @@
+extends ../prototypes/base
+
+prepend title
+	| UPLOAD
+
+append scripts
+	script
+		parent.uploadImageCallback(!{image});

@@ -1,6 +1,6 @@
 require ['etc/lang'], (lang) ->
+	useragent = navigator.userAgent.toLowerCase()
 	editing = false
-	isDataURL = false
 	step = 0
 	steps = [
 		{
@@ -30,7 +30,6 @@ require ['etc/lang'], (lang) ->
 					# read image
 					reader = new FileReader
 					reader.onload = (e) ->
-						isDataURL = true
 						model.imageSource e.target.result
 						next()
 
@@ -59,17 +58,18 @@ require ['etc/lang'], (lang) ->
 	model = new class
 		constructor: ->
 			# feature detection
-			ua = navigator.userAgent.toLowerCase()
-			@canPasteImage = (ua.indexOf 'chrome') > -1
-			@canDropImage = @canPasteImage || (ua.indexOf 'safari') > -1 || (ua.indexOf 'firefox') > -1
+			@canPasteImage = /chrome/.test useragent
+			@canDropImage = /chrome|safari|firefox|msie (9|10)/.test useragent
 
 			# model
 			@imageSource = ko.observable '/images/spacer.gif'
 			@state = ko.observable 'portal'
 
 			# methods
-			@upload = (e) ->
-				alert 'upload'
+			@upload = (d, e) ->
+				(($ e.target).closest 'form').submit()
+			@imageError = ->
+				alert lang.unsupportedImage
 
 	ko.applyBindings model, document.body
 
@@ -77,5 +77,10 @@ require ['etc/lang'], (lang) ->
 	($ window).on 'beforeunload', ->
 		lang.areYouSureToLeave if editing
 
+	# external callback
+	window.uploadImageCallback = (image) ->
+		model.imageSource image
+		next()
+
 	# boot strap
-	next()
+	unless /msie (6|7)/.test useragent then next() else alert lang.notCompatible
