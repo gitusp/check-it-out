@@ -36,7 +36,8 @@ block body
 		//- TODO: スライドアニメーション？
 		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
 			img(data-bind='attr: {src: imageSource}, event: {error: imageError}')
-			| [ clip ] [draw] [ share ]
+			span(data-bind='click: clip') [ clip ]
+			| [draw] [ share ]
 
 append scripts
 	script(src='/assets/scripts/libs/jquery.js')
