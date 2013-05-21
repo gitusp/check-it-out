@@ -8,25 +8,37 @@ require ['etc/lang'], (lang) ->
 				if model.canPasteImage
 					# bind paste
 					($ document).on 'paste', (e) ->
-						# get image
-						[image] = for datam in e.originalEvent.clipboardData.items
-							datam if /image\/.+/.test datam.type
-						return alert lang.noImagesInClipBoard unless image?
+						e.preventDefault()
+						alert lang.noImagesInClipBoard unless loadItems e.originalEvent.clipboardData.items
 
-						# read image
-						reader = new FileReader
-						reader.onload = (e) ->
-							isDataURL = true
-							model.imageSource e.target.result
-							next()
-						reader.readAsDataURL image.getAsFile()
+				# TODO: bind drop
+				if model.canDropImage
+					($ document).on 'dragover', (e) ->
+						e.preventDefault()
 
-				 # TODO: bind drop
-				 # if model.canDropImage
-				 	# TODO: do
+					($ document).on 'drop', (e) ->
+						e.preventDefault()
+						alert lang.noImagesInDragData unless loadItems e.originalEvent.dataTransfer.files
+
+				loadItems = (items) ->
+					# get image
+					[image] = for datam in items
+						datam if /image\/.+/.test datam.type
+					return false unless image?
+
+					# read image
+					reader = new FileReader
+					reader.onload = (e) ->
+						isDataURL = true
+						model.imageSource e.target.result
+						next()
+
+					file = if image.getAsFile? then image.getAsFile() else image
+					reader.readAsDataURL file
+					true
 
 			exit: ->
-				($ document).off 'paste'
+				($ document).off 'paste dragover drop'
 				editing = true
 		}
 		{
@@ -59,7 +71,7 @@ require ['etc/lang'], (lang) ->
 
 	# before leave
 	($ window).on 'beforeunload', ->
-		return lang.areYouSureToLeave if editing
+		lang.areYouSureToLeave if editing
 
 	# boot strap
 	next()
