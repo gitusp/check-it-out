@@ -58,13 +58,16 @@ require ['etc/lang'], (lang) ->
 
 	model = new class
 		constructor: ->
-			@canPasteImage = navigator.userAgent.toLowerCase().indexOf 'chrome' > -1
-			# TODO detection
-			@canDropImage = true
+			# feature detection
+			ua = navigator.userAgent.toLowerCase()
+			@canPasteImage = (ua.indexOf 'chrome') > -1
+			@canDropImage = @canPasteImage || (ua.indexOf 'safari') > -1 || (ua.indexOf 'firefox') > -1
 
-			# 
+			# model
 			@imageSource = ko.observable '/images/spacer.gif'
 			@state = ko.observable 'portal'
+
+			# methods
 			@upload = (e) ->
 				alert 'upload'
 
