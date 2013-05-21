@@ -4,6 +4,7 @@ require ['etc/lang'], (lang) ->
 	step = 0
 	steps = [
 		{
+			# PHASE: IMAGE UPLOAD
 			enter: ->
 				if model.canPasteImage
 					# bind paste
@@ -45,11 +46,13 @@ require ['etc/lang'], (lang) ->
 				editing = true
 		}
 		{
+			# PHASE: EDIT IMAGE
 			enter: ->
 				model.state 'editor'
 			exit: ->
 		}
 		{
+			# PHASE: SHARE
 			enter: ->
 		}
 	]

@@ -21,12 +21,16 @@ block body
 		#content-portal(data-bind='visible: state() == "portal"', style='display: none')
 			//- TODO: hide
 			iframe(name='upload-frame')
+
 			span(data-bind='visible: canPasteImage') クリップボードから画像をペースト、
 			span(data-bind='visible: canDropImage') 画像をドラッグアンドドロップ、
 			span(data-bind='visible: canPasteImage || canDropImage') または
+
+			//- TODO: style
 			form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
 				input(type='file', name='image', data-bind='event: {change: upload}')
 				input(type='submit')
+
 			span してください
 
 		//- TODO: スライドアニメーション？
