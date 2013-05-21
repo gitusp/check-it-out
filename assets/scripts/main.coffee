@@ -11,8 +11,8 @@ require ['etc/lang'], (lang) ->
 						e.preventDefault()
 						alert lang.noImagesInClipBoard unless loadItems e.originalEvent.clipboardData.items
 
-				# TODO: bind drop
 				if model.canDropImage
+					# bind drop
 					($ document).on 'dragover', (e) ->
 						e.preventDefault()
 
@@ -20,6 +20,7 @@ require ['etc/lang'], (lang) ->
 						e.preventDefault()
 						alert lang.noImagesInDragData unless loadItems e.originalEvent.dataTransfer.files
 
+				# common item loader
 				loadItems = (items) ->
 					# get image
 					[image] = for datam in items
