@@ -1,4 +1,4 @@
-define ['models/clip', 'models/draw', 'models/stage', 'etc/rect'], (clip, draw, stage, rect) ->
+define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'], (clip, draw, stage, rect, drawRect) ->
 	useragent = navigator.userAgent.toLowerCase()
 
 	class app
@@ -37,4 +37,4 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect'], (clip, draw, 
 				@::[key] = val for key, val of def.prototype
 
 	app.reopen clip, draw, stage
-	rect.setAppModel draw.setAppModel new app
+	drawRect.setAppModel clip.setAppModel rect.setAppModel draw.setAppModel new app

@@ -40,10 +40,34 @@
 	#clip-work-space {
 		.match-parent;
 
-		#clip-work-space-bg {
+		#clip-work-space-bg-wrapper {
 			.match-parent;
-			.opacity(0.5);
-			background: #000;
+
+			.mask1,
+			.mask2,
+			.mask3,
+			.mask4,
+			 {
+				position: absolute;
+				.opacity(0.5);
+				background: #000;
+			}
+			.mask1 {
+				top: 0;
+				right: 0;
+			}
+			.mask2 {
+				bottom: 0;
+				right: 0;
+			}
+			.mask3 {
+				bottom: 0;
+				left: 0;
+			}
+			.mask4 {
+				top: 0;
+				left: 0;
+			}
 		}
 	}
 	#draw-work-space {

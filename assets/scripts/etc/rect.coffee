@@ -2,7 +2,7 @@ define [], (appModel) ->
 	workSpace = $ document
 
 	class
-		constructor: (@pointFixed = {x: 0, y: 0}, @borderWidth = 0, @borderColor = 'transparent') ->
+		constructor: (@pointFixed = {x: 0, y: 0}) ->
 			@subscriptions = []
 			@subscriptions.push(appModel.stageWidth.subscribe (oldValue) ->
 					@cachedStageWidth = oldValue
@@ -21,22 +21,14 @@ define [], (appModel) ->
 					@redraw()
 				, @, 'beforeChange')
 
-			# duplicate point
+			# init point
 			@pointMutable = $.extend true, {}, @pointFixed
+			for pt in [@pointFixed, @pointMutable]
+				@normalize pt
 
 			# entity
-			@entity = $('<div class="rect">').on('mousedown', (e) ->
+			@entity = $('<div class="rect">').on 'mousedown', (e) ->
 					e.stopPropagation()
-				).css {
-					backgroundImage: "url(#{appModel.imageSource()})"
-				}
-
-			# border
-			if @borderWidth > 0
-				$('<div class="border-top">').height(@borderWidth).css('background', @borderColor).appendTo @entity
-				$('<div class="border-right">').width(@borderWidth).css('background', @borderColor).appendTo @entity
-				$('<div class="border-bottom">').height(@borderWidth).css('background', @borderColor).appendTo @entity
-				$('<div class="border-left">').width(@borderWidth).css('background', @borderColor).appendTo @entity
 
 		redraw: ->
 			clearTimeout @lock
@@ -46,29 +38,32 @@ define [], (appModel) ->
 			, 0
 
 		draw: ->
-			bgpx = - @getLeft() + appModel.stageOffsetX()
-			bgpy = - @getTop() + appModel.stageOffsetY()
 			@entity.css {
 					left: @getLeft()
 					top: @getTop()
 					width: @getWidth()
 					height: @getHeight()
-					backgroundPosition: "#{bgpx}px #{bgpy}px"
 				}
 
 		# NOTE: startPointはwrapperはさんでもpage基準でいいのか？
 		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
-		# 		いまだと領域超えちゃうしね
-		startDraw: (prevPoint) ->
+		startDraw: (initialPoint) ->
+			basePoint = $.extend true, {}, @pointMutable
 			workSpace.mousemove (e) =>
-				newPoint = {x: e.pageX, y: e.pageY}
-				@pointMutable.x += newPoint.x - prevPoint.x
-				@pointMutable.y += newPoint.y - prevPoint.y
-				prevPoint = newPoint
+				@pointMutable.x = basePoint.x + e.pageX - initialPoint.x
+				@pointMutable.y = basePoint.y + e.pageY - initialPoint.y
+				@normalize @pointMutable
 				@draw()
 
 			workSpace.mouseup (e) =>
 				workSpace.off 'mousemove mouseup'
+
+		# rangesafe point setter
+		normalize: (pt) ->
+			pt.x = if pt.x < 0 then 0 else pt.x
+			pt.y = if pt.y < 0 then 0 else pt.y
+			pt.x = if pt.x > appModel.stageWidth() then appModel.stageWidth() else pt.x
+			pt.y = if pt.y > appModel.stageHeight() then appModel.stageHeight() else pt.y
 
 		# getter
 		getLeft: -> Math.min @pointFixed.x, @pointMutable.x
