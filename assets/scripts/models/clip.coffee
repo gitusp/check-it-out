@@ -14,7 +14,8 @@ define ['etc/clipRect'], (clipRect, appModel) ->
 			# to fix scope
 			@startClip = (d, e) =>
 				@clean()
-				@clipRect = new clipRect {x: e.offsetX, y: e.offsetY}, maskResizer
+				offset = workSpace.offset()
+				@clipRect = new clipRect {x: e.pageX - offset.left, y: e.pageY - offset.top}, maskResizer
 				workSpace.append @clipRect.entity
 				@clipRect.startDraw {x: e.pageX, y: e.pageY}
 
@@ -25,4 +26,6 @@ define ['etc/clipRect'], (clipRect, appModel) ->
 
 		# static
 		@setAppModel = (am) ->
+			am.editor.subscribe (newValue) ->
+				maskResizer() if newValue == 'clip'
 			appModel = am
