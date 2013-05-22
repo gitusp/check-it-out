@@ -1,4 +1,4 @@
-define ['etc/lang'], (lang) ->
+define [], ->
 	useragent = navigator.userAgent.toLowerCase()
 
 	new class
@@ -10,14 +10,19 @@ define ['etc/lang'], (lang) ->
 
 			# appModel
 			@imageSource = ko.observable '/images/spacer.gif'
+			@stageWidth = ko.observable 0
+			@stageHeight = ko.observable 0
+			@stageOffsetX = ko.observable 0
+			@stageOffsetY = ko.observable 0
 			@state = ko.observable 'portal'
 			@editor = ko.observable()
 
+			# model for submit
+			@rects = ko.observableArray()
+
 			# methods
 			@upload = (d, e) ->
-				(($ e.target).closest 'form').submit()
-			@imageError = ->
-				alert lang.unsupportedImage
+				$(e.target).closest('form').submit()
 			@clip = =>
 				@editor 'clip'
 			@draw = =>

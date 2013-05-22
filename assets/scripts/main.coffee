@@ -7,30 +7,26 @@ require ['etc/lang', 'flow/load', 'models/app'], (lang, load, appModel) ->
 			enter: ->
 				if appModel.canPasteImage
 					# bind paste
-					($ document).on 'paste', (e) ->
-						e.preventDefault()
-						alert lang.noImagesInClipBoard unless load e.originalEvent.clipboardData.items, (src) ->
-							appModel.imageSource src
-							next()
+					$(document).on 'paste', (e) ->
+							e.preventDefault()
+							alert lang.noImagesInClipBoard unless load e.originalEvent.clipboardData.items, setImage
 
 				if appModel.canDropImage
 					# bind drop
-					($ document).on 'dragover dragenter', (e) ->
+					$(document).on 'dragover dragenter', (e) ->
 						e.preventDefault()
 
-					($ document).on 'drop', (e) ->
+					$(document).on 'drop', (e) ->
 						e.preventDefault()
-						alert lang.noImagesInDragData unless load e.originalEvent.dataTransfer.files, (src) ->
-							appModel.imageSource src
-							next()
+						alert lang.noImagesInDragData unless load e.originalEvent.dataTransfer.files, setImage
 
 			exit: ->
-				($ document).off 'paste dragover dragenter drop'
-				editing = true
+				$(document).off 'paste dragover dragenter drop'
 		}
 		{
 			# PHASE: EDIT IMAGE
 			enter: ->
+				editing = true
 				appModel.state 'editor'
 				appModel.editor.subscribe (va) ->
 					console.log va
@@ -46,18 +42,25 @@ require ['etc/lang', 'flow/load', 'models/app'], (lang, load, appModel) ->
 		steps[step - 1].exit() if steps[step - 1]?
 		steps[step].enter()
 		step++
+	setImage = (src) ->
+		[tmpImage] = $('<img>').load(->
+				appModel.imageSource src
+				appModel.stageWidth tmpImage.width
+				appModel.stageHeight tmpImage.height
+				next()
+			).error(->
+				alert lang.unsupportedImage
+			).attr('src', src)
 
 	# apply knockout
 	ko.applyBindings appModel, document.body
 
 	# before leave
-	($ window).on 'beforeunload', ->
+	$(window).on 'beforeunload', ->
 		lang.areYouSureToLeave if editing
 
 	# external callback
-	window.uploadImageCallback = (image) ->
-		appModel.imageSource image
-		next()
+	window.uploadImageCallback = setImage
 
 	# boot strap
 	if appModel.appUnavailable then alert lang.notCompatible else next()

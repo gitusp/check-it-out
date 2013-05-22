@@ -35,7 +35,7 @@ block body
 
 		//- TODO: スライドアニメーション？
 		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
-			img(data-bind='attr: {src: imageSource}, event: {error: imageError}')
+			#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
 			span(data-bind='click: clip') [ clip ]
 			| [draw] [ share ]
 
