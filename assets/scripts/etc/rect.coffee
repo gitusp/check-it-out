@@ -1,8 +1,9 @@
-define ['models/app'], (appModel) ->
+define ['require', 'models/app'], (require, appModel) ->
 	workSpace = $(document)
 
 	class
 		constructor: (@pointFixed = {x: 0, y: 0}, @borderWidth = 0, @borderColor = 'transparent') ->
+			appModel = require('models/app');
 			@subscriptions = []
 			@subscriptions.push(appModel.stageWidth.subscribe (oldValue) ->
 					@cachedStageWidth = oldValue
