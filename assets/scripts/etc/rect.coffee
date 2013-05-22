@@ -1,22 +1,22 @@
-define ['models/stage'], (stage) ->
+define ['models/app'], (appModel) ->
 	workSpace = $(document)
 
 	class
-		constructor: (@borderWidth = 0, @pointFixed = {x: 0, y: 0}) ->
+		constructor: (@pointFixed = {x: 0, y: 0}, @borderWidth = 0, @borderColor = 'transparent') ->
 			@subscriptions = []
-			@subscriptions.push(stage.stageWidth.subscribe (oldValue) ->
+			@subscriptions.push(appModel.stageWidth.subscribe (oldValue) ->
 					@cachedStageWidth = oldValue
 					@redraw()
 				, @, 'beforeChange')
-			@subscriptions.push(stage.stageHeight.subscribe (oldValue) ->
+			@subscriptions.push(appModel.stageHeight.subscribe (oldValue) ->
 					@cachedStageHeight = oldValue
 					@redraw()
 				, @, 'beforeChange')
-			@subscriptions.push(stage.stageOffsetX.subscribe (oldValue) ->
+			@subscriptions.push(appModel.stageOffsetX.subscribe (oldValue) ->
 					@cachedStageOffsetX = oldValue
 					@redraw()
 				, @, 'beforeChange')
-			@subscriptions.push(stage.stageOffsetY.subscribe (oldValue) ->
+			@subscriptions.push(appModel.stageOffsetY.subscribe (oldValue) ->
 					@cachedStageOffsetY = oldValue
 					@redraw()
 				, @, 'beforeChange')
@@ -28,8 +28,8 @@ define ['models/stage'], (stage) ->
 			@entity = $('<div class="rect">').on('mousedown', (e) ->
 					e.stopPropagation()
 				).css {
-					borderWidth: @borderWidth
-					backgroundImage: "url(#{stage.imageSource()})"
+					# borderWidth: @borderWidth
+					backgroundImage: "url(#{appModel.imageSource()})"
 				}
 
 		redraw: ->
@@ -40,14 +40,14 @@ define ['models/stage'], (stage) ->
 			, 0
 
 		draw: ->
-			# TODO: care about border
-			bgpx = - @getLeft() + stage.stageOffsetX()
-			bgpy = - @getTop() + stage.stageOffsetY()
+			bgpx = - @getLeft() + appModel.stageOffsetX()
+			bgpy = - @getTop() + appModel.stageOffsetY()
 			@entity.css {
 					left: @getLeft()
 					top: @getTop()
 					width: @getWidth()
 					height: @getHeight()
+					# TODO: split image DOM
 					backgroundPosition: "#{bgpx}px #{bgpy}px"
 				}
 
@@ -65,7 +65,6 @@ define ['models/stage'], (stage) ->
 			workSpace.mouseup (e) =>
 				workSpace.off 'mousemove mouseup'
 
-		# TODO: care about border
 		# getter
 		getLeft: -> Math.min @pointFixed.x, @pointMutable.x
 		getTop: -> Math.min @pointFixed.y, @pointMutable.y

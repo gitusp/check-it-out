@@ -1,12 +1,12 @@
-define ['models/clip', 'models/stage'], (clip, stage) ->
+define ['models/clip', 'models/draw', 'models/stage'], (clip, draw, stage) ->
 	useragent = navigator.userAgent.toLowerCase()
 
-	appModel = new class
+	class app
 		constructor: ->
 			# appModel
 			@state = ko.observable 'portal'
 
-			# methodだとスコープ固定できないので
+			# to fix scpne
 			@upload = (d, e) =>
 				$(e.target).closest('form').submit()
 			@clip = (d, e) =>
@@ -18,7 +18,12 @@ define ['models/clip', 'models/stage'], (clip, stage) ->
 				json = {}
 				@shareCallback(json)
 
-		# feature detection
+			# pseudo super
+			clip.apply @, arguments
+			draw.apply @, arguments
+			stage.apply @, arguments
+
+		# fixed val, feature detection
 		appUnavailable: /msie (6|7)/.test useragent
 		canPasteImage: /chrome/.test useragent
 		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
@@ -26,10 +31,10 @@ define ['models/clip', 'models/stage'], (clip, stage) ->
 		# methods
 		setShareCallback: (@shareCallback) ->
 
-		# module sys
-		include: (objs...) ->
-			for obj in objs
-				@[name] = method for name, method of obj
-			@
+		# extender
+		@reopen: (defs...) ->
+			for def in defs
+				@::[key] = val for key, val of def.prototype
 
-	appModel.include clip, stage
+	app.reopen clip, draw, stage
+	new app

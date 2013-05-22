@@ -1,5 +1,5 @@
 define [], ->
-	new class
+	class
 		constructor: ->
 			@imageSource = ko.observable '/images/spacer.gif'
 			@stageWidth = ko.observable 0

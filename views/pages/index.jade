@@ -39,6 +39,11 @@ block body
 				//- TODO: animation?
 				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
 					#clip-work-space-bg
+
+				//- TODO: animation?
+				#draw-work-space(data-bind='visible: editor() == "draw", event: {mousedown: startDraw}')
+					#draw-work-space-bg
+
 			span(data-bind='click: clip') [ clip ]
 			span(data-bind='click: draw') [ draw ]
 			span(data-bind='click: share') [ share ]
