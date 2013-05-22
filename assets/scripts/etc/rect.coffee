@@ -29,9 +29,15 @@ define ['require', 'models/app'], (require, appModel) ->
 			@entity = $('<div class="rect">').on('mousedown', (e) ->
 					e.stopPropagation()
 				).css {
-					# borderWidth: @borderWidth
 					backgroundImage: "url(#{appModel.imageSource()})"
 				}
+
+			# border
+			if @borderWidth > 0
+				$('<div class="border-top">').height(@borderWidth).css('background', @borderColor).appendTo @entity
+				$('<div class="border-right">').width(@borderWidth).css('background', @borderColor).appendTo @entity
+				$('<div class="border-bottom">').height(@borderWidth).css('background', @borderColor).appendTo @entity
+				$('<div class="border-left">').width(@borderWidth).css('background', @borderColor).appendTo @entity
 
 		redraw: ->
 			clearTimeout @lock
@@ -48,7 +54,6 @@ define ['require', 'models/app'], (require, appModel) ->
 					top: @getTop()
 					width: @getWidth()
 					height: @getHeight()
-					# TODO: split image DOM
 					backgroundPosition: "#{bgpx}px #{bgpy}px"
 				}
 

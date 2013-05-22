@@ -37,12 +37,14 @@ block body
 		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
 			#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
 				//- TODO: animation?
+				#draw-work-space(data-bind='event: {mousedown: startDraw}')
+					#draw-work-space-bg
+
+				//- TODO: animation?
 				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
 					#clip-work-space-bg
 
-				//- TODO: animation?
-				#draw-work-space(data-bind='visible: editor() == "draw", event: {mousedown: startDraw}')
-					#draw-work-space-bg
+				//- visible: editor() == "draw", 
 
 			span(data-bind='click: clip') [ clip ]
 			span(data-bind='click: draw') [ draw ]
