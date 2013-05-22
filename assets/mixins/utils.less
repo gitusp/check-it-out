@@ -9,3 +9,9 @@
 	width: 100%;
 	height: 100%;
 }
+
+.inner-shadow (@horizontal: 0, @vertical: 1px, @blur: 2px, @grow: 0px, @alpha: 0.3) {
+	-webkit-box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
+	-moz-box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
+	box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
+}

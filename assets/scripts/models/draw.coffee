@@ -5,7 +5,7 @@ define ['etc/drawRect'], (drawRect, appModel) ->
 		constructor: ->
 			# to fix scope
 			@startDraw = (d, e) =>
-				@drawRect = new drawRect {x: e.offsetX, y: e.offsetY}, 'black'
+				@drawRect = new drawRect {x: e.offsetX, y: e.offsetY}
 				workSpace.append @drawRect.entity
 				@drawRect.startDraw {x: e.pageX, y: e.pageY}
 

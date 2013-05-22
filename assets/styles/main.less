@@ -3,42 +3,58 @@
 
 .rect {
 	position: absolute;
-
-	.border-top {
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		left: 0;
-		width: 100%;
-	}
-	.border-right {
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		right: 0;
-		height: 100%;
-	}
-	.border-bottom {
-		position: absolute;
-		z-index: 1;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-	}
-	.border-left {
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		left: 0;
-		height: 100%;
-	}
 }
 
 #stage {
 	position: relative;
 
+	#draw-work-space {
+		.match-parent;
+
+		#draw-work-space-bg {
+			.match-parent;
+			.opacity(0.5);
+		}
+		&.hasRect #draw-work-space-bg {
+			background: #fff;
+		}
+
+		.rect {
+			.inner-shadow(0, 1px, 2px, 1px);
+
+			.border-top {
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				left: 0;
+				width: 100%;
+			}
+			.border-right {
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				right: 0;
+				height: 100%;
+			}
+			.border-bottom {
+				position: absolute;
+				z-index: 1;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			.border-left {
+				position: absolute;
+				z-index: 1;
+				top: 0;
+				left: 0;
+				height: 100%;
+			}
+		}
+	}
 	#clip-work-space {
 		.match-parent;
+		z-index: 2;
 
 		#clip-work-space-bg-wrapper {
 			.match-parent;
@@ -69,16 +85,9 @@
 				left: 0;
 			}
 		}
-	}
-	#draw-work-space {
-		.match-parent;
 
-		#draw-work-space-bg {
-			.match-parent;
-			.opacity(0.5);
-		}
-		&.hasRect #draw-work-space-bg {
-			background: #fff;
+		.rect {
+			.inner-shadow;
 		}
 	}
 }
