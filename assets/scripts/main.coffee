@@ -32,10 +32,12 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 				# 	console.log va
 
 			exit: ->
+				editing = false
 		}
 		{
 			# PHASE: SHARE
 			enter: ->
+				appModel.state 'share'
 		}
 	]
 	next = ->
@@ -50,9 +52,14 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 				next()
 			).error(->
 				alert lang.unsupportedImage
-			).attr('src', src)
+			).attr 'src', src
 
 	# apply knockout
+	appModel.setShareCallback (json) ->
+		# TODO: POST json
+		# TODO: on API success
+		next()
+
 	ko.applyBindings appModel, document.body
 
 	# before leave

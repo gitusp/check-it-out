@@ -1,29 +1,35 @@
-define [], ->
+define ['models/clip', 'models/stage'], (clip, stage) ->
 	useragent = navigator.userAgent.toLowerCase()
 
-	new class
+	appModel = new class
 		constructor: ->
-			# feature detection
-			@appUnavailable = /msie (6|7)/.test useragent
-			@canPasteImage = /chrome/.test useragent
-			@canDropImage = /chrome|safari|firefox|msie 1/.test useragent
-
 			# appModel
-			@imageSource = ko.observable '/images/spacer.gif'
-			@stageWidth = ko.observable 0
-			@stageHeight = ko.observable 0
-			@stageOffsetX = ko.observable 0
-			@stageOffsetY = ko.observable 0
 			@state = ko.observable 'portal'
-			@editor = ko.observable()
 
-			# model for submit
-			@rects = ko.observableArray()
-
-			# methods
-			@upload = (d, e) ->
+			# methodだとスコープ固定できないので
+			@upload = (d, e) =>
 				$(e.target).closest('form').submit()
-			@clip = =>
+			@clip = (d, e) =>
 				@editor 'clip'
-			@draw = =>
+			@draw = (d, e) =>
 				@editor 'draw'
+			@share = (d, e) =>
+				# TODO: JSONize myself
+				json = {}
+				@shareCallback(json)
+
+		# feature detection
+		appUnavailable: /msie (6|7)/.test useragent
+		canPasteImage: /chrome/.test useragent
+		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
+
+		# methods
+		setShareCallback: (@shareCallback) ->
+
+		# module sys
+		include: (objs...) ->
+			for obj in objs
+				@[name] = method for name, method of obj
+			@
+
+	appModel.include clip, stage
