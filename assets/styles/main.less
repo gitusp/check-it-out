@@ -1,1 +1,17 @@
 @import '../mixins/reset';
+@import '../mixins/utils';
+
+
+#stage {
+	position: relative;
+
+	#clip-work-space {
+		.match-parent;
+
+		#clip-work-space-bg {
+			.match-parent;
+			.opacity(0.5);
+			background: #000;
+		}
+	}
+}

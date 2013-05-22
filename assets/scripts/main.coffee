@@ -1,4 +1,4 @@
-require ['etc/lang', 'flow/load', 'models/app'], (lang, load, appModel) ->
+require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appModel) ->
 	editing = false
 	step = 0
 	steps = [
@@ -28,8 +28,8 @@ require ['etc/lang', 'flow/load', 'models/app'], (lang, load, appModel) ->
 			enter: ->
 				editing = true
 				appModel.state 'editor'
-				appModel.editor.subscribe (va) ->
-					console.log va
+				# appModel.editor.subscribe (va) ->
+				# 	console.log va
 
 			exit: ->
 		}
