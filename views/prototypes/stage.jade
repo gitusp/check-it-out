@@ -1,0 +1,12 @@
+extends ../prototypes/base
+
+append variables
+	- var bootstrap = ''
+
+append styles
+	link(rel='stylesheet', href='/assets/styles/main.css')
+
+append scripts
+	script(src='/assets/scripts/libs/jquery.js')
+	script(src='/assets/scripts/libs/knockout.js')
+	script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/' + bootstrap + '.js')

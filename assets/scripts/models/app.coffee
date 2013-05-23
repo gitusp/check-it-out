@@ -14,8 +14,23 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 			@draw = (d, e) =>
 				@editor 'draw'
 			@share = (d, e) =>
-				# TODO: JSONize myself
-				json = {}
+				rects = for rect in @rects()
+					{
+						x: rect.getLeft()
+						y: rect.getTop()
+						width: rect.getWidth()
+						height: rect.getHeight()
+						borderWidth: rect.borderWidth
+						borderColor: rect.borderColor
+					}
+				json = {
+					image: @imageSource()
+					width: @stageWidth()
+					height: @stageHeight()
+					offsetX: @stageOffsetX()
+					offsetY: @stageOffsetY()
+					rects: rects
+				}
 				@shareCallback(json)
 			@done = (d, e) =>
 				switch @editor()

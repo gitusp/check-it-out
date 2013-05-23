@@ -28,8 +28,6 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 			enter: ->
 				editing = true
 				appModel.state 'editor'
-				# appModel.editor.subscribe (va) ->
-				# 	console.log va
 
 			exit: ->
 				editing = false
@@ -56,9 +54,9 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# apply knockout
 	appModel.setShareCallback (json) ->
-		# TODO: POST json
-		# TODO: on API success
-		next()
+		$.post '/api/v1/share', json, (result) ->
+				next()
+			, 'json'
 
 	ko.applyBindings appModel, document.body
 

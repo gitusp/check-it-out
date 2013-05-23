@@ -1,10 +1,10 @@
-extends ../prototypes/base
+extends ../prototypes/stage
+
+append variables
+	- var bootstrap = 'main'
 
 block title
 	= screenAppName
-
-append styles
-	link(rel='stylesheet', href='/assets/styles/main.css')
 
 append metas
 	//- TODO: favicon
@@ -61,8 +61,3 @@ block body
 
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"')
-
-append scripts
-	script(src='/assets/scripts/libs/jquery.js')
-	script(src='/assets/scripts/libs/knockout.js')
-	script(src='/assets/scripts/libs/require.js', data-main='/assets/scripts/main.js')

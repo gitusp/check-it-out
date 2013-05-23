@@ -27,10 +27,20 @@ module.exports.routes = {
 		controller	: 'pages'
 	},
 
+	'/capture' : {
+		controller	: 'pages/capture'
+	},
+
 	// api
 	'post /api/v1/upload': {
 		controller	: 'apiv1',
 		action		: 'upload'
+	},
+
+	// api
+	'post /api/v1/share': {
+		controller	: 'apiv1',
+		action		: 'share'
 	},
 
 	// If you want to set up a route only for a particular HTTP method/verb 

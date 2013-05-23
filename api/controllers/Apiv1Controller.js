@@ -12,5 +12,10 @@ module.exports = {
 				res.view('pages/upload', {image: '"' + result + '"'});
 			}
 		});
-	}
+	},
+	share: function (req, res) {
+		console.log(req.param('width'));
+		// urlとかも返すのか
+		res.json({status: 'success'});
+	},
 }
