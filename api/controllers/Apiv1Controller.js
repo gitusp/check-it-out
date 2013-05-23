@@ -1,4 +1,7 @@
-var fs = require('fs');
+var fs = require('fs'),
+	childProcess = require('child_process'),
+	path = require('path'),
+	phantomjs = require('phantomjs');
 
 module.exports = {
 	upload: function (req, res) {
@@ -14,16 +17,27 @@ module.exports = {
 		});
 	},
 	share: function (req, res) {
-		console.log(req.param('width'));
-		// urlとかも返すのか
-		res.json({status: 'success'});
+		// NOTE: node_modulesにもってく？
+		var args = [
+			path.join(__dirname, 'bridge.js'),
+			__dirname,
+			this._bank,
+			JSON.stringify(this._info),
+			JSON.stringify(this._cookies),
+		];
+
+		// ここでパス決めちゃって、それ経由でやり取りでもいい
+
+		
+		childProcess.execFile(phantomjs.path, args, function(err, stdout, stderr) {
+			// stdout がバイナリでもいいのかな
+			// urlとかも返すのか
+			res.json({status: 'success'});
+		});
 	},
+
+	// キャプチャ用の内部ページ
 	capture: function (req, res) {
-		var json = {
-			image: 'hoge',
-			width: 500,
-			height: 500
-		};
-		res.view('pages/capture', {dna: JSON.stringify(json)});
+		res.view('pages/capture', {dna: req.param('dna')});
 	},
 }
