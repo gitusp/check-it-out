@@ -54,6 +54,7 @@ block body
 
 			//- TODO: animation
 			#guide(data-bind='visible: editor()')
+				span(data-bind='click: cancel, visible: editor() == "clip"') [ cancel ]
 				span(data-bind='click: done') [ done ]
 
 

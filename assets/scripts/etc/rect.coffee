@@ -28,12 +28,18 @@ define [], (appModel) ->
 
 			# entity
 			@entity = $('<div class="rect">').on 'mousedown', (e) ->
-					e.stopPropagation()
+				e.stopPropagation()
 
 		redraw: ->
 			clearTimeout @lock
 			@lock = setTimeout =>
-				# TODO: adjust points by comparing with chache
+				diffOffsetX = @cachedStageOffsetX - appModel.stageOffsetX()
+				diffOffsetY = @cachedStageOffsetY - appModel.stageOffsetY()
+				@setLeft @getLeft() - diffOffsetX
+				@setTop @getTop() - diffOffsetY
+
+				for pt in [@pointFixed, @pointMutable]
+					@normalize pt
 				@draw()
 			, 0
 
@@ -72,6 +78,15 @@ define [], (appModel) ->
 		getBottom: -> Math.max @pointFixed.y, @pointMutable.y
 		getWidth: -> @getRight() - @getLeft()
 		getHeight: -> @getBottom() - @getTop()
+
+		# setter
+		setLeft: (left) ->
+			pt = if @pointFixed.x < @pointMutable.x then @pointFixed else @pointMutable
+			pt.x = left
+
+		setTop: (top) ->
+			pt = if @pointFixed.y < @pointMutable.y then @pointFixed else @pointMutable
+			pt.y = top
 
 		# destructor
 		dispose: ->

@@ -20,7 +20,12 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 			@done = (d, e) =>
 				switch @editor()
 					when 'clip'
-						@_clip()
+						@doClip()
+					when 'draw'
+						@editor null
+					
+			@cancel = (d, e) =>
+				@editor null
 
 			# pseudo super
 			clip.apply @, arguments
