@@ -54,7 +54,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# apply knockout
 	appModel.setShareCallback (json) ->
-		$.post '/api/v1/share', json, (result) ->
+		$.post '/api/v1/share', {dna: json}, (result) ->
 				next()
 			, 'json'
 

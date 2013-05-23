@@ -1,7 +1,5 @@
 var fs = require('fs'),
-	childProcess = require('child_process'),
-	path = require('path'),
-	phantomjs = require('phantomjs');
+	client = require('capture/client');
 
 module.exports = {
 	upload: function (req, res) {
@@ -17,22 +15,8 @@ module.exports = {
 		});
 	},
 	share: function (req, res) {
-		// NOTE: node_modulesにもってく？
-		var args = [
-			path.join(__dirname, 'bridge.js'),
-			__dirname,
-			this._bank,
-			JSON.stringify(this._info),
-			JSON.stringify(this._cookies),
-		];
-
-		// ここでパス決めちゃって、それ経由でやり取りでもいい
-
-		
-		childProcess.execFile(phantomjs.path, args, function(err, stdout, stderr) {
-			// stdout がバイナリでもいいのかな
-			// urlとかも返すのか
-			res.json({status: 'success'});
+		client.run(req.param('dna'), function (data) {
+			console.log(data);
 		});
 	},
 
