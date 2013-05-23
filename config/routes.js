@@ -28,7 +28,8 @@ module.exports.routes = {
 	},
 
 	'/capture' : {
-		controller	: 'pages/capture'
+		controller	: 'apiv1',
+		action		: 'capture'
 	},
 
 	// api

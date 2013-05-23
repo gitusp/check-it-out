@@ -18,4 +18,12 @@ module.exports = {
 		// urlとかも返すのか
 		res.json({status: 'success'});
 	},
+	capture: function (req, res) {
+		var json = {
+			image: 'hoge',
+			width: 500,
+			height: 500
+		};
+		res.view('pages/capture', {dna: JSON.stringify(json)});
+	},
 }
