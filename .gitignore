@@ -23,7 +23,7 @@ pids
 logs
 results
 
-node_modules
+node_modules/*
 
 npm-debug.log
 
@@ -43,3 +43,9 @@ nbproject
 # local config
 ########################
 config/local.js
+
+
+########################
+# my node modules
+########################
+!node_modules/capture
