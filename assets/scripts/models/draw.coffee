@@ -9,9 +9,6 @@ define ['etc/drawRect'], (drawRect, appModel) ->
 				workSpace.append @drawRect.entity
 				@drawRect.startDraw {x: e.pageX, y: e.pageY}
 
-				# add to models rects
-				appModel.rects.push @drawRect
-
 		# static
 		@setAppModel: (am) ->
 			am.rects.subscribe (newValue) ->

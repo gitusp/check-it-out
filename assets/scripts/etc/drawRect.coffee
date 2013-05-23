@@ -17,6 +17,12 @@ define ['etc/rect'], (rect, appModel) ->
 			$('<div class="border-bottom">').height(@borderWidth).css('background', @borderColor).appendTo @entity
 			$('<div class="border-left">').width(@borderWidth).css('background', @borderColor).appendTo @entity
 
+			# destroyer
+			@entity.on 'dblclick', => @dispose()
+
+			# add to models rects
+			appModel.rects.push @
+
 		draw: ->
 			super()
 			bgpx = - @getLeft() + appModel.stageOffsetX()
@@ -24,6 +30,11 @@ define ['etc/rect'], (rect, appModel) ->
 			@entity.css {
 					backgroundPosition: "#{bgpx}px #{bgpy}px"
 				}
+
+		# destructor
+		dispose: ->
+			appModel.rects.remove @
+			super()
 
 		# static
 		@setAppModel: (am) ->
