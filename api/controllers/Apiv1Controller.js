@@ -1,1 +1,1 @@
-../../coffee/api/controllers/Apiv1Controller.coffee
+../../coffee/api/controllers/Apiv1Controller.js

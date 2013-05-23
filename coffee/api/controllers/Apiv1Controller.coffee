@@ -5,14 +5,14 @@ module.exports =
 		type = req.files.image.type
 		fs.readFile req.files.image.path, (err, data) ->
 			unless err
-				# TODO: fallback
-				# res.json({'hoge': 'piyo'});
 				result = "data:#{type};base64," + data.toString("base64")
 				res.view "pages/upload", image: "\"#{result}\""
+			else
+				# TODO: fallback
 
 	share: (req, res) ->
 		client.run req.param("dna"), (data) ->
-			console.log data
+			console.log data.toString()
 	
 	# キャプチャ用の内部ページ
 	capture: (req, res) ->

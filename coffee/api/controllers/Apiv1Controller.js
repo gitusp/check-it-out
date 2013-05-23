@@ -19,12 +19,14 @@
           return res.view("pages/upload", {
             image: "\"" + result + "\""
           });
+        } else {
+
         }
       });
     },
     share: function(req, res) {
       return client.run(req.param("dna"), function(data) {
-        return console.log(data);
+        return console.log(data.toString());
       });
     },
     capture: function(req, res) {
