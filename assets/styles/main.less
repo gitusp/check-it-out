@@ -20,32 +20,36 @@
 		}
 
 		.rect {
-			.inner-shadow(0, 1px, 2px, 1px);
+			.shadow {
+				.match-parent;
+				.inner-shadow(0, 1px, 2px, 1px);
+				z-index: 1;
+			}
 
 			.border-top {
 				position: absolute;
-				z-index: 1;
+				z-index: 2;
 				top: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-right {
 				position: absolute;
-				z-index: 1;
+				z-index: 2;
 				top: 0;
 				right: 0;
 				height: 100%;
 			}
 			.border-bottom {
 				position: absolute;
-				z-index: 1;
+				z-index: 2;
 				bottom: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-left {
 				position: absolute;
-				z-index: 1;
+				z-index: 2;
 				top: 0;
 				left: 0;
 				height: 100%;
@@ -54,7 +58,7 @@
 	}
 	#clip-work-space {
 		.match-parent;
-		z-index: 2;
+		z-index: 3;
 
 		#clip-work-space-bg-wrapper {
 			.match-parent;

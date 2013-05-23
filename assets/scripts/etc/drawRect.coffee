@@ -8,6 +8,9 @@ define ['etc/rect'], (rect, appModel) ->
 					backgroundImage: "url(#{appModel.imageSource()})"
 				}
 
+			# shadow
+			$('<div class="shadow">').appendTo @entity
+
 			# border
 			$('<div class="border-top">').height(@borderWidth).css('background', @borderColor).appendTo @entity
 			$('<div class="border-right">').width(@borderWidth).css('background', @borderColor).appendTo @entity

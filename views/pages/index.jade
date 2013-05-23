@@ -12,35 +12,33 @@ append metas
 
 block body
 	#wrapper
-		//- TODO: スライドアニメーション？
+		//- TODO: animation
 		#content-loading(data-bind='visible: state() == "loading"')
 			//- TODO: bg
 			img(src='/images/loading.gif')
 
-		//- TODO: スライドアニメーション？
+		//- TODO: animation
 		#content-portal(data-bind='visible: state() == "portal"', style='display: none')
 			//- TODO: hide
 			iframe(name='upload-frame')
 
-			span(data-bind='visible: canPasteImage') クリップボードから画像をペースト、
-			span(data-bind='visible: canDropImage') 画像をドラッグアンドドロップ、
-			span(data-bind='visible: canPasteImage || canDropImage') または
+			span(data-bind='visible: canPasteImage') [ paste ]
+			span(data-bind='visible: canDropImage') [ drop ]
+			span(data-bind='visible: canPasteImage || canDropImage') or
 
 			//- TODO: style
 			form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
 				input(type='file', name='image', data-bind='event: {change: upload}')
 				input(type='submit')
 
-			span してください
-
-		//- TODO: スライドアニメーション？
+		//- TODO: animation
 		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
 			#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
-				//- TODO: animation?
+				//- TODO: animation
 				#draw-work-space(data-bind='event: {mousedown: startDraw}')
 					#draw-work-space-bg
 
-				//- TODO: animation?
+				//- TODO: animation
 				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
 					#clip-work-space-bg-wrapper
 						.mask1
@@ -48,13 +46,18 @@ block body
 						.mask3
 						.mask4
 
-				//- visible: editor() == "draw", 
+			//- TODO: animation
+			#tools(data-bind='visible: ! editor()')
+				span(data-bind='click: clip') [ clip ]
+				span(data-bind='click: draw') [ draw ]
+				span(data-bind='click: share') [ share ]
 
-			span(data-bind='click: clip') [ clip ]
-			span(data-bind='click: draw') [ draw ]
-			span(data-bind='click: share') [ share ]
+			//- TODO: animation
+			#guide(data-bind='visible: editor()')
+				span(data-bind='click: done') [ done ]
 
-		//- TODO: スライドアニメーション？
+
+		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"')
 
 append scripts

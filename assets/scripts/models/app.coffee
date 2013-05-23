@@ -17,6 +17,10 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 				# TODO: JSONize myself
 				json = {}
 				@shareCallback(json)
+			@done = (d, e) =>
+				switch @editor()
+					when 'clip'
+						@_clip()
 
 			# pseudo super
 			clip.apply @, arguments
