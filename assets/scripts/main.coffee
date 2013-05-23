@@ -7,21 +7,21 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 			enter: ->
 				if appModel.canPasteImage
 					# bind paste
-					$(document).on 'paste', (e) ->
+					$(document).on 'paste.init', (e) ->
 							e.preventDefault()
 							alert lang.noImagesInClipBoard unless load e.originalEvent.clipboardData.items, setImage
 
 				if appModel.canDropImage
 					# bind drop
-					$(document).on 'dragover dragenter', (e) ->
+					$(document).on 'dragover.init dragenter.init', (e) ->
 						e.preventDefault()
 
-					$(document).on 'drop', (e) ->
+					$(document).on 'drop.init', (e) ->
 						e.preventDefault()
 						alert lang.noImagesInDragData unless load e.originalEvent.dataTransfer.files, setImage
 
 			exit: ->
-				$(document).off 'paste dragover dragenter drop'
+				$(document).off 'paste.init dragover.init dragenter.init drop.init'
 		}
 		{
 			# PHASE: EDIT IMAGE

@@ -27,8 +27,12 @@ define [], (appModel) ->
 				@normalize pt
 
 			# entity
-			@entity = $('<div class="rect">').on 'mousedown', (e) ->
+			@entity = $('<div class="rect">').on 'mousedown', (e) =>
 				e.stopPropagation()
+
+			# set draggable
+			@entity.on 'mousedown.drag', (e) =>
+				@startDrag {x: e.pageX, y: e.pageY}
 
 		redraw: ->
 			clearTimeout @lock
@@ -55,14 +59,29 @@ define [], (appModel) ->
 		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
 		startDraw: (initialPoint) ->
 			basePoint = $.extend true, {}, @pointMutable
-			workSpace.mousemove (e) =>
+			workSpace.on 'mousemove.draw', (e) =>
 				@pointMutable.x = basePoint.x + e.pageX - initialPoint.x
 				@pointMutable.y = basePoint.y + e.pageY - initialPoint.y
 				@normalize @pointMutable
 				@draw()
 
-			workSpace.mouseup (e) =>
-				workSpace.off 'mousemove mouseup'
+			workSpace.on 'mouseup.draw', (e) =>
+				workSpace.off 'mousemove.draw mouseup.draw'
+
+		startDrag: (initialPoint) ->
+			basePointFixed = $.extend true, {}, @pointFixed
+			basePointMutable = $.extend true, {}, @pointMutable
+			workSpace.on 'mousemove.drag', (e) =>
+				@pointFixed.x = basePointFixed.x + e.pageX - initialPoint.x
+				@pointFixed.y = basePointFixed.y + e.pageY - initialPoint.y
+				@pointMutable.x = basePointMutable.x + e.pageX - initialPoint.x
+				@pointMutable.y = basePointMutable.y + e.pageY - initialPoint.y
+				@normalize @pointFixed
+				@normalize @pointMutable
+				@draw()
+
+			workSpace.on 'mouseup.drag', (e) =>
+				workSpace.off 'mousemove.drag mouseup.drag'
 
 		# rangesafe point setter
 		normalize: (pt) ->
