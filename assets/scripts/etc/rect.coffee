@@ -30,6 +30,44 @@ define [], (appModel) ->
 			@entity = $('<div class="rect">').on 'mousedown', (e) =>
 				e.stopPropagation()
 
+			# resizer
+			$('<div class="handle-nw">').on('mousedown', (e) =>
+					e.stopPropagation()
+					bounds = @getBounds()
+					@pointFixed.x = bounds.right
+					@pointFixed.y = bounds.bottom
+					@pointMutable.x = bounds.left
+					@pointMutable.y = bounds.top
+					@startDraw {x: e.pageX, y: e.pageY}
+				).appendTo @entity
+			$('<div class="handle-ne">').on('mousedown', (e) =>
+					e.stopPropagation()
+					bounds = @getBounds()
+					@pointFixed.x = bounds.left
+					@pointFixed.y = bounds.bottom
+					@pointMutable.x = bounds.right
+					@pointMutable.y = bounds.top
+					@startDraw {x: e.pageX, y: e.pageY}
+				).appendTo @entity
+			$('<div class="handle-se">').on('mousedown', (e) =>
+					e.stopPropagation()
+					bounds = @getBounds()
+					@pointFixed.x = bounds.left
+					@pointFixed.y = bounds.top
+					@pointMutable.x = bounds.right
+					@pointMutable.y = bounds.bottom
+					@startDraw {x: e.pageX, y: e.pageY}
+				).appendTo @entity
+			$('<div class="handle-sw">').on('mousedown', (e) =>
+					e.stopPropagation()
+					bounds = @getBounds()
+					@pointFixed.x = bounds.right
+					@pointFixed.y = bounds.top
+					@pointMutable.x = bounds.left
+					@pointMutable.y = bounds.bottom
+					@startDraw {x: e.pageX, y: e.pageY}
+				).appendTo @entity
+
 			# set draggable
 			@entity.on 'mousedown.drag', (e) =>
 				@startDrag {x: e.pageX, y: e.pageY}
@@ -97,6 +135,7 @@ define [], (appModel) ->
 		getBottom: -> Math.max @pointFixed.y, @pointMutable.y
 		getWidth: -> @getRight() - @getLeft()
 		getHeight: -> @getBottom() - @getTop()
+		getBounds: -> {top: @getTop(), right: @getRight(), bottom: @getBottom(), left: @getLeft()}
 
 		# setter
 		setLeft: (left) ->

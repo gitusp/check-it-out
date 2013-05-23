@@ -3,6 +3,33 @@
 
 .rect {
 	position: absolute;
+
+	.handle-nw,
+	.handle-ne,
+	.handle-se,
+	.handle-sw,
+	{
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		z-index: 2;
+	}
+	.handle-nw {
+		left: 0;
+		top: 0;
+	}
+	.handle-ne {
+		right: 0;
+		top: 0;
+	}
+	.handle-se {
+		right: 0;
+		bottom: 0;
+	}
+	.handle-sw {
+		left: 0;
+		bottom: 0;
+	}
 }
 
 #stage {
@@ -28,28 +55,28 @@
 
 			.border-top {
 				position: absolute;
-				z-index: 2;
+				z-index: 3;
 				top: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-right {
 				position: absolute;
-				z-index: 2;
+				z-index: 3;
 				top: 0;
 				right: 0;
 				height: 100%;
 			}
 			.border-bottom {
 				position: absolute;
-				z-index: 2;
+				z-index: 3;
 				bottom: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-left {
 				position: absolute;
-				z-index: 2;
+				z-index: 3;
 				top: 0;
 				left: 0;
 				height: 100%;
@@ -58,7 +85,7 @@
 	}
 	#clip-work-space {
 		.match-parent;
-		z-index: 3;
+		z-index: 10;
 
 		#clip-work-space-bg-wrapper {
 			.match-parent;
