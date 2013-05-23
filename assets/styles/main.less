@@ -12,7 +12,6 @@
 		position: absolute;
 		width: 10px;
 		height: 10px;
-		z-index: 2;
 	}
 	.handle-nw {
 		left: 0;
@@ -52,40 +51,50 @@
 				.inner-shadow(0, 1px, 2px, 1px);
 				z-index: 1;
 			}
-
-			.border-top {
+			.border-top,
+			.border-right,
+			.border-bottom,
+			.border-left,
+			{
 				position: absolute;
-				z-index: 3;
+				z-index: 2;
+			}
+			.border-top {
 				top: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-right {
-				position: absolute;
-				z-index: 3;
 				top: 0;
 				right: 0;
 				height: 100%;
 			}
 			.border-bottom {
-				position: absolute;
-				z-index: 3;
 				bottom: 0;
 				left: 0;
 				width: 100%;
 			}
 			.border-left {
-				position: absolute;
-				z-index: 3;
 				top: 0;
 				left: 0;
 				height: 100%;
 			}
+			.handle-nw,
+			.handle-ne,
+			.handle-se,
+			.handle-sw,
+			{
+				z-index: 3;
+			}
 		}
+	}
+	#draw-cover {
+		.match-parent;
+		z-index: 10;
 	}
 	#clip-work-space {
 		.match-parent;
-		z-index: 10;
+		z-index: 20;
 
 		#clip-work-space-bg-wrapper {
 			.match-parent;

@@ -38,6 +38,8 @@ block body
 				#draw-work-space(data-bind='event: {mousedown: startDraw}')
 					#draw-work-space-bg
 
+				#draw-cover(data-bind='visible: editor() != "draw"')
+
 				//- TODO: animation
 				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
 					#clip-work-space-bg-wrapper
@@ -56,7 +58,6 @@ block body
 			#guide(data-bind='visible: editor()')
 				span(data-bind='click: cancel, visible: editor() == "clip"') [ cancel ]
 				span(data-bind='click: done') [ done ]
-
 
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"')
