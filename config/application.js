@@ -1,10 +1,12 @@
+var sv = require('shared_values');
+
 module.exports = {
 	
 	// Name of the application (used as default <title>)
 	appName: "checkout",
 
 	// Port this Sails application will live on
-	port: 1339,
+	port: sv.port,
 
 	// The environment the app is deployed in 
 	// (`development` or `production`)

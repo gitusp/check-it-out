@@ -57,7 +57,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 	appModel.setShareCallback (json) ->
 		$.post '/api/v1/share', {dna: json, hasTmpImage: nonBase64}, (result) ->
 				if result.status == 'success'
-					appModel.resultUrl result.hash
+					appModel.resultUrl "http://#{location.host}#{result.url}"
 					next()
 				else
 					alert lang.errorInServer

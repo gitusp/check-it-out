@@ -1,5 +1,6 @@
-fs = require("fs")
-client = require("capture/client")
+fs = require 'fs'
+client = require 'capture/client'
+sv = require 'shared_values'
 
 # hashがユニークになるまでトライ
 createHash = (callback) ->
@@ -55,6 +56,7 @@ module.exports =
 	# 
 	share: (req, res) ->
 		dna = req.param 'dna'
+		dna.port = sv.port
 		runClient = (dna) ->
 			myClient = new client dna
 			myClient.run (data64) ->
@@ -65,7 +67,7 @@ module.exports =
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
-								res.json status: 'success', hash: hash
+								res.json status: 'success', url: "/s/#{hash}"
 							else
 								res.json status: 'failure'
 
