@@ -1,5 +1,6 @@
 require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appModel) ->
 	editing = false
+	nonBase64 = false
 	step = 0
 	steps = [
 		{
@@ -54,7 +55,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# apply knockout
 	appModel.setShareCallback (json) ->
-		$.post '/api/v1/share', {dna: json}, (result) ->
+		$.post '/api/v1/share', {dna: json, hasTmpImage: nonBase64}, (result) ->
 				console.log result.hash
 				next()
 			, 'json'
@@ -66,7 +67,9 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 		lang.areYouSureToLeave if editing
 
 	# external callback
-	window.uploadImageCallback = setImage
+	window.uploadImageCallback = (src) ->
+		nonBase64 = true
+		setImage src
 
 	# boot strap
 	if appModel.appUnavailable then alert lang.notCompatible else next()

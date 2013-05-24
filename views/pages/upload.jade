@@ -4,5 +4,14 @@ prepend title
 	| UPLOAD
 
 append scripts
-	script
-		parent.uploadImageCallback(!{image});
+	if status == 'success'
+		script
+			parent.uploadImageCallback(!{image});
+
+	else if status == 'unsupportedimage'
+		script
+			alert('サポートされない画像タイプです');
+
+	else
+		script
+			alert('エラーが発生しました');
