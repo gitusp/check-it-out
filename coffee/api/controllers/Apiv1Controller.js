@@ -25,7 +25,10 @@
       });
     },
     share: function(req, res) {
-      return client.run(req.param("dna"), function(data) {
+      var myClient;
+
+      myClient = new client(req.param("dna"));
+      return myClient.run(function(data) {
         return console.log(data.toString());
       });
     },
