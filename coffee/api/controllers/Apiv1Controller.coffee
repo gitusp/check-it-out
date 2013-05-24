@@ -15,9 +15,14 @@ module.exports =
 	# end edit
 	share: (req, res) ->
 		myClient = new client req.param("dna")
-		myClient.run (data) ->
-			console.log data.toString()
-	
+		myClient.run (data64) ->
+			data = new Buffer(data64.toString(), 'base64')
+
+			# TODO: dataをmongoに保存
+			fs.writeFileSync 'debug.png', data
+
+			res.json status: 'success'
+
 	# キャプチャ用の内部ページ
 	# NOTE: 結局何もしてないので実はこのメソッドいらない
 	capture: (req, res) ->

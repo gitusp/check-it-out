@@ -28,8 +28,14 @@
       var myClient;
 
       myClient = new client(req.param("dna"));
-      return myClient.run(function(data) {
-        return console.log(data.toString());
+      return myClient.run(function(data64) {
+        var data;
+
+        data = new Buffer(data64.toString(), 'base64');
+        fs.writeFileSync('debug.png', data);
+        return res.json({
+          status: 'success'
+        });
       });
     },
     capture: function(req, res) {
