@@ -13,14 +13,33 @@ require [], ->
 				backgroundPosition: "#{dna.offsetX}px #{dna.offsetY}px"
 			}
 
-		# # create rects
-		# if dna.rects?
-		# 	for r in dna.rects
-		# 		rect = new drawRect {x: r.x, y: r.y}, r.borderColor, r.borderWidth
-		# 		rect.pointMutable.x = r.x + r.width
-		# 		rect.pointMutable.y = r.y + r.height
-		# 		rect.draw()
-		# 		workSpace.append rect.entity
+		# create rects
+		if dna.rects?
+			workSpace.addClass('hasRect')
+			for r in dna.rects
+				# base
+				bgpx = - (~~r.x) + (~~dna.offsetX)
+				bgpy = - (~~r.y) + (~~dna.offsetY)
+				rect = $('<div class="rect">').css {
+						backgroundImage: "url(#{dna.image})"
+						backgroundPosition: "#{bgpx}px #{bgpy}px"
+						left: "#{r.x}px"
+						top: "#{r.y}px"
+						width: r.width
+						height: r.height
+					}
+	
+				# shadow
+				$('<div class="shadow">').appendTo rect
+
+				# border
+				$('<div class="border-top">').height(r.borderWidth).css('background', r.borderColor).appendTo rect
+				$('<div class="border-right">').width(r.borderWidth).css('background', r.borderColor).appendTo rect
+				$('<div class="border-bottom">').height(r.borderWidth).css('background', r.borderColor).appendTo rect
+				$('<div class="border-left">').width(r.borderWidth).css('background', r.borderColor).appendTo rect
+
+				# ok
+				workSpace.append rect
 
 		# wait for image loaded
 		setTimeout ->
