@@ -28,10 +28,4 @@ module.exports.routes = {
 		controller	: 'apiv1',
 		action		: 'show'
 	},
-
-	// 仮保存用url
-	'/t/:hash': {
-		controller	: 'apiv1',
-		action		: 'tmp'
-	},
 };

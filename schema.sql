@@ -28,28 +28,11 @@ CREATE TABLE `image` (
   `updatedAt` datetime NOT NULL,
   `hash` varchar(16) NOT NULL,
   `image` mediumblob NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `hash` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `tmp`
---
-
-DROP TABLE IF EXISTS `tmp`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tmp` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  `hash` varchar(16) NOT NULL,
-  `image` mediumblob NOT NULL,
   `type` enum('png','jpg','gif') NOT NULL,
+  `tmp` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `hash` (`hash`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -61,4 +44,4 @@ CREATE TABLE `tmp` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-24 23:56:38
+-- Dump completed on 2013-05-25  0:19:35

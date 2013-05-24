@@ -6,6 +6,8 @@ module.exports = {
 
 	attributes	: {
 		hash: 'STRING',
-		image: 'BINARY'
+		image: 'BINARY',
+		type: 'STRING',
+		tmp: 'BOOLEAN'
 	}
 };

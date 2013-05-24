@@ -1,17 +1,24 @@
 fs = require("fs")
 client = require("capture/client")
 
-randobet = (n) ->
-	a = ('abcdefghijklmnopqrstuvwxyz'+ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'+ '0123456789').split ''
-	s = for i in [0..n]
-		a[Math.random() * a.length | 0]
-	s.join ''
+# hashがユニークになるまでトライ
+createHash = (callback) ->
+	randobet = (n) ->
+		a = ('abcdefghijklmnopqrstuvwxyz'+ 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'+ '0123456789').split ''
+		s = for i in [0..n]
+			a[Math.random() * a.length | 0]
+		s.join ''
 
-createHash = (model, callback) ->
-	hash = randobet 12
-	model.find(hash: hash).done (err, result) ->
-		unless result? then callback(hash) else createHash()
+	htry = ->
+		hash = randobet 12
+		Image.find(hash: hash).done (err, result) ->
+			unless result? then callback(hash) else htry()
 
+	htry()
+
+# 
+# main
+# 
 module.exports =
 	# 
 	# init by upload
@@ -31,15 +38,12 @@ module.exports =
 		unless type == 'unk'
 			fs.readFile req.files.image.path, (err, data) ->
 				unless err
-					save = (hash) ->
-						Tmp.create(hash: hash, image: data, type: type).done (err, img) ->
+					createHash (hash) ->
+						Image.create(hash: hash, image: data, type: type, tmp: true).done (err, img) ->
 							unless err
-								res.view "pages/upload", status: 'success', image: "\"/t/#{hash}\""
+								res.view "pages/upload", status: 'success', image: "\"/s/#{hash}\""
 							else
 								res.view "pages/upload", status: 'exception'
-
-					# hashを生成
-					createHash Tmp, save
 
 				else
 					res.view "pages/upload", status: 'exception'
@@ -54,24 +58,27 @@ module.exports =
 		runClient = (dna) ->
 			myClient = new client dna
 			myClient.run (data64) ->
-				data = new Buffer(data64.toString(), 'base64')
+				if data64?
+					data = new Buffer(data64.toString(), 'base64')
 
-				# dataを保存
-				save = (hash) ->
-					Image.create(hash: hash, image: data).done (err, img) ->
-						unless err
-							res.json status: 'success', hash: hash
-						else
-							res.json status: 'failure'
+					# dataを保存
+					createHash (hash) ->
+						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
+							unless err
+								res.json status: 'success', hash: hash
+							else
+								res.json status: 'failure'
 
-				# hashを生成
-				createHash Image, save
+				# phantomjsゴケ
+				else
+					res.json status: 'failure'
+
 
 		# アップロード組か否か
 		if req.param 'hasTmpImage'
 			tmpHash = dna.image.split('/').pop()
-			Tmp.find(hash: tmpHash).done (err, img) ->
-				unless err
+			Image.find(hash: tmpHash).done (err, img) ->
+				if ! err and img?
 					dna.image = "data:#{img.type};base64," + img.image.toString("base64")
 					runClient dna
 				else
@@ -81,31 +88,12 @@ module.exports =
 
 	# 
 	# シェア用
-	# NOTE: 下と共通化すべきな気もするし、今後ブランチしてく気もするし
 	# 
 	show: (req, res) ->
 		Image.find(hash: req.param 'hash').done (err, img) ->
-			unless err
-				if img?
-					res.setHeader 'Content-Type', 'image/png'
-					res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
-					res.end img.image
-				else
-					res.view '404'
+			if ! err and img?
+				res.setHeader 'Content-Type', "image/#{img.type}"
+				res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
+				res.end img.image
 			else
-				res.view '500'
-
-	# 
-	# 仮表示用
-	# 
-	tmp: (req, res) ->
-		Tmp.find(hash: req.param 'hash').done (err, img) ->
-			unless err
-				if img?
-					res.setHeader 'Content-Type', "image/#{img.type}"
-					res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
-					res.end img.image
-				else
-					res.view '404'
-			else
-				res.view '500'
+				res.view '404'
