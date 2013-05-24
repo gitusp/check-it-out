@@ -10,6 +10,7 @@ randobet = (n) ->
 module.exports =
 	# init by upload
 	upload: (req, res) ->
+		# TODO: tmp tableに格納
 		type = req.files.image.type
 		fs.readFile req.files.image.path, (err, data) ->
 			unless err
