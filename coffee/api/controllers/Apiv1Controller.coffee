@@ -13,7 +13,9 @@ createHash = (model, callback) ->
 		unless result? then callback(hash) else createHash()
 
 module.exports =
+	# 
 	# init by upload
+	# 
 	upload: (req, res) ->
 		# type判別
 		if /image\/p?jpe?g/.test req.files.image.type
@@ -44,7 +46,9 @@ module.exports =
 		else
 			res.view "pages/upload", status: 'unsupportedimage'
 
+	# 
 	# end edit
+	# 
 	share: (req, res) ->
 		dna = req.param 'dna'
 		runClient = (dna) ->
@@ -58,7 +62,7 @@ module.exports =
 						unless err
 							res.json status: 'success', hash: hash
 						else
-							# TODO: fallback
+							res.json status: 'failure'
 
 				# hashを生成
 				createHash Image, save
@@ -71,24 +75,37 @@ module.exports =
 					dna.image = "data:#{img.type};base64," + img.image.toString("base64")
 					runClient dna
 				else
-					# TODO: fallback
+					res.json status: 'failure'
 		else
 			runClient dna
 
+	# 
 	# シェア用
+	# NOTE: 下と共通化すべきな気もするし、今後ブランチしてく気もするし
+	# 
 	show: (req, res) ->
 		Image.find(hash: req.param 'hash').done (err, img) ->
 			unless err
-				res.setHeader 'Content-Type', 'image/png'
-				res.end img.image
+				if img?
+					res.setHeader 'Content-Type', 'image/png'
+					res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
+					res.end img.image
+				else
+					res.view '404'
 			else
-				# TODO: fallback
+				res.view '500'
 
+	# 
 	# 仮表示用
+	# 
 	tmp: (req, res) ->
 		Tmp.find(hash: req.param 'hash').done (err, img) ->
 			unless err
-				res.setHeader 'Content-Type', "image/#{img.type}"
-				res.end img.image
+				if img?
+					res.setHeader 'Content-Type', "image/#{img.type}"
+					res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
+					res.end img.image
+				else
+					res.view '404'
 			else
-				# TODO: fallback
+				res.view '500'

@@ -60,7 +60,8 @@ block body
 				span(data-bind='click: done') [ done ]
 
 		//- TODO: animation
-		#content-share(data-bind='visible: state() == "share"')
+		#content-share(data-bind='visible: state() == "share"', style='display: none')
+			input(data-bind='value: resultUrl()')
 
 block extlibs
 	script(src='/assets/scripts/libs/knockout.js')

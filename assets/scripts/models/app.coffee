@@ -5,6 +5,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 		constructor: ->
 			# appModel
 			@state = ko.observable 'portal'
+			@resultUrl = ko.observable()
 
 			# to fix scpne
 			@upload = (d, e) =>

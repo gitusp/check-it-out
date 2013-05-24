@@ -109,7 +109,9 @@
                   hash: hash
                 });
               } else {
-
+                return res.json({
+                  status: 'failure'
+                });
               }
             });
           };
@@ -125,7 +127,9 @@
             dna.image = ("data:" + img.type + ";base64,") + img.image.toString("base64");
             return runClient(dna);
           } else {
-
+            return res.json({
+              status: 'failure'
+            });
           }
         });
       } else {
@@ -137,10 +141,15 @@
         hash: req.param('hash')
       }).done(function(err, img) {
         if (!err) {
-          res.setHeader('Content-Type', 'image/png');
-          return res.end(img.image);
+          if (img != null) {
+            res.setHeader('Content-Type', 'image/png');
+            res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString());
+            return res.end(img.image);
+          } else {
+            return res.view('404');
+          }
         } else {
-
+          return res.view('500');
         }
       });
     },
@@ -149,10 +158,15 @@
         hash: req.param('hash')
       }).done(function(err, img) {
         if (!err) {
-          res.setHeader('Content-Type', "image/" + img.type);
-          return res.end(img.image);
+          if (img != null) {
+            res.setHeader('Content-Type', "image/" + img.type);
+            res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString());
+            return res.end(img.image);
+          } else {
+            return res.view('404');
+          }
         } else {
-
+          return res.view('500');
         }
       });
     }
