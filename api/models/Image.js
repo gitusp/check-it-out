@@ -7,7 +7,8 @@ module.exports = {
 	attributes	: {
 
 		// Simple attribute:
-		// name: 'STRING',
+		hash: 'STRING',
+		image: 'BINARY'
 
 		// Or for more flexibility:
 		// phoneNumber: {
