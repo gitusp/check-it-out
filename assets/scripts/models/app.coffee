@@ -49,8 +49,10 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 			stage.apply @, arguments
 
 		# fixed val, feature detection
-		appUnavailable: /msie (6|7)/.test useragent
+		# TODO: 再調査、ただアップロードでかなり対応したはず、z-indexがあやしいけどはじくほどでもないだろう
+		appUnavailable: false#/msie (6|7)/.test useragent
 		canPasteImage: /chrome/.test useragent
+		# NOTE: msie 1は推測と希望
 		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
 
 		# methods

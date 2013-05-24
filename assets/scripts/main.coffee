@@ -1,6 +1,6 @@
 require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appModel) ->
 	editing = false
-	nonBase64 = false
+	nonBase64 = null
 	step = 0
 	steps = [
 		{
