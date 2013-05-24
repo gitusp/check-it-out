@@ -27,7 +27,7 @@ module.exports.routes = {
 		controller	: 'pages'
 	},
 
-	'post /capture' : {
+	'/capture' : {
 		controller	: 'apiv1',
 		action		: 'capture'
 	},

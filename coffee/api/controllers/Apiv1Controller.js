@@ -30,9 +30,7 @@
       });
     },
     capture: function(req, res) {
-      return res.view("pages/capture", {
-        dna: req.param("dna")
-      });
+      return res.view("pages/capture");
     }
   };
 

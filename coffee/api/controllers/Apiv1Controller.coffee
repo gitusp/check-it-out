@@ -1,5 +1,6 @@
 fs = require("fs")
 client = require("capture/client")
+
 module.exports =
 	upload: (req, res) ->
 		type = req.files.image.type
@@ -16,5 +17,4 @@ module.exports =
 	
 	# キャプチャ用の内部ページ
 	capture: (req, res) ->
-		res.view "pages/capture",
-			dna: req.param("dna")
+		res.view "pages/capture"
