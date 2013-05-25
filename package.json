@@ -7,7 +7,8 @@
         "sails": "0.8.91",
         "optimist": "0.4.0",
         "phantomjs": ">=1.9.0-4",
-        "sails-mysql": ">=0.7.8"
+        "sails-mysql": ">=0.7.8",
+        "uuid": ">=1.4.1"
     },
     "scripts": {
         "start": "node app.js",

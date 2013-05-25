@@ -1,7 +1,8 @@
 fs = require 'fs'
 client = require 'capture/client'
 sv = require 'shared_values'
-crypto = require('crypto')
+crypto = require 'crypto'
+uuid = require 'uuid'
 
 # hashがユニークになるまでトライ
 createHash = (callback) ->
@@ -62,14 +63,16 @@ module.exports =
 			myClient = new client dna
 			myClient.run (data64) ->
 				if data64?
-					data = new Buffer(data64.toString(), 'base64')
+					data = new Buffer data64.toString(), 'base64'
 
 					# dataを保存
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
-								req.session.imageId = img.id
-								res.json status: 'success', url: "/s/#{hash}"
+								token = uuid.v4()
+								req.session.token = req.session.token || {}
+								req.session.token[token] = img.id
+								res.json status: 'success', url: "/s/#{hash}", token: token
 							else
 								res.json status: 'failure'
 
@@ -107,12 +110,14 @@ module.exports =
 	# 
 	key: (req, res) ->
 		key = req.param 'key', ''
+		token = req.param 'token', ''
+		imageId = req.session.token[token]
 
 		# has session?
-		return res.json result: 'exception' unless req.session.imageId?
+		return res.json status: 'exception' unless imageId?
 
 		# ok do
-		Image.find(req.session.imageId).done (err, img) ->
+		Image.find(imageId).done (err, img) ->
 			if ! err and img?
 				hash = ''
 				if key
@@ -120,13 +125,13 @@ module.exports =
 					shasum.update key
 					hash = shasum.digest 'hex'
 
-				Image.update req.session.imageId, {key: hash}, (err, img) ->
+				Image.update imageId, {key: hash}, (err, img) ->
 					if ! err
-						res.json result: 'success'
+						res.json status: 'success'
 					else
-						res.json result: 'exception'
+						res.json status: 'exception'
 			else
-				res.json result: 'exception'
+				res.json status: 'exception'
 
 	# 
 	# delete

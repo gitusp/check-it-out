@@ -2,6 +2,7 @@ define ['etc/lang'], (lang) ->
 	class
 		constructor: ->
 			@resultUrl = ko.observable()
+			@deleteToken = null
 			@deleteKey = ko.observable()
 			@deleteKeyStatus = ko.observable 'none'
 			@deleteUrl = ko.computed =>
@@ -12,7 +13,7 @@ define ['etc/lang'], (lang) ->
 				@deleteKeyStatus 'posting'
 				clearTimeout @deleteKeyTimeout
 				@deleteKeyTimeout = setTimeout =>
-						$.post '/api/v1/key', {key: newValue}, (json) =>
+						$.post '/api/v1/key', {key: newValue, token: @deleteToken}, (json) =>
 								switch json.status
 									when 'success'
 										@deleteKeyStatus 'posted'
