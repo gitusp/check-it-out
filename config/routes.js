@@ -1,12 +1,12 @@
 module.exports.routes = {
 	
 	// To route the home page to the "index" action of the "home" controller:
-	'/' : {
+	'get /' : {
 		controller	: 'pages'
 	},
 
 	// キャプチャ用internal
-	'/capture' : {
+	'get /capture' : {
 		controller	: 'pages',
 		action		: 'capture'
 	},
@@ -30,7 +30,7 @@ module.exports.routes = {
 	},
 
 	// シェア用url
-	'/s/:hash': {
+	'get /s/:hash': {
 		controller	: 'apiv1',
 		action		: 'show'
 	},

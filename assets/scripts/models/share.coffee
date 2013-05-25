@@ -13,7 +13,7 @@ define ['etc/lang'], (lang) ->
 				clearTimeout @deleteKeyTimeout
 				@deleteKeyTimeout = setTimeout =>
 						$.post '/api/v1/key', {key: newValue}, (json) =>
-								switch json.result
+								switch json.status
 									when 'success'
 										@deleteKeyStatus 'posted'
 									else
