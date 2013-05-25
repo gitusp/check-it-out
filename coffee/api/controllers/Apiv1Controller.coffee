@@ -1,6 +1,7 @@
 fs = require 'fs'
 client = require 'capture/client'
 sv = require 'shared_values'
+crypto = require('crypto')
 
 # hashがユニークになるまでトライ
 createHash = (callback) ->
@@ -110,14 +111,16 @@ module.exports =
 		# has session?
 		return res.json result: 'exception' unless req.session.imageId?
 
-		# key validation
-		return res.json result: 'tooshort' if key.length < 4
-
 		# ok do
 		Image.find(req.session.imageId).done (err, img) ->
 			if ! err and img?
-				# TODO: sha1
-				Image.update req.session.imageId, {key: key}, (err, img) ->
+				hash = ''
+				if key
+					shasum = crypto.createHash 'sha1'
+					shasum.update key
+					hash = shasum.digest 'hex'
+
+				Image.update req.session.imageId, {key: hash}, (err, img) ->
 					if ! err
 						res.json result: 'success'
 					else

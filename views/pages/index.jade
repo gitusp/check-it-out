@@ -62,10 +62,9 @@ block body
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"', style='display: none')
 			input(data-bind='value: resultUrl()')
-			form(data-bind='submit: setDeleteKey')
-				input(data-bind='value: deleteKey')
-				input(type='submit')
-			div(data-bind='visible: deleteKeyHasBeenSet()') 削除キーを設定しました
+			input(data-bind='value: deleteKey, valueUpdate: "keyup"')
+			div(data-bind='visible: deleteKeyStatus() == "posting"') guruguru
+			div(data-bind='visible: deleteKeyStatus() == "posted"') done
 
 block extlibs
 	script(src='/assets/scripts/libs/knockout.js')

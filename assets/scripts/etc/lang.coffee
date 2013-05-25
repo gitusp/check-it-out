@@ -5,5 +5,4 @@ define {
 	'notCompatible': 'お使いのブラウザはサポートされておりません'
 	'unsupportedImage': 'サポートされない画像形式です'
 	'errorInServer': 'サーバーエラーが発生しました'
-	'tooShortDeleteKey': '削除キーが短すぎます'
 }

@@ -13,6 +13,25 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 				@editor 'clip'
 			@draw = (d, e) =>
 				@editor 'draw'
+			@share = (d, e) =>
+				rects = for rect in @rects()
+					{
+						x: rect.getLeft()
+						y: rect.getTop()
+						width: rect.getWidth()
+						height: rect.getHeight()
+						borderWidth: rect.borderWidth
+						borderColor: rect.borderColor
+					}
+				json = {
+					image: @imageSource()
+					width: @stageWidth()
+					height: @stageHeight()
+					offsetX: @stageOffsetX()
+					offsetY: @stageOffsetY()
+					rects: rects
+				}
+				@shareCallback(json)
 
 			# common UI
 			@done = (d, e) =>
@@ -36,6 +55,9 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 		canPasteImage: /chrome/.test useragent
 		# NOTE: msie 1は推測と希望
 		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
+
+		# methods
+		setShareCallback: (@shareCallback) ->
 
 		# extender
 		@reopen: (defs...) ->
