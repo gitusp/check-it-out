@@ -34,4 +34,10 @@ module.exports.routes = {
 		controller	: 'apiv1',
 		action		: 'show'
 	},
+
+	// 削除用url
+	'/s/:hash/:key': {
+		controller	: 'apiv1',
+		action		: 'delete'
+	},
 };

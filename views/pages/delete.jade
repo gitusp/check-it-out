@@ -1,0 +1,15 @@
+extends ../prototypes/base
+
+prepend title
+	| DELETE
+
+block body
+	if mode == 'form'
+		form(action='?', method='post')
+			input(type='submit')
+
+	else if mode == 'done'
+		if error
+			| error
+		else
+			| done

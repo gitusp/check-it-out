@@ -97,7 +97,7 @@ module.exports =
 		Image.find(hash: req.param 'hash').done (err, img) ->
 			if ! err and img?
 				res.setHeader 'Content-Type', "image/#{img.type}"
-				res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString()
+				res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString()
 				res.end img.image
 			else
 				res.view '404'
@@ -127,3 +127,28 @@ module.exports =
 						res.json result: 'exception'
 			else
 				res.json result: 'exception'
+
+	# 
+	# delete
+	# 
+	'delete': (req, res) ->
+		key = req.param 'key', ''
+		hash = req.param 'hash', ''
+		return res.view '404' unless key
+
+		shasum = crypto.createHash 'sha1'
+		shasum.update key
+		key = shasum.digest 'hex'
+
+		# ok find by sha1
+		Image.find(hash: hash, key: key).done (err, img) ->
+			if ! err and img?
+				switch req.method
+					when 'POST'
+						Image.destroy img.id, (err, img) ->
+							res.view 'pages/delete', mode: 'done', error: err
+
+					when 'GET'
+						res.view 'pages/delete', mode: 'form'
+			else
+				res.view '404'

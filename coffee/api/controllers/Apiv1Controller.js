@@ -157,7 +157,7 @@
       }).done(function(err, img) {
         if (!err && (img != null)) {
           res.setHeader('Content-Type', "image/" + img.type);
-          res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 365 * 1000).toUTCString());
+          res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString());
           return res.end(img.image);
         } else {
           return res.view('404');
@@ -200,6 +200,40 @@
           return res.json({
             result: 'exception'
           });
+        }
+      });
+    },
+    'delete': function(req, res) {
+      var hash, key, shasum;
+
+      key = req.param('key', '');
+      hash = req.param('hash', '');
+      if (!key) {
+        return res.view('404');
+      }
+      shasum = crypto.createHash('sha1');
+      shasum.update(key);
+      key = shasum.digest('hex');
+      return Image.find({
+        hash: hash,
+        key: key
+      }).done(function(err, img) {
+        if (!err && (img != null)) {
+          switch (req.method) {
+            case 'POST':
+              return Image.destroy(img.id, function(err, img) {
+                return res.view('pages/delete', {
+                  mode: 'done',
+                  error: err
+                });
+              });
+            case 'GET':
+              return res.view('pages/delete', {
+                mode: 'form'
+              });
+          }
+        } else {
+          return res.view('404');
         }
       });
     }
