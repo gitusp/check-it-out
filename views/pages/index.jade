@@ -66,6 +66,10 @@ block body
 			div(data-bind='visible: deleteKeyStatus() == "posting"') guruguru
 			div(data-bind='visible: deleteKeyStatus() == "posted"') done
 
+			div(data-bind='visible: deleteUrl()')
+				| 削除URL: 
+				input(data-bind='value: deleteUrl()')
+
 block extlibs
 	script(src='/assets/scripts/libs/knockout.js')
 		

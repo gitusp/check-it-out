@@ -4,6 +4,8 @@ define ['etc/lang'], (lang) ->
 			@resultUrl = ko.observable()
 			@deleteKey = ko.observable()
 			@deleteKeyStatus = ko.observable 'none'
+			@deleteUrl = ko.computed =>
+				if @deleteKey() then "#{@resultUrl()}/#{@deleteKey()}" else false
 
 			# realtime POST
 			@deleteKey.subscribe (newValue) =>
