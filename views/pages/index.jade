@@ -63,6 +63,7 @@ block body
 		#content-share(data-bind='visible: state() == "share"', style='display: none')
 			input(data-bind='value: resultUrl()')
 			input(data-bind='value: deleteKey, valueUpdate: "keyup"')
+			//- NOTE: 固定物のbgきりかえかなー
 			div(data-bind='visible: deleteKeyStatus() == "posting"') guruguru
 			div(data-bind='visible: deleteKeyStatus() == "posted"') done
 

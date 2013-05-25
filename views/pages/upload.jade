@@ -8,10 +8,19 @@ append scripts
 		script
 			parent.uploadImageCallback(!{image});
 
-	else if status == 'unsupportedimage'
-		script
-			alert('サポートされない画像タイプです');
-
 	else
+		script(src='/assets/scripts/libs/require.js')
 		script
-			alert('エラーが発生しました');
+			requirejs.config({baseUrl: '/assets/scripts'});
+
+		if status == 'unsupportedimage'
+			script
+				require(['etc/lang'], function (lang) {
+						alert(lang.unsupportedImage);
+					});
+
+		else
+			script
+				require(['etc/lang'], function (lang) {
+						alert(lang.errorInServer);
+					});
