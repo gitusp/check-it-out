@@ -112,6 +112,7 @@
                 tmp: false
               }).done(function(err, img) {
                 if (!err) {
+                  req.session.imageId = img.id;
                   return res.json({
                     status: 'success',
                     url: "/s/" + hash
@@ -136,7 +137,7 @@
           hash: tmpHash
         }).done(function(err, img) {
           if (!err && (img != null)) {
-            dna.image = ("data:" + img.type + ";base64,") + img.image.toString("base64");
+            dna.image = ("data:" + img.type + ";base64,") + img.image.toString('base64');
             return runClient(dna);
           } else {
             return res.json({
@@ -158,6 +159,42 @@
           return res.end(img.image);
         } else {
           return res.view('404');
+        }
+      });
+    },
+    key: function(req, res) {
+      var key;
+
+      key = req.param('key', '');
+      if (req.session.imageId == null) {
+        return res.json({
+          result: 'exception'
+        });
+      }
+      if (key.length < 4) {
+        return res.json({
+          result: 'tooshort'
+        });
+      }
+      return Image.find(req.session.imageId).done(function(err, img) {
+        if (!err && (img != null)) {
+          return Image.update(req.session.imageId, {
+            key: key
+          }, function(err, img) {
+            if (!err) {
+              return res.json({
+                result: 'success'
+              });
+            } else {
+              return res.json({
+                result: 'exception'
+              });
+            }
+          });
+        } else {
+          return res.json({
+            result: 'exception'
+          });
         }
       });
     }

@@ -23,6 +23,12 @@ module.exports.routes = {
 		action		: 'share'
 	},
 
+	// api
+	'post /api/v1/key': {
+		controller	: 'apiv1',
+		action		: 'key'
+	},
+
 	// シェア用url
 	'/s/:hash': {
 		controller	: 'apiv1',

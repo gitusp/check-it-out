@@ -8,6 +8,7 @@ module.exports = {
 		hash: 'STRING',
 		image: 'BINARY',
 		type: 'STRING',
-		tmp: 'BOOLEAN'
+		tmp: 'BOOLEAN',
+		key: 'STRING',
 	}
 };

@@ -1,11 +1,10 @@
-define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'], (clip, draw, stage, rect, drawRect) ->
+define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect', 'etc/drawRect'], (clip, draw, stage, share, rect, drawRect) ->
 	useragent = navigator.userAgent.toLowerCase()
 
 	class app
 		constructor: ->
 			# appModel
 			@state = ko.observable 'portal'
-			@resultUrl = ko.observable()
 
 			# to fix scpne
 			@upload = (d, e) =>
@@ -14,32 +13,14 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 				@editor 'clip'
 			@draw = (d, e) =>
 				@editor 'draw'
-			@share = (d, e) =>
-				rects = for rect in @rects()
-					{
-						x: rect.getLeft()
-						y: rect.getTop()
-						width: rect.getWidth()
-						height: rect.getHeight()
-						borderWidth: rect.borderWidth
-						borderColor: rect.borderColor
-					}
-				json = {
-					image: @imageSource()
-					width: @stageWidth()
-					height: @stageHeight()
-					offsetX: @stageOffsetX()
-					offsetY: @stageOffsetY()
-					rects: rects
-				}
-				@shareCallback(json)
+
+			# common UI
 			@done = (d, e) =>
 				switch @editor()
 					when 'clip'
 						@doClip()
 					when 'draw'
 						@editor null
-					
 			@cancel = (d, e) =>
 				@editor null
 
@@ -47,6 +28,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 			clip.apply @, arguments
 			draw.apply @, arguments
 			stage.apply @, arguments
+			share.apply @, arguments
 
 		# fixed val, feature detection
 		# TODO: 再調査、ただアップロードでかなり対応したはず、z-indexがあやしいけどはじくほどでもないだろう
@@ -55,13 +37,10 @@ define ['models/clip', 'models/draw', 'models/stage', 'etc/rect', 'etc/drawRect'
 		# NOTE: msie 1は推測と希望
 		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
 
-		# methods
-		setShareCallback: (@shareCallback) ->
-
 		# extender
 		@reopen: (defs...) ->
 			for def in defs
 				@::[key] = val for key, val of def.prototype
 
-	app.reopen clip, draw, stage
+	app.reopen clip, draw, stage, share
 	drawRect.setAppModel clip.setAppModel rect.setAppModel draw.setAppModel new app

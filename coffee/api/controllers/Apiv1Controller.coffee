@@ -67,6 +67,7 @@ module.exports =
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
+								req.session.imageId = img.id
 								res.json status: 'success', url: "/s/#{hash}"
 							else
 								res.json status: 'failure'
@@ -81,7 +82,7 @@ module.exports =
 			tmpHash = dna.image.split('/').pop()
 			Image.find(hash: tmpHash).done (err, img) ->
 				if ! err and img?
-					dna.image = "data:#{img.type};base64," + img.image.toString("base64")
+					dna.image = "data:#{img.type};base64," + img.image.toString 'base64'
 					runClient dna
 				else
 					res.json status: 'failure'
@@ -99,3 +100,27 @@ module.exports =
 				res.end img.image
 			else
 				res.view '404'
+
+	# 
+	# set delete key
+	# 
+	key: (req, res) ->
+		key = req.param 'key', ''
+
+		# has session?
+		return res.json result: 'exception' unless req.session.imageId?
+
+		# key validation
+		return res.json result: 'tooshort' if key.length < 4
+
+		# ok do
+		Image.find(req.session.imageId).done (err, img) ->
+			if ! err and img?
+				# TODO: sha1
+				Image.update req.session.imageId, {key: key}, (err, img) ->
+					if ! err
+						res.json result: 'success'
+					else
+						res.json result: 'exception'
+			else
+				res.json result: 'exception'
