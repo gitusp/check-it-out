@@ -77,11 +77,12 @@ define [], (appModel) ->
 			@lock = setTimeout =>
 				diffOffsetX = @cachedStageOffsetX - appModel.stageOffsetX()
 				diffOffsetY = @cachedStageOffsetY - appModel.stageOffsetY()
-				@setLeft @getLeft() - diffOffsetX
-				@setTop @getTop() - diffOffsetY
 
 				for pt in [@pointFixed, @pointMutable]
+					pt.x -= diffOffsetX
+					pt.y -= diffOffsetY
 					@normalize pt
+
 				@draw()
 			, 0
 
@@ -136,15 +137,6 @@ define [], (appModel) ->
 		getWidth: -> @getRight() - @getLeft()
 		getHeight: -> @getBottom() - @getTop()
 		getBounds: -> {top: @getTop(), right: @getRight(), bottom: @getBottom(), left: @getLeft()}
-
-		# setter
-		setLeft: (left) ->
-			pt = if @pointFixed.x < @pointMutable.x then @pointFixed else @pointMutable
-			pt.x = left
-
-		setTop: (top) ->
-			pt = if @pointFixed.y < @pointMutable.y then @pointFixed else @pointMutable
-			pt.y = top
 
 		# destructor
 		dispose: ->
