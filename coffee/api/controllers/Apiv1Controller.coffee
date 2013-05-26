@@ -70,8 +70,8 @@ module.exports =
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
 								token = uuid.v4()
-								req.session.token = req.session.token || {}
-								req.session.token[token] = img.id
+								req.session.keyToken = req.session.keyToken || {}
+								req.session.keyToken[token] = img.id
 								res.json status: 'success', url: "/s/#{hash}", token: token
 							else
 								res.json status: 'failure'
@@ -111,32 +111,28 @@ module.exports =
 	key: (req, res) ->
 		key = req.param 'key', ''
 		token = req.param 'token', ''
-		imageId = req.session.token[token]
+		imageId = req.session.keyToken[token]
 
 		# has session?
 		return res.json status: 'exception' unless imageId?
 
 		# ok do
-		Image.find(imageId).done (err, img) ->
-			if ! err and img?
-				hash = ''
-				if key
-					shasum = crypto.createHash 'sha1'
-					shasum.update key
-					hash = shasum.digest 'hex'
+		hash = ''
+		if key
+			shasum = crypto.createHash 'sha1'
+			shasum.update key
+			hash = shasum.digest 'hex'
 
-				Image.update imageId, {key: hash}, (err, img) ->
-					if ! err
-						res.json status: 'success'
-					else
-						res.json status: 'exception'
+		Image.update imageId, {key: hash}, (err, img) ->
+			if ! err
+				res.json status: 'success'
 			else
 				res.json status: 'exception'
 
 	# 
-	# delete
+	# confirm
 	# 
-	'delete': (req, res) ->
+	confirm: (req, res) ->
 		key = req.param 'key', ''
 		hash = req.param 'hash', ''
 		return res.view '404' unless key
@@ -148,12 +144,22 @@ module.exports =
 		# ok find by sha1
 		Image.find(hash: hash, key: key).done (err, img) ->
 			if ! err and img?
-				switch req.method
-					when 'POST'
-						Image.destroy img.id, (err, img) ->
-							res.view 'pages/delete', mode: 'done', error: err
-
-					when 'GET'
-						res.view 'pages/delete', mode: 'form'
+				token = uuid.v4()
+				req.session.deleteToken = req.session.deleteToken || {}
+				req.session.deleteToken[token] = img.id
+				res.view 'pages/delete', mode: 'form', token: token, imageSource: "/s/#{hash}"
 			else
 				res.view '404'
+
+	# 
+	# delete
+	# 
+	delete: (req, res) ->
+		token = req.param 'token', ''
+		imageId = req.session.deleteToken[token]
+
+		# has session?
+		return res.view 'pages/delete', mode: 'done', error: true unless imageId?
+
+		Image.destroy imageId, (err, img) ->
+			res.view 'pages/delete', mode: 'done', error: err

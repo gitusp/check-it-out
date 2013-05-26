@@ -119,8 +119,8 @@
 
                 if (!err) {
                   token = uuid.v4();
-                  req.session.token = req.session.token || {};
-                  req.session.token[token] = img.id;
+                  req.session.keyToken = req.session.keyToken || {};
+                  req.session.keyToken[token] = img.id;
                   return res.json({
                     status: 'success',
                     url: "/s/" + hash,
@@ -172,38 +172,28 @@
       });
     },
     key: function(req, res) {
-      var imageId, key, token;
+      var hash, imageId, key, shasum, token;
 
       key = req.param('key', '');
       token = req.param('token', '');
-      imageId = req.session.token[token];
+      imageId = req.session.keyToken[token];
       if (imageId == null) {
         return res.json({
           status: 'exception'
         });
       }
-      return Image.find(imageId).done(function(err, img) {
-        var hash, shasum;
-
-        if (!err && (img != null)) {
-          hash = '';
-          if (key) {
-            shasum = crypto.createHash('sha1');
-            shasum.update(key);
-            hash = shasum.digest('hex');
-          }
-          return Image.update(imageId, {
-            key: hash
-          }, function(err, img) {
-            if (!err) {
-              return res.json({
-                status: 'success'
-              });
-            } else {
-              return res.json({
-                status: 'exception'
-              });
-            }
+      hash = '';
+      if (key) {
+        shasum = crypto.createHash('sha1');
+        shasum.update(key);
+        hash = shasum.digest('hex');
+      }
+      return Image.update(imageId, {
+        key: hash
+      }, function(err, img) {
+        if (!err) {
+          return res.json({
+            status: 'success'
           });
         } else {
           return res.json({
@@ -212,7 +202,7 @@
         }
       });
     },
-    'delete': function(req, res) {
+    confirm: function(req, res) {
       var hash, key, shasum;
 
       key = req.param('key', '');
@@ -227,23 +217,38 @@
         hash: hash,
         key: key
       }).done(function(err, img) {
+        var token;
+
         if (!err && (img != null)) {
-          switch (req.method) {
-            case 'POST':
-              return Image.destroy(img.id, function(err, img) {
-                return res.view('pages/delete', {
-                  mode: 'done',
-                  error: err
-                });
-              });
-            case 'GET':
-              return res.view('pages/delete', {
-                mode: 'form'
-              });
-          }
+          token = uuid.v4();
+          req.session.deleteToken = req.session.deleteToken || {};
+          req.session.deleteToken[token] = img.id;
+          return res.view('pages/delete', {
+            mode: 'form',
+            token: token,
+            imageSource: "/s/" + hash
+          });
         } else {
           return res.view('404');
         }
+      });
+    },
+    "delete": function(req, res) {
+      var imageId, token;
+
+      token = req.param('token', '');
+      imageId = req.session.deleteToken[token];
+      if (imageId == null) {
+        return res.view('pages/delete', {
+          mode: 'done',
+          error: true
+        });
+      }
+      return Image.destroy(imageId, function(err, img) {
+        return res.view('pages/delete', {
+          mode: 'done',
+          error: err
+        });
       });
     }
   };

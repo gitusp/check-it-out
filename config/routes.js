@@ -36,7 +36,13 @@ module.exports.routes = {
 	},
 
 	// 削除用url
-	'/s/:hash/:key': {
+	'get /s/:hash/:key': {
+		controller	: 'apiv1',
+		action		: 'confirm'
+	},
+
+	// 削除
+	'post /delete': {
 		controller	: 'apiv1',
 		action		: 'delete'
 	},

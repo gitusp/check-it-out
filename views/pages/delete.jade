@@ -5,8 +5,10 @@ prepend title
 
 block body
 	if mode == 'form'
-		form(action='?', method='post')
+		form(action='/delete', method='post')
+			input(type='hidden', name='token', value=token)
 			input(type='submit')
+		img(src=imageSource)
 
 	else if mode == 'done'
 		if error
