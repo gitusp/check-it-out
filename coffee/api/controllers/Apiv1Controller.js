@@ -140,13 +140,14 @@
           }
         });
       };
-      if (req.param('hasTmpImage')) {
+      if (dna.nonBase64) {
         tmpHash = dna.image.split('/').pop();
         return Image.find({
           hash: tmpHash
         }).done(function(err, img) {
           if (!err && (img != null)) {
             dna.image = ("data:" + img.type + ";base64,") + img.image.toString('base64');
+            dna.nonBase64 = null;
             return runClient(dna);
           } else {
             return res.json({

@@ -33,6 +33,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 						}
 					json = {
 						image: imageSource
+						nonBase64: @nonBase64
 						width: @stageWidth()
 						height: @stageHeight()
 						offsetX: @stageOffsetX() - adjustOffsetX

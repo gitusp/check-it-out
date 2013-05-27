@@ -54,7 +54,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# apply knockout
 	appModel.setShareCallback (json) ->
-		$.post '/api/v1/share', {dna: json, hasTmpImage: appModel.nonBase64}, (result) ->
+		$.post '/api/v1/share', {dna: json}, (result) ->
 				if result.status == 'success'
 					appModel.resultUrl "http://#{location.host}#{result.url}"
 					appModel.deleteToken = result.token

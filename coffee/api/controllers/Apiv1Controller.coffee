@@ -82,11 +82,12 @@ module.exports =
 
 
 		# アップロード組か否か
-		if req.param 'hasTmpImage'
+		if dna.nonBase64
 			tmpHash = dna.image.split('/').pop()
 			Image.find(hash: tmpHash).done (err, img) ->
 				if ! err and img?
 					dna.image = "data:#{img.type};base64," + img.image.toString 'base64'
+					dna.nonBase64 = null
 					runClient dna
 				else
 					res.json status: 'failure'
