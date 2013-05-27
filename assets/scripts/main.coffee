@@ -1,6 +1,5 @@
 require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appModel) ->
 	editing = false
-	nonBase64 = null
 	step = 0
 	steps = [
 		{
@@ -55,7 +54,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# apply knockout
 	appModel.setShareCallback (json) ->
-		$.post '/api/v1/share', {dna: json, hasTmpImage: nonBase64}, (result) ->
+		$.post '/api/v1/share', {dna: json, hasTmpImage: appModel.nonBase64}, (result) ->
 				if result.status == 'success'
 					appModel.resultUrl "http://#{location.host}#{result.url}"
 					appModel.deleteToken = result.token
@@ -72,7 +71,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# external callback
 	window.uploadImageCallback = (src) ->
-		nonBase64 = true
+		appModel.nonBase64 = true
 		setImage src
 
 	# boot strap

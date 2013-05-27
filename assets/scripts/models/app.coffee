@@ -5,6 +5,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 		constructor: ->
 			# appModel
 			@state = ko.observable 'portal'
+			@nonBase64 = null
 
 			# to fix scpne
 			@upload = (d, e) =>
@@ -14,24 +15,50 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			@draw = (d, e) =>
 				@editor 'draw'
 			@share = (d, e) =>
-				rects = for rect in @rects()
-					{
-						x: rect.getLeft()
-						y: rect.getTop()
-						width: rect.getWidth()
-						height: rect.getHeight()
-						borderWidth: rect.borderWidth
-						borderColor: rect.borderColor
+				# use for adjustment
+				adjustOffsetX = 0
+				adjustOffsetY = 0
+				imageSource = @imageSource()
+
+				# next
+				done = =>
+					rects = for rect in @rects()
+						{
+							x: rect.getLeft() + adjustOffsetX
+							y: rect.getTop() + adjustOffsetY
+							width: rect.getWidth()
+							height: rect.getHeight()
+							borderWidth: rect.borderWidth
+							borderColor: rect.borderColor
+						}
+					json = {
+						image: imageSource
+						width: @stageWidth()
+						height: @stageHeight()
+						offsetX: @stageOffsetX() - adjustOffsetX
+						offsetY: @stageOffsetY() - adjustOffsetY
+						rects: rects
 					}
-				json = {
-					image: @imageSource()
-					width: @stageWidth()
-					height: @stageHeight()
-					offsetX: @stageOffsetX()
-					offsetY: @stageOffsetY()
-					rects: rects
-				}
-				@shareCallback(json)
+					@shareCallback(json)
+
+				if ! @nonBase64 and Modernizr.canvas
+					# try to compress data
+					[canvas] = $("<canvas width=\"#{@stageWidth()}\" height=\"#{@stageHeight()}\">")
+					context = canvas.getContext '2d'
+					[img] = $('<img>').on('load', =>
+							context.drawImage img, -@stageOffsetX(), -@stageOffsetY(), @stageWidth(), @stageHeight(), 0, 0, @stageWidth(), @stageHeight()
+							tmpImageSource = canvas.toDataURL()
+							if tmpImageSource.length < @imageSource().length
+								# is compressed?
+								imageSource = tmpImageSource
+								adjustOffsetX = @stageOffsetX()
+								adjustOffsetY = @stageOffsetY()
+							done()
+						).attr 'src', imageSource
+				else
+					# direct output
+					done()
+
 
 			# common UI
 			@done = (d, e) =>
@@ -53,8 +80,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 		# TODO: 再調査、ただアップロードでかなり対応したはず、z-indexがあやしいけどはじくほどでもないだろう
 		appUnavailable: false#/msie (6|7)/.test useragent
 		canPasteImage: /chrome/.test useragent
-		# NOTE: msie 1は推測と希望
-		canDropImage: /chrome|safari|firefox|msie 1/.test useragent
+		canDropImage: !!window.FileReader && Modernizr.draganddrop
 
 		# methods
 		setShareCallback: (@shareCallback) ->
