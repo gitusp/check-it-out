@@ -1,6 +1,21 @@
 @import '../mixins/reset';
 @import '../mixins/utils';
 
+body {
+	background: url(/images/pattern-slash.png);
+}
+
+#content-portal {
+	.hidden-element {
+		border: none;
+		height: 0;
+		width: 0;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+}
+
 .rect {
 	position: absolute;
 

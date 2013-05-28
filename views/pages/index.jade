@@ -19,8 +19,7 @@ block body
 
 		//- TODO: animation
 		#content-portal(data-bind='visible: state() == "portal"', style='display: none')
-			//- TODO: hide
-			iframe(name='upload-frame')
+			iframe.hidden-element(name='upload-frame')
 
 			span(data-bind='visible: canPasteImage') [ paste ]
 			span(data-bind='visible: canDropImage') [ drop ]
@@ -28,8 +27,10 @@ block body
 
 			//- TODO: style
 			form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
-				input(type='file', name='image', data-bind='event: {change: upload}')
-				input(type='submit')
+				span(data-bind='click: emulateBrowse') [ upload ]
+				.hidden-element
+					input(type='file', name='image', data-bind='event: {change: upload}')
+					input(type='submit')
 
 		//- TODO: animation
 		#content-editor(data-bind='visible: state() == "editor"', style='display: none')

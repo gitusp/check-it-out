@@ -8,6 +8,8 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			@nonBase64 = null
 
 			# to fix scpne
+			@emulateBrowse = (d, e) =>
+				$(e.target).closest('form').find('input[type=file]').click()
 			@upload = (d, e) =>
 				$(e.target).closest('form').submit()
 			@clip = (d, e) =>
