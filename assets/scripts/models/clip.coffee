@@ -19,6 +19,7 @@ define ['etc/clipRect'], (clipRect, appModel) ->
 				@rect = new clipRect {x: e.pageX - offset.left, y: e.pageY - offset.top}, maskResizer
 				workSpace.append @rect.entity
 				@rect.startDraw {x: e.pageX, y: e.pageY}
+				e.preventDefault()
 
 		doClip: ->
 			if @rect

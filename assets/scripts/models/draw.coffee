@@ -5,9 +5,11 @@ define ['etc/drawRect'], (drawRect, appModel) ->
 		constructor: ->
 			# to fix scope
 			@startDraw = (d, e) =>
-				@drawRect = new drawRect {x: e.offsetX, y: e.offsetY}
+				offset = workSpace.offset()
+				@drawRect = new drawRect {x: e.pageX - offset.left, y: e.pageY - offset.top}
 				workSpace.append @drawRect.entity
 				@drawRect.startDraw {x: e.pageX, y: e.pageY}
+				e.preventDefault()
 
 		# static
 		@setAppModel: (am) ->

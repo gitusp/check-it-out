@@ -78,7 +78,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			share.apply @, arguments
 
 		# fixed val, feature detection
-		# TODO: 再調査、ただアップロードでかなり対応したはず、z-indexがあやしいけどはじくほどでもないだろう
+		# TODO: 調査、ただ8から使えるのは確認したので急ぎではない
 		appUnavailable: false#/msie (6|7)/.test useragent
 		canPasteImage: /chrome/.test useragent
 		canDropImage: !!window.FileReader && Modernizr.draganddrop
