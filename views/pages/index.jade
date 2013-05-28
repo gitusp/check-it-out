@@ -14,8 +14,6 @@ block body
 	#wrapper
 		//- TODO: animation
 		#content-loading(data-bind='visible: state() == "loading"')
-			//- TODO: bg
-			img(src='/images/loading.gif')
 
 		//- TODO: animation
 		#content-portal(data-bind='visible: state() == "portal"', style='display: none')
@@ -33,32 +31,34 @@ block body
 					input(type='submit')
 
 		//- TODO: animation
-		#content-editor(data-bind='visible: state() == "editor"', style='display: none')
-			#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
-				//- TODO: animation
-				#draw-work-space(data-bind='event: {mousedown: startDraw}')
-					#draw-work-space-bg
+		table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0')
+			tr
+				td
+					span#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
+						//- TODO: animation
+						#draw-work-space(data-bind='event: {mousedown: startDraw}')
+							#draw-work-space-bg
 
-				#draw-cover(data-bind='visible: editor() != "draw"')
+						#draw-cover(data-bind='visible: editor() != "draw"')
 
-				//- TODO: animation
-				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
-					#clip-work-space-bg-wrapper
-						.mask1
-						.mask2
-						.mask3
-						.mask4
+						//- TODO: animation
+						#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
+							#clip-work-space-bg-wrapper
+								.mask1
+								.mask2
+								.mask3
+								.mask4
 
-			//- TODO: animation
-			#tools(data-bind='visible: ! editor()')
-				span(data-bind='click: clip') [ clip ]
-				span(data-bind='click: draw') [ draw ]
-				span(data-bind='click: share') [ share ]
+					//- TODO: animation
+					#tools(data-bind='visible: ! editor()')
+						span(data-bind='click: clip') [ clip ]
+						span(data-bind='click: draw') [ draw ]
+						span(data-bind='click: share') [ share ]
 
-			//- TODO: animation
-			#guide(data-bind='visible: editor()')
-				span(data-bind='click: cancel, visible: editor() == "clip"') [ cancel ]
-				span(data-bind='click: done') [ done ]
+					//- TODO: animation
+					#guide(data-bind='visible: editor()')
+						span(data-bind='click: cancel, visible: editor() == "clip"') [ cancel ]
+						span(data-bind='click: done') [ done ]
 
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"', style='display: none')

@@ -11,8 +11,14 @@
 	height: 100%;
 }
 
-.inner-shadow (@horizontal: 0, @vertical: 1px, @blur: 2px, @grow: 0px, @alpha: 0.3) {
-	-webkit-box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
-	-moz-box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
-	box-shadow: inset @horizontal @vertical @blur @grow rgba(0, 0, 0, @alpha);
+.drop-shadow (@x: 0, @y: 1px, @blur: 2px, @spread: 0, @alpha: 0.3) {
+	-webkit-box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
+	-moz-box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
+	box-shadow: @x @y @blur @spread rgba(0, 0, 0, @alpha);
+}
+
+.inner-shadow (@horizontal: 0, @vertical: 1px, @blur: 2px, @spread: 0px, @alpha: 0.3) {
+	-webkit-box-shadow: inset @horizontal @vertical @blur @spread rgba(0, 0, 0, @alpha);
+	-moz-box-shadow: inset @horizontal @vertical @blur @spread rgba(0, 0, 0, @alpha);
+	box-shadow: inset @horizontal @vertical @blur @spread rgba(0, 0, 0, @alpha);
 }
