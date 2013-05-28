@@ -51,9 +51,10 @@ block body
 
 					//- TODO: animation
 					#tools(data-bind='visible: ! editor()')
-						span(data-bind='click: clip') [ clip ]
-						span(data-bind='click: draw') [ draw ]
-						span(data-bind='click: share') [ share ]
+						.container
+							span(data-bind='click: clip') [ clip ]
+							span(data-bind='click: draw') [ draw ]
+							span.share(data-bind='click: share') [ share ]
 
 					//- TODO: animation
 					#guide(data-bind='visible: editor()')

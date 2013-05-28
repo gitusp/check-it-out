@@ -22,3 +22,9 @@
 	-moz-box-shadow: inset @horizontal @vertical @blur @spread rgba(0, 0, 0, @alpha);
 	box-shadow: inset @horizontal @vertical @blur @spread rgba(0, 0, 0, @alpha);
 }
+
+.border-radius (@radius: 4px) {
+	-webkit-border-radius: @radius;
+	-moz-border-radius:    @radius;
+	border-radius:         @radius;
+}

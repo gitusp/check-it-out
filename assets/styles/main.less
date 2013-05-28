@@ -12,6 +12,7 @@ body {
 }
 
 #content-loading {
+	height: 100%;
 	background: url(/images/init-loader.gif) 50% 50% no-repeat;
 }
 #content-portal {
@@ -166,4 +167,42 @@ body {
 			.inner-shadow;
 		}
 	}
+}
+#tools {
+	position: fixed;
+	width: 100%;
+	top: 50%;
+	left: 0;
+	z-index: 30;
+
+	.container {
+		margin-top: -100px;
+		text-align: center;
+		white-space: nowrap;
+
+		// TODO: hover
+		span {
+			.border-radius(8px);
+			.drop-shadow;
+			background-color: #46afa2;
+			border-width: 1px;
+			border-style: solid;
+			border-color: #339688;
+			display: inline-block;
+			width: 198px;
+			height: 198px;
+			margin: 0 5px;
+
+			&.share {
+				background-color: #5fb270;
+				border-color: #489b56;
+			}
+		}
+	}
+}
+#guide {
+	position: fixed;
+	top: 0;
+	z-index: 31;
+	// TODO: center;
 }
