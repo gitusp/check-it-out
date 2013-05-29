@@ -55,9 +55,10 @@ block body
 					//- TODO: animation
 					#tools(data-bind='visible: ! editor()')
 						.container
-							span(data-bind='click: clip') [ clip ]
-							span(data-bind='click: draw') [ draw ]
-							span.share(data-bind='click: share') [ share ]
+							span.clip(data-bind='click: clip', data-bind='dissolveCSS3: ! editor()')
+							br
+							span.draw(data-bind='click: draw', data-bind='dissolveCSS3: ! editor()')
+							span.share(data-bind='click: share', data-bind='dissolveCSS3: ! editor()')
 
 					//- TODO: animation
 					#guide(data-bind='visible: editor()')

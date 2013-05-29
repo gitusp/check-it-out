@@ -135,26 +135,45 @@ body {
 	z-index: 30;
 
 	.container {
-		margin-top: -100px;
+		margin-top: -214px;
 		text-align: center;
 		white-space: nowrap;
 
 		// TODO: hover
 		span {
-			.border-radius(8px);
+			.transition(.3s);
+			.border-radius(100px);
 			.drop-shadow;
-			background-color: #46afa2;
 			border-width: 1px;
 			border-style: solid;
-			border-color: #339688;
+			border-color: rgba(51, 150, 136, .8);
 			display: inline-block;
 			width: 198px;
 			height: 198px;
-			margin: 0 5px;
+			margin: 0 20px;
 
+			background: rgb(70, 175, 162); // IE7, IE8
+			background: rgba(70, 175, 162, .8);
+			background-repeat: no-repeat;
+			background-position: 50% 50%;
+
+			&.dissolve-out {
+				opacity: 0;
+			}
+
+			&.clip {
+				background-image: url(/images/tools-clip.png);
+			}
+			&.draw {
+				background-image: url(/images/tools-draw.png);
+			}
 			&.share {
-				background-color: #5fb270;
-				border-color: #489b56;
+				border-color: rgba(72, 155, 86, .8);
+				background: rgb(95, 178, 112);	// IE7, IE8
+				background: rgba(95, 178, 112, .8);
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+				background-image: url(/images/tools-share.png);
 			}
 		}
 	}
