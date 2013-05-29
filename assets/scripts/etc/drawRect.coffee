@@ -1,6 +1,6 @@
 define ['etc/rect'], (rect, appModel) ->
 	class extends rect
-		constructor: (point = {x: 0, y: 0}, @borderColor = '#09b282', @borderWidth = 1) ->
+		constructor: (point = {x: 0, y: 0}, @borderColor = '#dd436f', @borderWidth = 2) ->
 			super point
 
 			# bg

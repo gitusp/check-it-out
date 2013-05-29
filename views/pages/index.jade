@@ -52,13 +52,10 @@ block body
 								.mask3
 								.mask4
 
-					//- TODO: animation
-					#tools(data-bind='visible: ! editor()')
-						.container
-							span.clip(data-bind='click: clip', data-bind='dissolveCSS3: ! editor()')
-							br
-							span.draw(data-bind='click: draw', data-bind='dissolveCSS3: ! editor()')
-							span.share(data-bind='click: share', data-bind='dissolveCSS3: ! editor()')
+					#tools
+						.clip(data-bind='click: clip, dissolveCSS3: ! editor()')
+						.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
+						.share(data-bind='click: share, dissolveCSS3: ! editor()')
 
 					//- TODO: animation
 					#guide(data-bind='visible: editor()')

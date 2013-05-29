@@ -7,4 +7,4 @@ define [], ->
 			@stageOffsetX = ko.observable 0
 			@stageOffsetY = ko.observable 0
 			@rects = ko.observableArray()
-			@editor = ko.observable()
+			@editor = ko.observable 'loader'

@@ -28,6 +28,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 			enter: ->
 				editing = true
 				appModel.state 'editor'
+				appModel.editor null
 
 			exit: ->
 				editing = false

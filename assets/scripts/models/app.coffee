@@ -17,7 +17,10 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			@draw = (d, e) =>
 				@editor 'draw'
 			@share = (d, e) =>
-				# next
+				return if @editor() == 'share'
+				@editor 'share'
+
+				# 圧縮完了時に呼び出す
 				done = (preClipped = false, imageSource = @imageSource()) =>
 					rects = for rect in @rects()
 						{
