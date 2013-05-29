@@ -3,6 +3,10 @@ extends ../prototypes/base
 prepend title
 	| DELETE
 
+append styles
+	link(rel='stylesheet', href='/assets/mixins/reset.css')
+	link(rel='stylesheet', href='/assets/styles/main.css')
+
 block body
 	if mode == 'form'
 		form(action='/delete', method='post')

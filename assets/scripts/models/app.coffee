@@ -17,17 +17,12 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			@draw = (d, e) =>
 				@editor 'draw'
 			@share = (d, e) =>
-				# use for adjustment
-				adjustOffsetX = 0
-				adjustOffsetY = 0
-				imageSource = @imageSource()
-
 				# next
-				done = =>
+				done = (preClipped = false, imageSource = @imageSource()) =>
 					rects = for rect in @rects()
 						{
-							x: rect.getLeft() + adjustOffsetX
-							y: rect.getTop() + adjustOffsetY
+							x: rect.getLeft()
+							y: rect.getTop()
 							width: rect.getWidth()
 							height: rect.getHeight()
 							borderWidth: rect.borderWidth
@@ -38,8 +33,8 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 						nonBase64: @nonBase64
 						width: @stageWidth()
 						height: @stageHeight()
-						offsetX: @stageOffsetX() - adjustOffsetX
-						offsetY: @stageOffsetY() - adjustOffsetY
+						offsetX: if preClipped then 0 else @stageOffsetX()
+						offsetY: if preClipped then 0 else @stageOffsetY()
 						rects: rects
 					}
 					@shareCallback(json)
@@ -52,12 +47,10 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 							context.drawImage img, -@stageOffsetX(), -@stageOffsetY(), @stageWidth(), @stageHeight(), 0, 0, @stageWidth(), @stageHeight()
 							tmpImageSource = canvas.toDataURL()
 							if tmpImageSource.length < @imageSource().length
-								# is compressed?
-								imageSource = tmpImageSource
-								adjustOffsetX = @stageOffsetX()
-								adjustOffsetY = @stageOffsetY()
-							done()
-						).attr 'src', imageSource
+								done(true, tmpImageSource)
+							else
+								done()
+						).attr 'src', @imageSource()
 				else
 					# direct output
 					done()

@@ -15,6 +15,7 @@ module.exports = {
 	// And your views and templates are cached in-memory.  Gzip is also used.
 	// The downside?  Harder to debug, and the server takes longer to start.
 	environment: 'development',
+	// environment: 'production',
 
 	// Logger
 	// Valid `level` configs:

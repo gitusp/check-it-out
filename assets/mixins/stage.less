@@ -1,0 +1,57 @@
+@import 'utils';
+
+.rect {
+	position: absolute;
+}
+
+#stage {
+	position: relative;
+
+	#draw-work-space {
+		.match-parent;
+
+		#draw-work-space-bg {
+			.match-parent;
+			.opacity(0.5);
+		}
+		&.hasRect #draw-work-space-bg {
+			background: #fff;
+		}
+
+		.rect {
+			.shadow {
+				.match-parent;
+				.inner-shadow(0, 1px, 2px, 1px);
+				z-index: 1;
+			}
+			.border-top,
+			.border-right,
+			.border-bottom,
+			.border-left,
+			{
+				position: absolute;
+				z-index: 2;
+			}
+			.border-top {
+				top: 0;
+				left: 0;
+				width: 100%;
+			}
+			.border-right {
+				top: 0;
+				right: 0;
+				height: 100%;
+			}
+			.border-bottom {
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
+			.border-left {
+				top: 0;
+				left: 0;
+				height: 100%;
+			}
+		}
+	}
+}
