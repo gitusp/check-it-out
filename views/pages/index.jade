@@ -34,34 +34,31 @@ block body
 					input(type='submit')
 
 		//- TODO: animation
-		table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0')
-			tr
-				td
-					span#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
-						//- TODO: animation
-						#draw-work-space(data-bind='event: {mousedown: startDraw}')
-							#draw-work-space-bg
+		table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+			span#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
+				//- TODO: animation
+				#draw-work-space(data-bind='event: {mousedown: startDraw}')
+					#draw-work-space-bg
 
-						#draw-cover(data-bind='visible: editor() != "draw"')
+				#draw-cover(data-bind='visible: editor() != "draw"')
 
-						//- TODO: animation
-						#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
-							#clip-work-space-bg-wrapper
-								.mask1
-								.mask2
-								.mask3
-								.mask4
+				//- TODO: animation
+				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
+					#clip-work-space-bg-wrapper
+						.mask1
+						.mask2
+						.mask3
+						.mask4
 
-					#tools
-						.clip(data-bind='click: clip, dissolveCSS3: ! editor()')
-						.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
-						.share(data-bind='click: share, dissolveCSS3: ! editor()')
+			#tools
+				.clip(data-bind='click: clip, dissolveCSS3: ! editor()')
+				.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
+				.share(data-bind='click: share, dissolveCSS3: ! editor()')
 
-					//- TODO: animation
-					#guide(data-bind='dissolveCSS3: editor() && editor() != "loader"')
-						.container(data-bind='css: editor()')
-							span.cancel(data-bind='click: cancel') [ cancel ]
-							span.done(data-bind='click: done') [ done ]
+			#guide(data-bind='dissolveCSS3: editor() && editor() != "loader"')
+				.container(data-bind='css: editor()')
+					.cancel(data-bind='click: cancel') [ cancel ]
+					.done(data-bind='click: done'): .entity: .text
 
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"', style='display: none')
