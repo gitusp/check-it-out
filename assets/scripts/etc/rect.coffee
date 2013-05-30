@@ -108,6 +108,7 @@ define [], (appModel) ->
 			workSpace.on 'mouseup.draw', (e) =>
 				appModel.dragging false
 				workSpace.off 'mousemove.draw mouseup.draw'
+				@dispose() unless @getWidth() * @getHeight()
 
 		startDrag: (initialPoint) ->
 			appModel.dragging true
@@ -125,6 +126,7 @@ define [], (appModel) ->
 			workSpace.on 'mouseup.drag', (e) =>
 				appModel.dragging false
 				workSpace.off 'mousemove.drag mouseup.drag'
+				@dispose() unless @getWidth() * @getHeight()
 
 		# rangesafe point setter
 		normalize: (pt) ->

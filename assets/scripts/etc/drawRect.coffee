@@ -17,9 +17,6 @@ define ['etc/rect'], (rect, appModel) ->
 			$('<div class="border-bottom">').height(@borderWidth).css('background', @borderColor).appendTo @entity
 			$('<div class="border-left">').width(@borderWidth).css('background', @borderColor).appendTo @entity
 
-			# destroyer
-			@entity.on 'dblclick', => @dispose()
-
 			# add to models rects
 			appModel.rects.push @
 
