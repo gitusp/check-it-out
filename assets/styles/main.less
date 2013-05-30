@@ -6,6 +6,17 @@ html, body {
 body {
 	background: url(/images/pattern-slash.png);
 }
+
+// util
+.hidden-element {
+	border: none;
+	height: 0;
+	width: 0;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
 #wrapper {
 	height: 100%;
 }
@@ -15,14 +26,6 @@ body {
 	background: url(/images/init-loader.gif) 50% 50% no-repeat;
 }
 #content-portal {
-	.hidden-element {
-		border: none;
-		height: 0;
-		width: 0;
-		padding: 0;
-		margin: 0;
-		overflow: hidden;
-	}
 }
 #content-editor {
 	width: 100%;
@@ -262,30 +265,79 @@ body {
 		}
 
 		// buttons
-		.done {
+		// TODO: hover
+		.done,
+		.cancel
+		{
 			position: absolute;
-			right: 7px;
 			bottom: 7px;
-			width: 99px;
 			height: 39px;
 			padding: 1px;
-			.gradient(#b3b3b3, #ededed);
 			.border-radius(4px);
 			cursor: pointer;
 
 			.entity {
 				position: relative;
 				.border-radius(4px);
-				.gradient(#5eccc2, #46afa2);
-				border: 1px solid #3a9b8d;
-				width: 97px;
+				border: 1px solid transparent;
 				height: 37px;
 
 				.text {
 					position: absolute;
 					width: 100%;
 					height: 100%;
-					background: url(/images/text-next.png) no-repeat 50% 50%;
+					background: no-repeat 50% 50%;
+				}
+			}
+		}
+
+		// done style
+		.done {
+			right: 7px;
+			width: 99px;
+			.gradient(#b3b3b3, #ededed);
+
+			.entity {
+				.gradient(#5eccc2, #46afa2);
+				border-color: #3a9b8d;
+				width: 97px;
+
+				.text {
+					background-image: url(/images/text-next.png);
+				}
+			}
+
+			&:hover {
+				.entity {
+					.gradient(#5eccc2, #3ca092);
+					border-color: #3a9b8d;
+				}
+			}
+		}
+
+		// cancel style
+		.cancel {
+			left: 7px;
+			width: 113px;
+
+			.entity {
+				width: 111px;
+
+				.text {
+					background-image: url(/images/text-cancel-default.png);
+				}
+			}
+
+			&:hover {
+				.gradient(#b3b3b3, #ededed);
+
+				.entity {
+					.gradient(#83a8b5, #6a92a0);
+					border-color: #548093;
+
+					.text {
+						background-image: url(/images/text-cancel-hover.png);
+					}
 				}
 			}
 		}

@@ -55,9 +55,11 @@ block body
 				.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
 				.share(data-bind='click: share, dissolveCSS3: ! editor()')
 
-			#guide(data-bind='dissolveCSS3: editor() && editor() != "loader"')
+			#guide(data-bind='dissolveCSS3: editor() && editor() != "loader" && editor() != "share"')
 				.container(data-bind='css: editor()')
-					.cancel(data-bind='click: cancel') [ cancel ]
+					//- HACK: pre-load
+					img.hidden-element(src='/images/text-cancel-hover.png')
+					.cancel(data-bind='click: cancel'): .entity: .text
 					.done(data-bind='click: done'): .entity: .text
 
 		//- TODO: animation
