@@ -5,6 +5,7 @@ html, body {
 }
 body {
 	background: url(/images/pattern-slash.png);
+	.user-select(none);
 }
 
 // util
@@ -44,39 +45,26 @@ body {
 .rect {
 	cursor: move;
 
-	&.transforming,
-	&.transforming .handle-nw,
-	&.transforming .handle-ne,
-	&.transforming .handle-se,
-	&.transforming .handle-sw,
-	{
-		cursor: auto;
-	}
-
 	.handle-nw,
 	.handle-ne,
 	.handle-se,
 	.handle-sw,
 	{
-		background-repeat: no-repeat;
+		background: no-repeat 50% 50%;
 		position: absolute;
-		width: 10px;
-		height: 10px;
+		width: 30px;
+		height: 30px;
 	}
 	.handle-nw {
-		background-position: 0 0;
 		cursor: nw-resize;
 	}
 	.handle-se {
-		background-position: 0 0;
 		cursor: se-resize;
 	}
 	.handle-ne {
-		background-position: 0 -9px;
 		cursor: ne-resize;
 	}
 	.handle-sw {
-		background-position: 0 -9px;
 		cursor: sw-resize;
 	}
 }
@@ -93,24 +81,27 @@ body {
 			.handle-se,
 			.handle-sw,
 			{
-				background-image: url(/images/handle-draw.png);
 				z-index: 3;
 			}
 			.handle-nw {
-				left: -3px;
-				top: -3px;
+				background-image: url(/images/handle-draw-nw.png);
+				left: -13px;
+				top: -13px;
 			}
 			.handle-ne {
-				right: -3px;
-				top: -3px;
+				background-image: url(/images/handle-draw-ne.png);
+				right: -13px;
+				top: -13px;
 			}
 			.handle-se {
-				right: -3px;
-				bottom: -3px;
+				background-image: url(/images/handle-draw-se.png);
+				right: -13px;
+				bottom: -13px;
 			}
 			.handle-sw {
-				left: -3px;
-				bottom: -3px;
+				background-image: url(/images/handle-draw-sw.png);
+				left: -13px;
+				bottom: -13px;
 			}
 		}
 	}
@@ -156,30 +147,32 @@ body {
 		.rect {
 			.inner-shadow;
 
-			.handle-nw,
-			.handle-ne,
-			.handle-se,
-			.handle-sw,
-			{
-				background-image: url(/images/handle-clip.png);
-			}
 			.handle-nw {
-				left: -5px;
-				top: -5px;
+				background-image: url(/images/handle-clip-nw.png);
+				left: -15px;
+				top: -15px;
 			}
 			.handle-ne {
-				right: -5px;
-				top: -5px;
+				background-image: url(/images/handle-clip-ne.png);
+				right: -15px;
+				top: -15px;
 			}
 			.handle-se {
-				right: -5px;
-				bottom: -5px;
+				background-image: url(/images/handle-clip-se.png);
+				right: -15px;
+				bottom: -15px;
 			}
 			.handle-sw {
-				left: -5px;
-				bottom: -5px;
+				background-image: url(/images/handle-clip-sw.png);
+				left: -15px;
+				bottom: -15px;
 			}
 		}
+	}
+	#drag-cover {
+		cursor: default;
+		.match-parent;
+		z-index: 30;
 	}
 }
 
@@ -190,7 +183,7 @@ body {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	z-index: 30;
+	z-index: 40;
 
 	div {
 		.transition(.3s);
@@ -254,7 +247,7 @@ body {
 	top: 0;
 	left: 0;
 	width: 100%;
-	z-index: 31;
+	z-index: 41;
 	.transition(.3s);
 	&.dissolve-out {
 		.translate3d(0, -60px);
@@ -302,9 +295,7 @@ body {
 				height: 37px;
 
 				.text {
-					position: absolute;
-					width: 100%;
-					height: 100%;
+					.match-parent;
 					background: no-repeat 50% 50%;
 				}
 			}

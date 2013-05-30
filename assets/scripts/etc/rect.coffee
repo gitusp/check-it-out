@@ -97,7 +97,7 @@ define [], (appModel) ->
 		# NOTE: startPointはwrapperはさんでもpage基準でいいのか？
 		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
 		startDraw: (initialPoint) ->
-			@entity.addClass 'transforming'
+			appModel.dragging true
 			basePoint = $.extend true, {}, @pointMutable
 			workSpace.on 'mousemove.draw', (e) =>
 				@pointMutable.x = basePoint.x + e.pageX - initialPoint.x
@@ -106,10 +106,11 @@ define [], (appModel) ->
 				@draw()
 
 			workSpace.on 'mouseup.draw', (e) =>
+				appModel.dragging false
 				workSpace.off 'mousemove.draw mouseup.draw'
-				@entity.removeClass 'transforming'
 
 		startDrag: (initialPoint) ->
+			appModel.dragging true
 			basePointFixed = $.extend true, {}, @pointFixed
 			basePointMutable = $.extend true, {}, @pointMutable
 			workSpace.on 'mousemove.drag', (e) =>
@@ -122,6 +123,7 @@ define [], (appModel) ->
 				@draw()
 
 			workSpace.on 'mouseup.drag', (e) =>
+				appModel.dragging false
 				workSpace.off 'mousemove.drag mouseup.drag'
 
 		# rangesafe point setter

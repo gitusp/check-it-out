@@ -8,3 +8,4 @@ define [], ->
 			@stageOffsetY = ko.observable 0
 			@rects = ko.observableArray()
 			@editor = ko.observable 'loader'
+			@dragging = ko.observable false
