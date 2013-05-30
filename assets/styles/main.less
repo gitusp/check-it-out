@@ -41,8 +41,18 @@ body {
 /*
  *	extend stage module
  */
-// TODO: cursor
 .rect {
+	cursor: move;
+
+	&.transforming,
+	&.transforming .handle-nw,
+	&.transforming .handle-ne,
+	&.transforming .handle-se,
+	&.transforming .handle-sw,
+	{
+		cursor: auto;
+	}
+
 	.handle-nw,
 	.handle-ne,
 	.handle-se,
@@ -53,15 +63,21 @@ body {
 		width: 10px;
 		height: 10px;
 	}
-	.handle-nw,
-	.handle-se
-	{
+	.handle-nw {
 		background-position: 0 0;
+		cursor: nw-resize;
 	}
-	.handle-ne,
-	.handle-sw
-	{
+	.handle-se {
+		background-position: 0 0;
+		cursor: se-resize;
+	}
+	.handle-ne {
 		background-position: 0 -9px;
+		cursor: ne-resize;
+	}
+	.handle-sw {
+		background-position: 0 -9px;
+		cursor: sw-resize;
 	}
 }
 #stage {
@@ -69,6 +85,8 @@ body {
 	.drop-shadow;
 
 	#draw-work-space {
+		cursor: crosshair;
+
 		.rect {
 			.handle-nw,
 			.handle-ne,
@@ -103,6 +121,7 @@ body {
 	#clip-work-space {
 		.match-parent;
 		z-index: 20;
+		cursor: crosshair;
 
 		#clip-work-space-bg-wrapper {
 			.match-parent;
@@ -265,7 +284,7 @@ body {
 		}
 
 		// buttons
-		// TODO: hover
+		// TODO: add fallback
 		.done,
 		.cancel
 		{
