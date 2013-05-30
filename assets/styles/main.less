@@ -230,6 +230,38 @@ body {
 #guide {
 	position: fixed;
 	top: 0;
+	left: 0;
+	width: 100%;
 	z-index: 31;
+	.transition(.3s);
+	&.dissolve-out {
+		.translate3d(0, -60px);
+	}
+
+	.container {
+		position: relative;
+		margin: 0 auto;
+		height: 63px;
+		width: 798px;
+		background-color: #e5e5e5;
+		background-position: 50% 23px;
+		background-repeat: no-repeat;
+		border: 1px solid #ccc;
+		top: -8px;
+		.border-radius(8px);
+		.drop-shadow;
+
+		&.draw {
+			background-image: url(/images/guide-draw.png);
+
+			.cancel {
+				display: none;
+			}
+		}
+		&.clip {
+			background-image: url(/images/guide-clip.png);
+		}
+	}
+
 	// TODO: center;
 }

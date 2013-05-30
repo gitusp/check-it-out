@@ -2,12 +2,10 @@ define [], ->
 	transitionEndEvent = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd'
 
 	ko.bindingHandlers.dissolveCSS3 = 
-		# init: (element, valueAccessor) ->
-		# 	value = ko.utils.unwrapObservable valueAccessor()
-		# 	$element = $ element
-		# 	unless value
-		# 		$element.addClass 'dissolve-out' if Modernizr.csstransitions
-		# 		$element.hide()
+		init: (element, valueAccessor) ->
+			value = ko.utils.unwrapObservable valueAccessor()
+			unless value
+				$(element).hide()
 
 		update: (element, valueAccessor) ->
 			value = ko.utils.unwrapObservable valueAccessor()

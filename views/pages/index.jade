@@ -58,9 +58,10 @@ block body
 						.share(data-bind='click: share, dissolveCSS3: ! editor()')
 
 					//- TODO: animation
-					#guide(data-bind='visible: editor()')
-						span(data-bind='click: cancel, visible: editor() == "clip"') [ cancel ]
-						span(data-bind='click: done') [ done ]
+					#guide(data-bind='dissolveCSS3: editor() && editor() != "loader"')
+						.container(data-bind='css: editor()')
+							span.cancel(data-bind='click: cancel') [ cancel ]
+							span.done(data-bind='click: done') [ done ]
 
 		//- TODO: animation
 		#content-share(data-bind='visible: state() == "share"', style='display: none')
