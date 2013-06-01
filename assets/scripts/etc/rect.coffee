@@ -1,5 +1,6 @@
 define [], (appModel) ->
 	workSpace = $ document
+	$window = $ window
 
 	class
 		constructor: (@pointFixed = {x: 0, y: 0}) ->
@@ -97,6 +98,7 @@ define [], (appModel) ->
 		# NOTE: startPointはwrapperはさんでもpage基準でいいのか？
 		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
 		startDraw: (initialPoint) ->
+			@optimizeViewport()
 			appModel.dragging true
 			basePoint = $.extend true, {}, @pointMutable
 			workSpace.on 'mousemove.draw', (e) =>
@@ -127,6 +129,44 @@ define [], (appModel) ->
 				appModel.dragging false
 				workSpace.off 'mousemove.drag mouseup.drag'
 				@dispose() unless @getWidth() * @getHeight()
+
+		optimizeViewport: ->
+			# conf
+			pad = 70
+			transition = 8
+
+			# flag
+			toBreak = false
+
+			(=>
+					x = 0
+					y = 0
+					nowX = if @pointMutable.x < @pointFixed.x then @entity.offset().left else @entity.offset().left + @getWidth()
+					nowY = if @pointMutable.y < @pointFixed.y then @entity.offset().top else @entity.offset().top + @getHeight()
+
+					# about x
+					overX = nowX - $window.width() - $window.scrollLeft() + pad
+					if overX > 0
+						x = overX / transition
+					else
+						overX = nowX - $window.scrollLeft() - pad
+						x = overX / transition if overX < 0
+
+					# about y
+					overY = nowY - $window.height() - $window.scrollTop() + pad
+					if overY > 0
+						y = overY / transition
+					else
+						overY = nowY - $window.scrollTop() - pad
+						y = overY / transition if overY < 0
+
+					window.scrollBy x, y
+					setTimeout arguments.callee, 13 unless toBreak
+				)()
+
+			workSpace.on 'mouseup.optimize', (e) =>
+				workSpace.off 'mouseup.optimize'
+				toBreak = true
 
 		# rangesafe point setter
 		normalize: (pt) ->
