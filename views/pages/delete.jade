@@ -24,7 +24,9 @@ block body
 		if error
 			| error
 		else
-			| done
+			#content-delete
+				h2.done
+				span.container キャッシュの設定により最大24時間画像が表示されることがあります
 
 block scripts
 	if mode == 'form'

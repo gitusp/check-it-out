@@ -187,10 +187,17 @@ h2 {
 	padding-top: 55px;
 	text-align: center;
 
-	h2.confirm {
-		background-image: url(/images/header-delete.png);
+	h2 {
 		margin-bottom: 40px;
+
+		&.confirm {
+			background-image: url(/images/header-delete.png);
+		}
+		&.done {
+			background-image: url(/images/header-deleted.png);
+		}
 	}
+
 	.container {
 		display: inline-block;
 		vertical-align: top;
