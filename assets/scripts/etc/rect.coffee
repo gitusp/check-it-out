@@ -98,12 +98,12 @@ define [], (appModel) ->
 		# NOTE: startPointはwrapperはさんでもpage基準でいいのか？
 		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
 		startDraw: (initialPoint) ->
-			@optimizeViewport()
+			@optimizeViewport(initialPoint)
 			appModel.dragging true
 			basePoint = $.extend true, {}, @pointMutable
-			workSpace.on 'mousemove.draw', (e) =>
-				@pointMutable.x = basePoint.x + e.pageX - initialPoint.x
-				@pointMutable.y = basePoint.y + e.pageY - initialPoint.y
+			workSpace.on 'mousemove.draw', (e, x = e.pageX, y = e.pageY) =>
+				@pointMutable.x = basePoint.x + x - initialPoint.x
+				@pointMutable.y = basePoint.y + y - initialPoint.y
 				@normalize @pointMutable
 				@draw()
 
@@ -113,14 +113,15 @@ define [], (appModel) ->
 				@dispose() unless @getWidth() * @getHeight()
 
 		startDrag: (initialPoint) ->
+			@optimizeViewport(initialPoint)
 			appModel.dragging true
 			basePointFixed = $.extend true, {}, @pointFixed
 			basePointMutable = $.extend true, {}, @pointMutable
-			workSpace.on 'mousemove.drag', (e) =>
-				@pointFixed.x = basePointFixed.x + e.pageX - initialPoint.x
-				@pointFixed.y = basePointFixed.y + e.pageY - initialPoint.y
-				@pointMutable.x = basePointMutable.x + e.pageX - initialPoint.x
-				@pointMutable.y = basePointMutable.y + e.pageY - initialPoint.y
+			workSpace.on 'mousemove.drag', (e, x = e.pageX, y = e.pageY) =>
+				@pointFixed.x = basePointFixed.x + x - initialPoint.x
+				@pointFixed.y = basePointFixed.y + y - initialPoint.y
+				@pointMutable.x = basePointMutable.x + x - initialPoint.x
+				@pointMutable.y = basePointMutable.y + y - initialPoint.y
 				@normalize @pointFixed
 				@normalize @pointMutable
 				@draw()
@@ -130,42 +131,52 @@ define [], (appModel) ->
 				workSpace.off 'mousemove.drag mouseup.drag'
 				@dispose() unless @getWidth() * @getHeight()
 
-		optimizeViewport: ->
+		optimizeViewport: (initialPoint) ->
 			# conf
 			pad = 70
 			transition = 8
 
-			# flag
+			# v
 			toBreak = false
+			lastPoint = initialPoint
 
 			(=>
 					x = 0
 					y = 0
-					nowX = if @pointMutable.x < @pointFixed.x then @entity.offset().left else @entity.offset().left + @getWidth()
-					nowY = if @pointMutable.y < @pointFixed.y then @entity.offset().top else @entity.offset().top + @getHeight()
+					scrollLeft = $window.scrollLeft()
+					scrollTop = $window.scrollTop()
+					innerWidth = $window.width()
+					innerHeight = $window.height()
 
 					# about x
-					overX = nowX - $window.width() - $window.scrollLeft() + pad
-					if overX > 0
+					overX = lastPoint.x - innerWidth - scrollLeft + pad
+					if overX > 0 and scrollLeft + innerWidth < workSpace.width()
 						x = overX / transition
-					else
-						overX = nowX - $window.scrollLeft() - pad
+					else if overX < 0 and scrollLeft > 0
+						overX = lastPoint.x - scrollLeft - pad
 						x = overX / transition if overX < 0
 
 					# about y
-					overY = nowY - $window.height() - $window.scrollTop() + pad
-					if overY > 0
+					overY = lastPoint.y - innerHeight - scrollTop + pad
+					if overY > 0 and scrollTop + innerHeight < workSpace.height()
 						y = overY / transition
-					else
-						overY = nowY - $window.scrollTop() - pad
+					else if overY < 0 and scrollTop > 0
+						overY = lastPoint.y - scrollTop - pad
 						y = overY / transition if overY < 0
 
+					# adj
+					x = x|0
+					y = y|0
 					window.scrollBy x, y
+					workSpace.trigger 'mousemove', [lastPoint.x + x, lastPoint.y + y]
 					setTimeout arguments.callee, 13 unless toBreak
 				)()
 
+			workSpace.on 'mousemove.optimize', (e, x = e.pageX, y = e.pageY) =>
+				lastPoint = x: x, y: y
+
 			workSpace.on 'mouseup.optimize', (e) =>
-				workSpace.off 'mouseup.optimize'
+				workSpace.off 'mousemove.optimize mouseup.optimize'
 				toBreak = true
 
 		# rangesafe point setter
