@@ -22,7 +22,7 @@ define ['etc/clipRect'], (clipRect, appModel) ->
 				e.preventDefault()
 
 		doClip: ->
-			if @rect
+			if @rect and @rect.getWidth() * @rect.getHeight()
 				to = {
 					offsetX: @stageOffsetX() - @rect.getLeft()
 					offsetY: @stageOffsetY() - @rect.getTop()
