@@ -8,6 +8,8 @@ define ['etc/lang'], (lang) ->
 			@deleteKeyStatus = ko.observable 'none'
 			@deleteUrl = ko.computed =>
 				if @deleteKey() then "#{@resultUrl()}/#{@deleteKey()}" else ''
+			@selectAll = (d, e) ->
+				$(e.target).select()
 
 			# realtime POST
 			@deleteKey.subscribe (newValue) =>

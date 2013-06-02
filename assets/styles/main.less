@@ -34,8 +34,7 @@ h2 {
 	height: 100%;
 	background: url(/images/init-loader.gif) 50% 50% no-repeat;
 }
-#content-portal {
-}
+#content-portal,
 #content-editor,
 #content-share,
 {
@@ -47,6 +46,61 @@ h2 {
 	td {
 		padding: 70px;
 		line-height: 0;
+	}
+}
+#content-portal {
+	.container {
+		display: inline-block;
+
+		form {
+			display: inline-block;
+		}
+
+		span {
+			display: inline-block;
+			height: 41px;
+			background: url(/images/portal-sprite.png) no-repeat;
+
+			&.paste {
+				width: 453px;
+				background-position: 0 0;
+			}
+			&.drop {
+				width: 235px;
+				background-position: -453px 0;
+			}
+			&.please {
+				width: 101px;
+				background-position: -831px 0;
+			}
+			&.upload {
+				cursor: pointer;
+				padding: 1px;
+				width: 141px;
+				height: 39px;
+				.border-radius(4px);
+				.gradient(#ccc, #fff);
+
+				.entity {
+					position: relative;
+					.border-radius(4px);
+					border: 1px solid #489351;
+					.gradient(#74ba7e, #5baa68);
+					height: 37px;
+
+					.text {
+						.match-parent;
+						background: no-repeat 50% 50% url(/images/text-upload.png);
+					}
+				}
+
+				&:hover {
+					.entity {
+						.gradient(#74ba7e, #579e5c);
+					}
+				}
+			}
+		}
 	}
 }
 #content-share {
