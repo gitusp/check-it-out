@@ -1,3 +1,5 @@
+var sv = require('local_shared_values');
+
 // Configure installed adapters
 // If you define an attribute in your model definition, 
 // it will override anything from this global config.
@@ -29,9 +31,9 @@ module.exports.adapters = {
 	// Learn more: http://en.wikipedia.org/wiki/MySQL
 	mysql: {
 		module		: 'sails-mysql',
-		host		: 'localhost',
-		user		: 'check_it_out',
-		password	: 'De2G&e%T',
-		database	: 'check_it_out'
-	}
+		host		: sv.mysqlHost,
+		user		: sv.mysqlUser,
+		password	: sv.mysqlPassword,
+		database	: sv.mysqlDatabase,
+	},
 };
