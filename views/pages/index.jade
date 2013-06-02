@@ -77,13 +77,13 @@ block body
 			table
 				tr
 					th シェア用URL
-					td(colspan='2'): span.input-wrapper: input(data-bind='value: resultUrl(), click: selectAll')
+					td(colspan='2'): span.input-wrapper: input(data-bind='value: resultUrl(), click: selectAll', readonly)
 				tr
 					th 削除キーを設定する
 					td(colspan='2'): span.input-wrapper.short: input(data-bind='value: deleteKey, valueUpdate: "keyup"')
 				tr(data-bind='css: deleteUrl() ? "" : "hidden"')
 					th 削除用URL
-					td: span.input-wrapper: input(data-bind='value: deleteUrl(), click: selectAll')
+					td: span.input-wrapper: input(data-bind='value: deleteUrl(), click: selectAll', readonly)
 					td.status(data-bind='css: deleteKeyStatus()')
 
 block extlibs
