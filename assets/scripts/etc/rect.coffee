@@ -95,8 +95,6 @@ define [], (appModel) ->
 					height: @getHeight()
 				}
 
-		# NOTE: startPointはwrapperはさんでもpage基準でいいのか？
-		# 		どちらにせよwrapperスクロールするために参照どこかで持ちそうなきがする
 		startDraw: (initialPoint) ->
 			@optimizeViewport(initialPoint)
 			appModel.dragging true
@@ -140,6 +138,7 @@ define [], (appModel) ->
 			toBreak = false
 			lastPoint = initialPoint
 
+			# looper
 			(=>
 					x = 0
 					y = 0
@@ -165,13 +164,14 @@ define [], (appModel) ->
 						y = overY / transition if overY < 0
 
 					# adj
-					x = x|0
-					y = y|0
+					x = ~~x
+					y = ~~y
 					window.scrollBy x, y
 					workSpace.trigger 'mousemove', [lastPoint.x + x, lastPoint.y + y]
 					setTimeout arguments.callee, 13 unless toBreak
 				)()
 
+			# events
 			workSpace.on 'mousemove.optimize', (e, x = e.pageX, y = e.pageY) =>
 				lastPoint = x: x, y: y
 

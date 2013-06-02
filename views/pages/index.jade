@@ -35,7 +35,7 @@ block body
 
 		//- TODO: animation
 		table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
-			span#stage(data-bind='style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
+			span#stage(data-bind='dissolveCSS3: editor() != "loader" && editor() != "share", style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
 				#draw-work-space(data-bind='event: {mousedown: startDraw}')
 					#draw-work-space-bg
 

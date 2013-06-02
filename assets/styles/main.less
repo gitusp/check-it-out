@@ -72,6 +72,11 @@ body {
 #stage {
 	display: inline-block;
 	.drop-shadow;
+	.transition(.3s);
+
+	&.dissolve-out {
+		.opacity(0);
+	}
 
 	#draw-work-space {
 		cursor: crosshair;
@@ -208,7 +213,7 @@ body {
 		}
 
 		&.dissolve-out {
-			opacity: 0;
+			.opacity(0);
 		}
 
 		&.clip {
