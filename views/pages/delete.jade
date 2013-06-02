@@ -10,14 +10,26 @@ append styles
 block body
 	if mode == 'form'
 		#content-delete
-			h2
+			h2.confirm
 			form(action='/delete', method='post')
-				input(type='hidden', name='token', value=token)
-				input(type='submit')
-			img(src=imageSource)
+				span.container
+					| この操作は取り消せません
+					span.delete: .entity: .text
+					.hidden-element
+						input(type='hidden', name='token', value=token)
+						input(type='submit')
+			.image-wrapper: img(src=imageSource)
 
 	else if mode == 'done'
 		if error
 			| error
 		else
 			| done
+
+block scripts
+	if mode == 'form'
+		script(src='/assets/scripts/libs/jquery.js')
+		script
+			$('.delete').click(function (e) {
+					$(this).closest('form').submit();
+				});

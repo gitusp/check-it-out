@@ -183,6 +183,58 @@ h2 {
 		}
 	}
 }
+#content-delete {
+	padding-top: 55px;
+	text-align: center;
+
+	h2.confirm {
+		background-image: url(/images/header-delete.png);
+		margin-bottom: 40px;
+	}
+	.container {
+		display: inline-block;
+		vertical-align: top;
+		line-height: 41px;
+
+		span.delete {
+			margin-left: 15px;
+			display: inline-block;
+			cursor: pointer;
+			padding: 1px;
+			width: 109px;
+			height: 39px;
+			.border-radius(4px);
+			.gradient(#ccc, #fff);
+
+			.entity {
+				position: relative;
+				.border-radius(4px);
+				border: 1px solid #548093;
+				.gradient(#83a8b5, #6a92a0);
+				height: 37px;
+
+				.text {
+					.match-parent;
+					background: no-repeat 50% 50% url(/images/text-delete.png);
+				}
+			}
+
+			&:hover {
+				.entity {
+					.gradient(#83a8b5, #5e848e);
+				}
+			}
+		}
+	}
+	.image-wrapper {
+		text-align: center;
+		padding: 30px;
+
+		img {
+			display: inline-block;
+		}
+	}
+}
 
 // wait for server
 #progress {
