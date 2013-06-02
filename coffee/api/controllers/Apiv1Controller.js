@@ -74,25 +74,25 @@
               }).done(function(err, img) {
                 if (!err) {
                   return res.view("pages/upload", {
-                    status: 'success',
+                    uploadStatus: 'success',
                     image: "\"/s/" + hash + "\""
                   });
                 } else {
                   return res.view("pages/upload", {
-                    status: 'exception'
+                    uploadStatus: 'exception'
                   });
                 }
               });
             });
           } else {
             return res.view("pages/upload", {
-              status: 'exception'
+              uploadStatus: 'exception'
             });
           }
         });
       } else {
         return res.view("pages/upload", {
-          status: 'unsupportedimage'
+          uploadStatus: 'unsupportedimage'
         });
       }
     },

@@ -4,7 +4,7 @@ prepend title
 	| UPLOAD
 
 append scripts
-	if status == 'success'
+	if uploadStatus == 'success'
 		script
 			parent.uploadImageCallback(!{image});
 
@@ -13,7 +13,7 @@ append scripts
 		script
 			requirejs.config({baseUrl: '/assets/scripts'});
 
-		if status == 'unsupportedimage'
+		if uploadStatus == 'unsupportedimage'
 			script
 				require(['etc/lang'], function (lang) {
 						alert(lang.unsupportedImage);

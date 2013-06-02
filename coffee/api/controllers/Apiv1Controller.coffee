@@ -45,14 +45,14 @@ module.exports =
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: type, tmp: true).done (err, img) ->
 							unless err
-								res.view "pages/upload", status: 'success', image: "\"/s/#{hash}\""
+								res.view "pages/upload", uploadStatus: 'success', image: "\"/s/#{hash}\""
 							else
-								res.view "pages/upload", status: 'exception'
+								res.view "pages/upload", uploadStatus: 'exception'
 
 				else
-					res.view "pages/upload", status: 'exception'
+					res.view "pages/upload", uploadStatus: 'exception'
 		else
-			res.view "pages/upload", status: 'unsupportedimage'
+			res.view "pages/upload", uploadStatus: 'unsupportedimage'
 
 	# 
 	# end edit
