@@ -96,7 +96,7 @@ define [], (appModel) ->
 				}
 
 		startDraw: (initialPoint) ->
-			@optimizeViewport(initialPoint)
+			@optimizeViewport(initialPoint) if appModel.canOptimizeViewPort
 			appModel.dragging true
 			basePoint = $.extend true, {}, @pointMutable
 			workSpace.on 'mousemove.draw', (e, x = e.pageX, y = e.pageY) =>
@@ -111,7 +111,7 @@ define [], (appModel) ->
 				@dispose() unless @getWidth() * @getHeight()
 
 		startDrag: (initialPoint) ->
-			@optimizeViewport(initialPoint)
+			@optimizeViewport(initialPoint) if appModel.canOptimizeViewPort
 			appModel.dragging true
 			basePointFixed = $.extend true, {}, @pointFixed
 			basePointMutable = $.extend true, {}, @pointMutable
@@ -168,7 +168,7 @@ define [], (appModel) ->
 					y = ~~y
 					window.scrollBy x, y
 					workSpace.trigger 'mousemove', [lastPoint.x + x, lastPoint.y + y]
-					setTimeout arguments.callee, 25 unless toBreak
+					setTimeout arguments.callee, 13 unless toBreak
 				)()
 
 			# events

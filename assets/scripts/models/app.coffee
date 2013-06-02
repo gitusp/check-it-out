@@ -78,6 +78,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 		# fixed val, feature detection
 		# TODO: 調査、ただ8から使えるのは確認したので急ぎではない
 		appUnavailable: false#/msie (6|7)/.test useragent
+		canOptimizeViewPort: ! /safari/.test useragent
 		canPasteImage: /chrome/.test useragent
 		canDropImage: !!window.FileReader && Modernizr.draganddrop
 
