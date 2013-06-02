@@ -47,7 +47,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 					[canvas] = $("<canvas width=\"#{@stageWidth()}\" height=\"#{@stageHeight()}\">")
 					context = canvas.getContext '2d'
 					[img] = $('<img>').on('load', =>
-							context.drawImage img, -@stageOffsetX(), -@stageOffsetY(), @stageWidth(), @stageHeight(), 0, 0, @stageWidth(), @stageHeight()
+							context.drawImage img, @stageOffsetX(), @stageOffsetY()
 							tmpImageSource = canvas.toDataURL()
 							if tmpImageSource.length < @imageSource().length
 								done(true, tmpImageSource)
