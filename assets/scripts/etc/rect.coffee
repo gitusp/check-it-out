@@ -168,7 +168,7 @@ define [], (appModel) ->
 					y = ~~y
 					window.scrollBy x, y
 					workSpace.trigger 'mousemove', [lastPoint.x + x, lastPoint.y + y]
-					setTimeout arguments.callee, 13 unless toBreak
+					setTimeout arguments.callee, 25 unless toBreak
 				)()
 
 			# events
