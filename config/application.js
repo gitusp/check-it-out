@@ -1,4 +1,4 @@
-var sv = require('shared_values');
+var sv = require('local_shared_values');
 
 module.exports = {
 	

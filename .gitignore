@@ -49,4 +49,4 @@ config/local.js
 # my node modules
 ########################
 !node_modules/capture
-!node_modules/shared_values.js
+!node_modules/local_shared_values.ex.js

@@ -1,6 +1,6 @@
 fs = require 'fs'
 client = require 'capture/client'
-sv = require 'shared_values'
+sv = require 'local_shared_values'
 crypto = require 'crypto'
 uuid = require 'uuid'
 
