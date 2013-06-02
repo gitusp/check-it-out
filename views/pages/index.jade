@@ -21,69 +21,70 @@ append styles
 	link(rel='stylesheet', href='/assets/styles/main.css')
 
 block body
-	#wrapper
-		#content-loading(data-bind='visible: state() == "loading"')
+	#content-loading(data-bind='visible: state() == "loading"')
 
-		table#content-portal(data-bind='visible: state() == "portal"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
-			.container
-				iframe.hidden-element(name='upload-frame')
+	table#content-portal(data-bind='visible: state() == "portal"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+		.container
+			iframe.hidden-element(name='upload-frame')
 
-				span.image
-				span.paste(data-bind='visible: canPasteImage')
-				span.drop(data-bind='visible: canDropImage')
+			span.image
+			span.paste(data-bind='visible: canPasteImage')
+			span.drop(data-bind='visible: canDropImage')
 
-				form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
-					span.upload(data-bind='click: emulateBrowse'): .entity: .text
-					.hidden-element
-						input(type='file', name='image', data-bind='event: {change: upload}')
-						input(type='submit')
+			form(action='./api/v1/upload', method='post', enctype='multipart/form-data', target='upload-frame')
+				span.upload(data-bind='click: emulateBrowse'): .entity: .text
+				.hidden-element
+					input(type='file', name='image', data-bind='event: {change: upload}')
+					input(type='submit')
 
-				span.please
+			span.please
 
-		table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
-			span#stage(data-bind='dissolveCSS3: editor() != "loader" && editor() != "share", style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
-				#draw-work-space(data-bind='event: {mousedown: startDraw}')
-					#draw-work-space-bg
+	table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+		#progress(data-bind='dissolveCSS3: editor() == "share"')
 
-				#draw-cover(data-bind='visible: editor() != "draw"')
+		span#stage(data-bind='dissolveCSS3: editor() != "loader" && editor() != "share", style: {height: stageHeight() + "px", width: stageWidth() + "px", backgroundImage: "url(" + imageSource() + ")", backgroundPosition: stageOffsetX() + "px " + stageOffsetY() + "px"}')
+			#draw-work-space(data-bind='event: {mousedown: startDraw}')
+				#draw-work-space-bg
 
-				#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
-					#clip-work-space-bg-wrapper
-						.mask1
-						.mask2
-						.mask3
-						.mask4
+			#draw-cover(data-bind='visible: editor() != "draw"')
 
-				#drag-cover(data-bind='visible: dragging()')
+			#clip-work-space(data-bind='visible: editor() == "clip", event: {mousedown: startClip}')
+				#clip-work-space-bg-wrapper
+					.mask1
+					.mask2
+					.mask3
+					.mask4
 
-			#tools
-				.clip(data-bind='click: clip, dissolveCSS3: ! editor()')
-				.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
-				.share(data-bind='click: share, dissolveCSS3: ! editor()')
+			#drag-cover(data-bind='visible: dragging()')
 
-			#guide(data-bind='dissolveCSS3: editor() && editor() != "loader" && editor() != "share"')
-				.container(data-bind='css: editor()')
-					//- HACK: pre-load
-					img.hidden-element(src='/images/text-cancel-hover.png')
-					.cancel(data-bind='click: cancel'): .entity: .text
-					.done(data-bind='click: done'): .entity: .text
+		#tools
+			.clip(data-bind='click: clip, dissolveCSS3: ! editor()')
+			.draw(data-bind='click: draw, dissolveCSS3: ! editor()')
+			.share(data-bind='click: share, dissolveCSS3: ! editor()')
 
-		table#content-share(data-bind='visible: state() == "share"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
-			span.container
-				h2
-				.note(data-bind='text: "有効期限は" + expire() + "までです"')
-				.ad-container
-				table
-					tr
-						th シェア用URL
-						td(colspan='2'): span.input-wrapper: input(data-bind='value: resultUrl(), click: selectAll')
-					tr
-						th 削除キーを設定する
-						td(colspan='2'): span.input-wrapper.short: input(data-bind='value: deleteKey, valueUpdate: "keyup"')
-					tr(data-bind='css: deleteUrl() ? "" : "hidden"')
-						th 削除用URL
-						td: span.input-wrapper: input(data-bind='value: deleteUrl(), click: selectAll')
-						td.status(data-bind='css: deleteKeyStatus()')
+		#guide(data-bind='dissolveCSS3: editor() && editor() != "loader" && editor() != "share"')
+			.container(data-bind='css: editor()')
+				//- HACK: pre-load
+				img.hidden-element(src='/images/text-cancel-hover.png')
+				.cancel(data-bind='click: cancel'): .entity: .text
+				.done(data-bind='click: done'): .entity: .text
+
+	table#content-share(data-bind='visible: state() == "share"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+		span.container
+			h2
+			.note(data-bind='text: "有効期限は" + expire() + "までです"')
+			.ad-container
+			table
+				tr
+					th シェア用URL
+					td(colspan='2'): span.input-wrapper: input(data-bind='value: resultUrl(), click: selectAll')
+				tr
+					th 削除キーを設定する
+					td(colspan='2'): span.input-wrapper.short: input(data-bind='value: deleteKey, valueUpdate: "keyup"')
+				tr(data-bind='css: deleteUrl() ? "" : "hidden"')
+					th 削除用URL
+					td: span.input-wrapper: input(data-bind='value: deleteUrl(), click: selectAll')
+					td.status(data-bind='css: deleteKeyStatus()')
 
 block extlibs
 	script(src='/assets/scripts/libs/modernizr.js')

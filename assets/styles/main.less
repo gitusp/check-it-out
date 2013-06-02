@@ -23,12 +23,8 @@ body {
 
 // common
 h2 {
-	height: 20px;
+	height: 21px;
 	background: no-repeat 50% 0;
-}
-
-#wrapper {
-	height: 100%;
 }
 
 #content-loading {
@@ -188,6 +184,16 @@ h2 {
 	}
 }
 
+// wait for server
+#progress {
+	.match-parent;
+	.transition(.3s opacity);
+	background: url(/images/init-loader.gif) 50% 50% no-repeat;
+
+	&.dissolve-out {
+		.opacity(0);
+	}
+}
 
 /*
  *	extend stage module
