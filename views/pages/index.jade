@@ -7,8 +7,15 @@ block title
 	= screenAppName
 
 append metas
-	//- TODO: favicon
-	//- TODO: ogp
+	meta(name='description', content=appDescription)
+
+	//- OGP
+	meta(property='og:title', content=screenAppName)
+	meta(property='og:type', content='website')
+	meta(property='og:url', content='http://mite.tsuku.ro/')
+	meta(property='og:image', content='http://mite.tsuku.ro/images/ogp.png')
+	meta(property='og:description', content=appDescription)
+	meta(property='og:site_name', content=screenAppName)
 
 append styles
 	link(rel='stylesheet', href='/assets/styles/main.css')
