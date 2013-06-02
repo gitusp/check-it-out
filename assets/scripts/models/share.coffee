@@ -1,12 +1,13 @@
 define ['etc/lang'], (lang) ->
 	class
 		constructor: ->
+			@expire = ko.observable()
 			@resultUrl = ko.observable()
 			@deleteToken = null
 			@deleteKey = ko.observable()
 			@deleteKeyStatus = ko.observable 'none'
 			@deleteUrl = ko.computed =>
-				if @deleteKey() then "#{@resultUrl()}/#{@deleteKey()}" else false
+				if @deleteKey() then "#{@resultUrl()}/#{@deleteKey()}" else ''
 
 			# realtime POST
 			@deleteKey.subscribe (newValue) =>

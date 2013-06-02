@@ -3,6 +3,7 @@ client = require 'capture/client'
 sv = require 'local_shared_values'
 crypto = require 'crypto'
 uuid = require 'uuid'
+dateformat = require 'dateformat'
 
 # hashがユニークになるまでトライ
 createHash = (callback) ->
@@ -69,10 +70,15 @@ module.exports =
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
+								# expire
+								future = new Date (new Date).getTime() + 60 * 60 * 24 * 30 * 1000
+								expire = dateformat future, "yyyy/mm/dd HH:MM:ss"
+
+								# token
 								token = uuid.v4()
 								req.session.keyToken = req.session.keyToken || {}
 								req.session.keyToken[token] = img.id
-								res.json status: 'success', url: "/s/#{hash}", token: token
+								res.json status: 'success', url: "/s/#{hash}", token: token, expire: expire
 							else
 								res.json status: 'failure'
 

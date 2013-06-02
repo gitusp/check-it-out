@@ -5,6 +5,8 @@ html, body {
 }
 body {
 	background: url(/images/pattern-slash.png);
+	font-size: 14px;
+	color: #666;
 	.user-select(none);
 }
 
@@ -18,6 +20,12 @@ body {
 	overflow: hidden;
 }
 
+// common
+h2 {
+	height: 20px;
+	background: no-repeat 50% 0;
+}
+
 #wrapper {
 	height: 100%;
 }
@@ -28,7 +36,9 @@ body {
 }
 #content-portal {
 }
-#content-editor {
+#content-editor,
+#content-share,
+{
 	width: 100%;
 	height: 100%;
 	vertical-align: middle;
@@ -39,6 +49,86 @@ body {
 		line-height: 0;
 	}
 }
+#content-share {
+	.container {
+		width: 700px;
+		display: inline-block;
+
+		h2 {
+			background-image: url(/images/header-share.png);
+			margin-bottom: 40px;
+		}
+
+		.note {
+			margin-bottom: 50px;
+		}
+
+		.ad-container {
+			margin-bottom: 22px;
+		}
+
+		table {
+			margin: 0 auto;
+
+			tr {
+				.transition(.3s);
+
+				&.hidden {
+					.opacity(0);
+				}
+			}
+
+			th {
+				text-align: right;
+				font-weight: normal;
+				font-size: 12px;
+			}
+			td {
+				padding: 6px;
+				text-align: left;
+			}
+			.input-wrapper {
+				display: inline-block;
+				width: 398px;
+				height: 34px;
+				padding: 1px;
+				.border-radius(4px);
+				.gradient(#ccc, #fff);
+
+				input {
+					width: 384px;
+					height: 32px;
+					line-height: 32px;
+					font-size: 16px;
+					color: #666;
+					padding: 0 6px;
+					border: 1px solid #e6e6e6;
+					.border-radius(4px);
+				}
+
+				&.short {
+					width: 118px;
+
+					input {
+						width: 104px;
+					}
+				}
+			}
+			.status {
+				background: no-repeat 50% 50%;
+				padding-left:24px;
+
+				&.posting {
+					background-image: url(/images/post-loader.gif);
+				}
+				&.posted {
+					background-image: url(/images/post-complete.png);
+				}
+			}
+		}
+	}
+}
+
 
 /*
  *	extend stage module

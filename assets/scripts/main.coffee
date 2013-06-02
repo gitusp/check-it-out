@@ -59,6 +59,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 				if result.status == 'success'
 					appModel.resultUrl "http://#{location.host}#{result.url}"
 					appModel.deleteToken = result.token
+					appModel.expire result.expire
 					next()
 				else
 					alert lang.errorInServer

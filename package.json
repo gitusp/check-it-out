@@ -6,9 +6,10 @@
     "dependencies": {
         "sails": "0.8.91",
         "optimist": "0.4.0",
-        "phantomjs": ">=1.9.0-4",
-        "sails-mysql": ">=0.7.8",
-        "uuid": ">=1.4.1"
+        "phantomjs": "1.9.0-4",
+        "sails-mysql": "0.7.8",
+        "uuid": "1.4.1",
+        "dateformat": "1.0.6-1.2.3"
     },
     "scripts": {
         "start": "node app.js",

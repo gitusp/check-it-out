@@ -63,16 +63,22 @@ block body
 					.done(data-bind='click: done'): .entity: .text
 
 		//- TODO: animation
-		#content-share(data-bind='visible: state() == "share"', style='display: none')
-			input(data-bind='value: resultUrl()')
-			input(data-bind='value: deleteKey, valueUpdate: "keyup"')
-			//- NOTE: 固定物のbgきりかえかなー
-			div(data-bind='visible: deleteKeyStatus() == "posting"') guruguru
-			div(data-bind='visible: deleteKeyStatus() == "posted"') done
-
-			div(data-bind='visible: deleteUrl()')
-				| 削除URL: 
-				input(data-bind='value: deleteUrl()')
+		table#content-share(data-bind='visible: state() == "share"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+			span.container
+				h2
+				.note(data-bind='text: "有効期限は" + expire() + "までです"')
+				.ad-container
+				table
+					tr
+						th シェア用URL
+						td(colspan='2'): span.input-wrapper: input(data-bind='value: resultUrl()')
+					tr
+						th 削除キーを設定する
+						td(colspan='2'): span.input-wrapper.short: input(data-bind='value: deleteKey, valueUpdate: "keyup"')
+					tr(data-bind='css: deleteUrl() ? "" : "hidden"')
+						th 削除用URL
+						td: span.input-wrapper: input(data-bind='value: deleteUrl()')
+						td.status(data-bind='css: deleteKeyStatus()')
 
 block extlibs
 	script(src='/assets/scripts/libs/modernizr.js')
