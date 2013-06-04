@@ -24,6 +24,7 @@ block body
 	#content-loading(data-bind='visible: state() == "loading"')
 
 	table#content-portal(data-bind='visible: state() == "portal"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+		.about-service(data-bind='click: showHelp') このサービスについて
 		.container
 			iframe.hidden-element(name='upload-frame')
 
@@ -85,6 +86,10 @@ block body
 					th 削除用URL
 					td: span.input-wrapper: input(data-bind='value: deleteUrl(), click: selectAll', readonly)
 					td.status(data-bind='css: deleteKeyStatus()')
+
+	table#content-help(data-bind='dissolveCSS3: help()', style='display: none', cellspacing='0', cellpadding='0'): tr: td
+		.background
+		span.container
 
 block extlibs
 	script(src='/assets/scripts/libs/modernizr.js')

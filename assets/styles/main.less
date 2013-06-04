@@ -46,6 +46,22 @@ h2 {
 	}
 }
 #content-portal {
+	.about-service {
+		.transition(.2s opacity);
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		color: #20a894;
+		cursor: pointer;
+		font-size: 12px;
+		padding-left: 15px;
+		line-height: 12px;
+		background: url(/images/icon-link.png) no-repeat 0 0;
+
+		&:hover {
+			.opacity(.75);
+		}
+	}
 	.container {
 		display: inline-block;
 
@@ -249,6 +265,35 @@ h2 {
 		img {
 			display: inline-block;
 		}
+	}
+}
+#content-help {
+	.match-parent;
+	vertical-align: middle;
+	text-align: center;
+	.transition(.3s opacity);
+
+	td {
+		padding: 50px;
+		line-height: 0;
+	}
+
+	&.dissolve-out {
+		.opacity(0);
+	}
+
+	.background {
+		background: #000;
+		.match-parent;
+		.opacity(.5);
+	}
+	.container {
+		.drop-shadow;
+		position: relative;
+		display: inline-block;
+		width: 800px;
+		height: 514px;
+		background: #fff url(/images/help.png);
 	}
 }
 

@@ -58,7 +58,6 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 					# direct output
 					done()
 
-
 			# common UI
 			@done = (d, e) =>
 				switch @editor()
@@ -68,6 +67,11 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 						@editor null
 			@cancel = (d, e) =>
 				@editor null
+
+			# help
+			@showHelp = =>
+				@help true
+			@help = ko.observable false
 
 			# pseudo super
 			clip.apply @, arguments
