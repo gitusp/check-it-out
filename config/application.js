@@ -17,6 +17,11 @@ module.exports = {
 	environment: 'development',
 	// environment: 'production',
 
+	session: {
+		secret: sv.sessionSecret,
+		cookie: {domain: sv.host, maxAge: 60 * 60 * 24 * 1000}
+	},
+
 	// Logger
 	// Valid `level` configs:
 	// 
