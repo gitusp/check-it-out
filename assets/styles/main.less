@@ -75,15 +75,16 @@ h2 {
 				background-position: -831px 0;
 			}
 			&.upload {
+				position: relative;
 				cursor: pointer;
 				padding: 1px;
 				width: 141px;
 				height: 39px;
+				overflow: hidden;
 				.border-radius(4px);
 				.gradient(#ccc, #fff);
 
 				.entity {
-					position: relative;
 					.border-radius(4px);
 					border: 1px solid #489351;
 					.gradient(#74ba7e, #5baa68);
@@ -99,6 +100,14 @@ h2 {
 					.entity {
 						.gradient(#74ba7e, #579e5c);
 					}
+				}
+				input {
+					height: 300px;
+					font-size: 300px;
+					position: absolute;
+					top: 0;
+					right: 0;
+					.opacity(0);
 				}
 			}
 		}
@@ -204,6 +213,7 @@ h2 {
 		line-height: 41px;
 
 		span.delete {
+			position: relative;
 			margin-left: 15px;
 			display: inline-block;
 			cursor: pointer;
@@ -214,7 +224,6 @@ h2 {
 			.gradient(#ccc, #fff);
 
 			.entity {
-				position: relative;
 				.border-radius(4px);
 				border: 1px solid #548093;
 				.gradient(#83a8b5, #6a92a0);
@@ -509,7 +518,6 @@ h2 {
 			cursor: pointer;
 
 			.entity {
-				position: relative;
 				.border-radius(4px);
 				border: 1px solid transparent;
 				height: 37px;

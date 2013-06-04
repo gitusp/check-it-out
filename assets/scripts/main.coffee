@@ -78,3 +78,8 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 
 	# boot strap
 	if appModel.appUnavailable then alert lang.notCompatible else next()
+
+	# HACK: need real file input
+	if appModel.needRealFileInput
+		$('#content-portal input[type=file]').appendTo('#content-portal .upload').click((e) -> e.stopPropagation())
+	

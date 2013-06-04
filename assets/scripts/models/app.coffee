@@ -81,6 +81,7 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 		canOptimizeViewPort: ! /safari/.test useragent and ! /chrome/.test useragent
 		canPasteImage: /chrome/.test useragent
 		canDropImage: !!window.FileReader && Modernizr.draganddrop
+		needRealFileInput: /msie/.test useragent
 
 		# methods
 		setShareCallback: (@shareCallback) ->
