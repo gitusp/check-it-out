@@ -19,6 +19,12 @@ append scripts
 						alert(lang.unsupportedImage);
 					});
 
+		else if uploadStatus == 'toolargeimage'
+			script
+				require(['etc/lang'], function (lang) {
+						alert(lang.tooLargeImage);
+					});
+
 		else
 			script
 				require(['etc/lang'], function (lang) {

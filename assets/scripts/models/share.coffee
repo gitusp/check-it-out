@@ -20,6 +20,8 @@ define ['etc/lang'], (lang) ->
 								switch json.status
 									when 'success'
 										@deleteKeyStatus 'posted'
+									when 'toolargeimage'
+										alert lang.tooLargeImage
 									else
 										alert lang.errorInServer
 							, 'json'
