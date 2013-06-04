@@ -71,7 +71,7 @@ module.exports =
 						Image.create(hash: hash, image: data, type: 'png', tmp: false).done (err, img) ->
 							unless err
 								# expire
-								future = new Date (new Date).getTime() + 60 * 60 * 24 * 30 * 1000
+								future = new Date (new Date).getTime() + sv.imageMaxAge
 								expire = dateformat future, "yyyy/mm/dd HH:MM:ss"
 
 								# token

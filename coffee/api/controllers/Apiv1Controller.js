@@ -120,7 +120,7 @@
                 var expire, future, token;
 
                 if (!err) {
-                  future = new Date((new Date).getTime() + 60 * 60 * 24 * 30 * 1000);
+                  future = new Date((new Date).getTime() + sv.imageMaxAge);
                   expire = dateformat(future, "yyyy/mm/dd HH:MM:ss");
                   token = uuid.v4();
                   req.session.keyToken = req.session.keyToken || {};
