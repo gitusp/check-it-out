@@ -118,7 +118,7 @@ module.exports =
 	key: (req, res) ->
 		key = req.param 'key', ''
 		token = req.param 'token', ''
-		imageId = req.session.keyToken[token]
+		imageId = if req.session.keyToken? then req.session.keyToken[token] else null
 
 		# has session?
 		return res.json status: 'exception' unless imageId?
@@ -163,7 +163,7 @@ module.exports =
 	# 
 	delete: (req, res) ->
 		token = req.param 'token', ''
-		imageId = req.session.deleteToken[token]
+		imageId = if req.session.deleteToken? then req.session.deleteToken[token] else null
 
 		# has session?
 		return res.view 'pages/delete', mode: 'done', error: true unless imageId?
