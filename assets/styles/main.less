@@ -293,7 +293,32 @@ h2 {
 		display: inline-block;
 		width: 800px;
 		height: 514px;
-		background: #fff url(/images/help.png);
+		background: #fff url(/images/help.png) 0 0 no-repeat;
+
+		.try {
+			.transition(.2s);
+			background: #52beb2 url(/images/text-try.png) 50% 50% no-repeat;
+			position: absolute;
+			width: 100%;
+			height: 57px;
+			border-top: #84cfc5 1px solid;
+			left: 0;
+			bottom: 0;
+			cursor: pointer;
+
+			&:hover {
+				background-color: #46afa0;
+			}
+		}
+
+		.close {
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			right: 10px;
+			top: 10px;
+			cursor: pointer;
+		}
 	}
 }
 

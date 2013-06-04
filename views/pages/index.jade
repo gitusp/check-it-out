@@ -90,6 +90,8 @@ block body
 	table#content-help(data-bind='dissolveCSS3: help()', style='display: none', cellspacing='0', cellpadding='0'): tr: td
 		.background
 		span.container
+			.close(data-bind='click: hideHelp')
+			.try(data-bind='click: hideHelp')
 
 block extlibs
 	script(src='/assets/scripts/libs/modernizr.js')
