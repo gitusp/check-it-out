@@ -77,7 +77,8 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 		setImage src
 
 	# boot strap
-	if appModel.appUnavailable then alert lang.notCompatible else next()
+	alert lang.notCompatible if appModel.appUnavailable
+	next()
 
 	# HACK: need real file input
 	if appModel.needRealFileInput
