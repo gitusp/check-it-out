@@ -56,13 +56,18 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 	# apply knockout
 	appModel.setShareCallback (json) ->
 		$.post '/api/v1/share', {dna: json}, (result) ->
-				if result.status == 'success'
-					appModel.resultUrl "http://#{location.host}#{result.url}"
-					appModel.deleteToken = result.token
-					appModel.expire result.expire
-					next()
-				else
-					alert lang.errorInServer
+				switch result.status
+					when 'success'
+						appModel.resultUrl "http://#{location.host}#{result.url}"
+						appModel.deleteToken = result.token
+						appModel.expire result.expire
+						next()
+
+					when 'toolargeimage'
+						alert lang.tooLargeImage
+
+					else
+						alert lang.errorInServer
 			, 'json'
 
 	ko.applyBindings appModel, document.body

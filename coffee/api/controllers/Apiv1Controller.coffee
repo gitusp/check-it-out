@@ -28,19 +28,26 @@ module.exports =
 	# init by upload
 	# 
 	upload: (req, res) ->
+		image = req.files.image
+		return res.view "pages/upload", uploadStatus: 'exception' unless image?
+
 		# type判別
-		if /image\/p?jpe?g/.test req.files.image.type
+		if /image\/p?jpe?g/.test image.type
 			type = 'jpg'
-		else if /image\/(x-)?png/.test req.files.image.type
+		else if /image\/(x-)?png/.test image.type
 			type = 'png'
-		else if /image\/gif/.test req.files.image.type
+		else if /image\/gif/.test image.type
 			type = 'gif'
 		else
 			type = 'unk'
 
 		# dataを保存
 		unless type == 'unk'
-			fs.readFile req.files.image.path, (err, data) ->
+			# size判定
+			return res.view "pages/upload", uploadStatus: 'toolargeimage' if image.size > sv.imageMaxBytes
+
+			# 保存
+			fs.readFile image.path, (err, data) ->
 				unless err
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: type, tmp: true).done (err, img) ->
@@ -87,8 +94,8 @@ module.exports =
 					res.json status: 'failure'
 
 
-		# アップロード組か否か
 		if dna.nonBase64
+			# アップロードしているほう
 			tmpHash = dna.image.split('/').pop()
 			Image.find(hash: tmpHash).done (err, img) ->
 				if ! err and img?
@@ -98,6 +105,9 @@ module.exports =
 				else
 					res.json status: 'failure'
 		else
+			# なうでデータ送ってきてるほう
+			return res.json status: 'failure' if ! dna.image?
+			return res.json status: 'toolargeimage' if dna.image.length * 3 / 4 > sv.imageMaxBytes
 			runClient dna
 
 	# 

@@ -51,19 +51,30 @@
 
   module.exports = {
     upload: function(req, res) {
-      var type;
+      var image, type;
 
-      if (/image\/p?jpe?g/.test(req.files.image.type)) {
+      image = req.files.image;
+      if (image == null) {
+        return res.view("pages/upload", {
+          uploadStatus: 'exception'
+        });
+      }
+      if (/image\/p?jpe?g/.test(image.type)) {
         type = 'jpg';
-      } else if (/image\/(x-)?png/.test(req.files.image.type)) {
+      } else if (/image\/(x-)?png/.test(image.type)) {
         type = 'png';
-      } else if (/image\/gif/.test(req.files.image.type)) {
+      } else if (/image\/gif/.test(image.type)) {
         type = 'gif';
       } else {
         type = 'unk';
       }
       if (type !== 'unk') {
-        return fs.readFile(req.files.image.path, function(err, data) {
+        if (image.size > sv.imageMaxBytes) {
+          return res.view("pages/upload", {
+            uploadStatus: 'toolargeimage'
+          });
+        }
+        return fs.readFile(image.path, function(err, data) {
           if (!err) {
             return createHash(function(hash) {
               return Image.create({
@@ -161,6 +172,16 @@
           }
         });
       } else {
+        if (dna.image == null) {
+          return res.json({
+            status: 'failure'
+          });
+        }
+        if (dna.image.length * 3 / 4 > sv.imageMaxBytes) {
+          return res.json({
+            status: 'toolargeimage'
+          });
+        }
         return runClient(dna);
       }
     },
@@ -182,7 +203,7 @@
 
       key = req.param('key', '');
       token = req.param('token', '');
-      imageId = req.session.keyToken[token];
+      imageId = req.session.keyToken != null ? req.session.keyToken[token] : null;
       if (imageId == null) {
         return res.json({
           status: 'exception'
@@ -243,7 +264,7 @@
       var imageId, token;
 
       token = req.param('token', '');
-      imageId = req.session.deleteToken[token];
+      imageId = req.session.deleteToken != null ? req.session.deleteToken[token] : null;
       if (imageId == null) {
         return res.view('pages/delete', {
           mode: 'done',

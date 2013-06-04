@@ -20,6 +20,7 @@ define ['etc/lang'], (lang) ->
 								switch json.status
 									when 'success'
 										@deleteKeyStatus 'posted'
+
 									else
 										alert lang.errorInServer
 							, 'json'
