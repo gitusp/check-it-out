@@ -21,6 +21,8 @@ append styles
 	link(rel='stylesheet', href='/assets/styles/main.css')
 
 block body
+	include ../modules/fbsdk
+
 	#content-loading(data-bind='visible: state() == "loading"')
 
 	table#content-portal(data-bind='visible: state() == "portal"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
@@ -39,6 +41,11 @@ block body
 					input(type='submit')
 
 			span.please
+			.social-plugins
+				a(href='https://twitter.com/share', class='twitter-share-button', data-url='http://mite.tsuku.ro/', data-lang='ja') ツイート
+				script
+					!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+				div.fb-like(data-href='http://mite.tsuku.ro/', data-send='false', data-layout='button_count', data-width='120', data-show-faces='false')
 
 	table#content-editor(data-bind='visible: state() == "editor"', style='display: none', cellspacing='0', cellpadding='0'): tr: td
 		#progress(data-bind='dissolveCSS3: editor() == "share"')
