@@ -4,6 +4,7 @@ define {
 	'areYouSureToLeave': '編集中のデータがあります'
 	'notCompatible': 'お使いのブラウザは正常に動作しない場合があります'
 	'unsupportedImage': 'サポートされない画像形式です'
+	'errorWhileLoadingImage': '画像読込エラーが発生しました'
 	'errorInServer': 'サーバーエラーが発生しました'
 	'tooLargeImage': '画像サイズが大きすぎます'
 }

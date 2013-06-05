@@ -82,8 +82,8 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			share.apply @, arguments
 
 		# fixed val, feature detection
-		appUnavailable: /msie (6|7)/.test useragent
-		canOptimizeViewPort: ! /safari/.test useragent and ! /chrome/.test useragent
+		appUnavailable: /msie (6|7)|iphone|android|ipad|ipod/.test useragent # old msie and touch devices
+		canOptimizeViewPort: /chrome|firefox|msie/.test useragent # exclude safari
 		canPasteImage: /chrome/.test useragent
 		canDropImage: !!window.FileReader && Modernizr.draganddrop
 		needRealFileInput: /msie/.test useragent

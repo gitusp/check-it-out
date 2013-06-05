@@ -50,7 +50,7 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 				appModel.stageHeight tmpImage.height
 				next()
 			).error(->
-				alert lang.unsupportedImage
+				alert lang.errorWhileLoadingImage
 			).attr 'src', src
 
 	# apply knockout

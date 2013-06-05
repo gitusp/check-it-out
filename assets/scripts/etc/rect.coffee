@@ -5,22 +5,14 @@ define [], (appModel) ->
 	class
 		constructor: (@pointFixed = {x: 0, y: 0}) ->
 			@subscriptions = []
-			@subscriptions.push(appModel.stageWidth.subscribe (oldValue) ->
-					@cachedStageWidth = oldValue
-					@redraw()
-				, @, 'beforeChange')
-			@subscriptions.push(appModel.stageHeight.subscribe (oldValue) ->
-					@cachedStageHeight = oldValue
-					@redraw()
-				, @, 'beforeChange')
-			@subscriptions.push(appModel.stageOffsetX.subscribe (oldValue) ->
-					@cachedStageOffsetX = oldValue
-					@redraw()
-				, @, 'beforeChange')
-			@subscriptions.push(appModel.stageOffsetY.subscribe (oldValue) ->
-					@cachedStageOffsetY = oldValue
-					@redraw()
-				, @, 'beforeChange')
+			@subscriptions.push appModel.stageWidth.subscribe @redraw, @
+			@subscriptions.push appModel.stageHeight.subscribe @redraw, @
+			@subscriptions.push appModel.stageOffsetX.subscribe @redraw, @
+			@subscriptions.push appModel.stageOffsetY.subscribe @redraw, @
+
+			# stage cache
+			@cachedStageOffsetX = appModel.stageOffsetX()
+			@cachedStageOffsetY = appModel.stageOffsetY()
 
 			# init point
 			@pointMutable = $.extend true, {}, @pointFixed
@@ -73,18 +65,23 @@ define [], (appModel) ->
 			@entity.on 'mousedown.drag', (e) =>
 				@startDrag {x: e.pageX, y: e.pageY}
 
+			# draw before apeend
+			@draw()
+
 		redraw: ->
 			clearTimeout @lock
 			@lock = setTimeout =>
 				diffOffsetX = @cachedStageOffsetX - appModel.stageOffsetX()
 				diffOffsetY = @cachedStageOffsetY - appModel.stageOffsetY()
+				@cachedStageOffsetX = appModel.stageOffsetX()
+				@cachedStageOffsetY = appModel.stageOffsetY()
 
 				for pt in [@pointFixed, @pointMutable]
 					pt.x -= diffOffsetX
 					pt.y -= diffOffsetY
 					@normalize pt
 
-				@draw()
+				if @getWidth() * @getHeight() then @draw() else @dispose()
 			, 0
 
 		draw: ->
