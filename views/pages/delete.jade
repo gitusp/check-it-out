@@ -13,7 +13,7 @@ block body
 			h2.confirm
 			form(action='/delete', method='post')
 				span.container
-					| この操作は取り消せません
+					span.text-wrapper この操作は取り消せません
 					span.delete: .entity: .text
 					.hidden-element
 						input(type='hidden', name='token', value=token)

@@ -89,3 +89,12 @@ require ['etc/lang', 'flow/load', 'models/app', 'etc/helper'], (lang, load, appM
 	if appModel.needRealFileInput
 		$('#content-portal input[type=file]').appendTo('#content-portal .upload').click((e) -> e.stopPropagation())
 	
+	# HACK: apply FB JS SDK after app lifted
+	((d, s, id) ->
+			fjs = d.getElementsByTagName(s)[0]
+			return if d.getElementById id
+			js = d.createElement s
+			js.id = id
+			js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1"
+			fjs.parentNode.insertBefore js, fjs
+		) document, 'script', 'facebook-jssdk'

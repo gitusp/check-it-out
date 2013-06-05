@@ -7,7 +7,6 @@ body {
 	background: url(/images/pattern-slash.png);
 	font-size: 14px;
 	color: #666;
-	.user-select(none);
 }
 
 // util
@@ -239,12 +238,16 @@ h2 {
 	.container {
 		display: inline-block;
 		vertical-align: top;
-		line-height: 41px;
 
+		span.text-wrapper,
+		span.delete,
+		{
+			display: inline-block;
+			vertical-align: middle;
+		}
 		span.delete {
 			position: relative;
 			margin-left: 15px;
-			display: inline-block;
 			cursor: pointer;
 			padding: 1px;
 			width: 109px;
@@ -485,6 +488,7 @@ h2 {
 		cursor: default;
 		.match-parent;
 		z-index: 30;
+		.user-select(none);
 	}
 }
 
