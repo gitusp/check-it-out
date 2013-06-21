@@ -35,6 +35,12 @@ module.exports.routes = {
 		action		: 'show'
 	},
 
+	// シェア用url(画像出力専用)
+	'get /s/:hash/:force': {
+		controller	: 'apiv1',
+		action		: 'show'
+	},
+
 	// 削除用url
 	'get /s/:hash/:key': {
 		controller	: 'apiv1',

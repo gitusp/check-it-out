@@ -186,17 +186,23 @@
       }
     },
     show: function(req, res) {
-      return Image.find({
-        hash: req.param('hash')
-      }).done(function(err, img) {
-        if (!err && (img != null)) {
-          res.setHeader('Content-Type', "image/" + img.type);
-          res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString());
-          return res.end(img.image);
-        } else {
-          return res.view('404');
-        }
-      });
+      if (req.params.force || !/facebookexternalhit/.test(req.header('user-agent'))) {
+        return Image.find({
+          hash: req.param('hash')
+        }).done(function(err, img) {
+          if (!err && (img != null)) {
+            res.setHeader('Content-Type', "image/" + img.type);
+            res.setHeader('Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString());
+            return res.end(img.image);
+          } else {
+            return res.view('404');
+          }
+        });
+      } else {
+        return res.view('pages/facebookexternalhit', {
+          hash: req.param('hash')
+        });
+      }
     },
     key: function(req, res) {
       var hash, imageId, key, shasum, token;

@@ -1,0 +1,12 @@
+extends ../prototypes/base
+
+prepend title
+	| SHARE
+
+append metas
+	meta(property='og:title', content=screenAppName)
+	meta(property='og:type', content='website')
+	meta(property='og:url', content='http://mite.tsuku.ro/s/' + hash)
+	meta(property='og:image', content='http://mite.tsuku.ro/s/' + hash + '/yes')
+	meta(property='og:description', content=appDescription)
+	meta(property='og:site_name', content=screenAppName)
