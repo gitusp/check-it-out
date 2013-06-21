@@ -35,10 +35,10 @@ module.exports.routes = {
 		action		: 'show'
 	},
 
-	// シェア用url(画像出力専用)
-	'get /s/:hash/:force': {
+	// 画像url
+	'get /i/:hash': {
 		controller	: 'apiv1',
-		action		: 'show'
+		action		: 'image'
 	},
 
 	// 削除用url

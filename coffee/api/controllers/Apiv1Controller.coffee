@@ -20,6 +20,16 @@ createHash = (callback) ->
 
 	htry()
 
+# 画像を出力
+display = (hash, res) ->
+	Image.find(hash: hash).done (err, img) ->
+		if ! err and img?
+			res.setHeader 'Content-Type', "image/#{img.type}"
+			res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString()
+			res.end img.image
+		else
+			res.view '404'
+
 # 
 # main
 # 
@@ -52,7 +62,7 @@ module.exports =
 					createHash (hash) ->
 						Image.create(hash: hash, image: data, type: type, tmp: true).done (err, img) ->
 							unless err
-								res.view "pages/upload", uploadStatus: 'success', image: "\"/s/#{hash}\""
+								res.view "pages/upload", uploadStatus: 'success', image: "\"/i/#{hash}\""
 							else
 								res.view "pages/upload", uploadStatus: 'exception'
 
@@ -114,18 +124,18 @@ module.exports =
 	# シェア用
 	# 
 	show: (req, res) ->
-		if req.params.force or ! /facebookexternalhit/.test req.header 'user-agent'
-			# 単純に画像を出力
-			Image.find(hash: req.param 'hash').done (err, img) ->
-				if ! err and img?
-					res.setHeader 'Content-Type', "image/#{img.type}"
-					res.setHeader 'Expires', new Date(Date.now() + 60 * 60 * 24 * 1000).toUTCString()
-					res.end img.image
-				else
-					res.view '404'
-		else
+		if /facebookexternalhit/.test req.header 'user-agent'
 			# ogp出力
 			res.view 'pages/facebookexternalhit', hash: req.param 'hash'
+		else
+			# 画像出力
+			display req.param('hash'), res
+	
+	# 
+	# 画像を出力する
+	# 
+	image: (req, res) ->
+		display req.param('hash'), res
 
 	# 
 	# set delete key
