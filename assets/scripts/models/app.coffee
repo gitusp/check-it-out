@@ -68,13 +68,6 @@ define ['models/clip', 'models/draw', 'models/stage', 'models/share', 'etc/rect'
 			@cancel = (d, e) =>
 				@editor null
 
-			# help
-			@hideHelp = =>
-				@help false
-			@showHelp = =>
-				@help true
-			@help = ko.observable false
-
 			# pseudo super
 			clip.apply @, arguments
 			draw.apply @, arguments

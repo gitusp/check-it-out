@@ -47,22 +47,6 @@ h2 {
 #content-portal {
 	background: url(/images/logo.png) no-repeat 44px 35px;
 
-	.about-service {
-		.transition(.2s opacity);
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		color: #20a894;
-		cursor: pointer;
-		font-size: 12px;
-		padding-left: 15px;
-		line-height: 12px;
-		background: url(/images/icon-link.png) no-repeat 0 0;
-
-		&:hover {
-			.opacity(.75);
-		}
-	}
 	.container {
 		display: inline-block;
 
@@ -286,60 +270,6 @@ h2 {
 		img {
 			display: inline-block;
 			.drop-shadow;
-		}
-	}
-}
-#content-help {
-	.match-parent;
-	vertical-align: middle;
-	text-align: center;
-	.transition(.3s opacity);
-
-	td {
-		padding: 50px;
-		line-height: 0;
-	}
-
-	&.dissolve-out {
-		.opacity(0);
-	}
-
-	.background {
-		background: #000;
-		.match-parent;
-		.opacity(.5);
-	}
-	.container {
-		.drop-shadow;
-		position: relative;
-		display: inline-block;
-		width: 800px;
-		height: 514px;
-		background: #fff url(/images/help.png) 0 0 no-repeat;
-
-		.try {
-			.transition(.2s);
-			background: #52beb2 url(/images/text-try.png) 50% 50% no-repeat;
-			position: absolute;
-			width: 100%;
-			height: 57px;
-			border-top: #84cfc5 1px solid;
-			left: 0;
-			bottom: 0;
-			cursor: pointer;
-
-			&:hover {
-				background-color: #46afa0;
-			}
-		}
-
-		.close {
-			position: absolute;
-			width: 20px;
-			height: 20px;
-			right: 10px;
-			top: 10px;
-			cursor: pointer;
 		}
 	}
 }
