@@ -92,6 +92,9 @@ define [], (appModel) ->
 					height: @getHeight()
 				}
 
+			# hide if zero
+			if @getWidth() * @getHeight() then @entity.show() else @entity.hide()
+
 		startDraw: (initialPoint) ->
 			@optimizeViewport(initialPoint) if appModel.canOptimizeViewPort
 			appModel.dragging true
